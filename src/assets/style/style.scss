@@ -1,0 +1,57 @@
+$rowHeight:47px;
+.common-form-wrapper{
+    position: relative;
+    &.posRight {
+        .formRow {
+            right: 0;
+        }
+    }
+    &.posLeft {
+        .formRow {
+            left: 0;
+        }
+    }
+    &.grid {
+        display: grid !important;
+        grid-template-columns: repeat(2,1fr);
+        &.grid_3 {
+            grid-template-columns: repeat(3,1fr);
+        }
+        &.grid_4 {
+            grid-template-columns: repeat(4,1fr);
+        }
+    }
+    &.flex {
+        display: flex;
+        flex-wrap: wrap;
+        .formRow {
+            width:50% !important;
+            &.rowspan_1 {
+                position: absolute;
+                top: $rowHeight;
+            }
+            &.rowspan_2 {
+                position: absolute;
+                top: $rowHeight*2;
+            }
+            &.rowspan_3 {
+                position: absolute;
+                top: $rowHeight*3;
+            }
+            &.rowspan_4 {
+                position: absolute;
+                top: $rowHeight*4;
+            }
+            &.rowspan_5 {
+                position: absolute;
+                top: $rowHeight*5;
+            }
+        }
+        &.flex_3 {
+            width:33% !important;
+        }
+        &.flex_4 {
+            width:25% !important;
+        }
+    }
+}
