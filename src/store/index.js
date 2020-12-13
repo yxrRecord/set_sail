@@ -6,7 +6,7 @@ const state = {
     sysPrefix: "cadreMeals_",
     refreshLocal: [], 
     appInfo: {
-        appName: "后台管理系统",
+        appName: "尹旭冉-扬帆起航-未来可期",
         appIcon: "icon-oabangong-copy"
     },
     openMenu: false,

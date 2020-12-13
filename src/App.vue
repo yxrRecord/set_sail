@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'App',
+  mounted() {
+    document.querySelectorAll('title')[0].innerHTML = this.$store.state.appInfo.appName
+  },
 }
 </script>
 

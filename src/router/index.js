@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Vue from 'vue'
+import Router from 'vue-router'
 
 let routes = [
   {
@@ -20,6 +20,11 @@ let routes = [
       }
     ]
   },
+  {
+    path: '*',
+    name: '404',
+    component: () => import('@/pages/404')
+  }
 ]
 
 Vue.use(Router)

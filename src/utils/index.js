@@ -1,17 +1,17 @@
-import $ from 'jquery';
-import qs from 'qs';
-import store from '../store';
-import CryptoJS from 'crypto-js';
+import $ from 'jquery'
+import qs from 'qs'
+import store from '../store'
+import CryptoJS from 'crypto-js'
 
-let util = {};
+let util = {}
 util.install = function (Vue) {
     //提示信息
     Vue.prototype.$showMsg = (type, message) => {
         Vue.prototype.$message({
             type: type,
             message: message
-        });
-    };
+        })
+    }
 
     //提示弹窗
     Vue.prototype.$showConfirm = (hintText, callback, cancel, flag = true) => {
@@ -21,16 +21,16 @@ util.install = function (Vue) {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                callback();
+                callback()
             }).catch(() => {
                 if (cancel) {
-                    cancel();
+                    cancel()
                 }
-                Vue.prototype.$showMsg('info', '取消操作!');
-            });
+                Vue.prototype.$showMsg('info', '取消操作!')
+            })
         else
-            callback();
-    };
+            callback()
+    }
 
     //请求方式
     Vue.prototype.$ajaxPost = (requestOptions, showLoading, callback) => {
@@ -43,46 +43,46 @@ util.install = function (Vue) {
             responseType: 'json', //'arraybuffer',//default//blob
             isNeedLogin: true
         }
-        let requestUrl = requestOptions.url;
+        let requestUrl = requestOptions.url
         if (requestUrl.substring(requestUrl.length - 1) === "?") { //请求参数是需要序列化的
-            requestOptions.url = requestUrl.substring(0, requestUrl.length - 1);
+            requestOptions.url = requestUrl.substring(0, requestUrl.length - 1)
             if (requestOptions.data.refresh)
-                delete requestOptions.data.refresh;
-            requestOptions.data = qs.stringify(requestOptions.data);
+                delete requestOptions.data.refresh
+            requestOptions.data = qs.stringify(requestOptions.data)
         }
         for (var key in requestOptions) {
-            ajaxOptions[key] = requestOptions[key];
+            ajaxOptions[key] = requestOptions[key]
         }
         ajaxOptions.url = Vue.prototype.$baseUrl + ajaxOptions.url
         if (ajaxOptions.method === 'get' && Object.keys(ajaxOptions.data).length > 0) {
-            ajaxOptions.url += "?";
-            ajaxOptions.url += ajaxOptions.data;
-            ajaxOptions.data = {};
-            delete ajaxOptions.headers;
-            delete ajaxOptions.responseType;
+            ajaxOptions.url += "?"
+            ajaxOptions.url += ajaxOptions.data
+            ajaxOptions.data = {}
+            delete ajaxOptions.headers
+            delete ajaxOptions.responseType
         }
         console.log("请求开始++++++++++" + ajaxOptions.url)
         console.log('ajaxOptions+++++')
         console.log(ajaxOptions)
         if (showLoading) {
-            store.commit("updatePageLoading", ++store.state.pageLoading);
+            store.commit("updatePageLoading", ++store.state.pageLoading)
         }
         Vue.prototype.$http(ajaxOptions).then((response)=> {
             console.log("请求返回++++++++++" + ajaxOptions.url)
             console.log('response++++')
             console.log(response)
             if (showLoading)
-                store.commit("updatePageLoading", --store.state.pageLoading);
+                store.commit("updatePageLoading", --store.state.pageLoading)
             if (callback)
-                callback(response.data);
+                callback(response.data)
         }).catch((error)=> {
             console.log('error+++++')
             console.log(error)
             if (showLoading)
-                store.commit("updatePageLoading", --store.state.pageLoading);
-            return false;
-        });
-    };
+                store.commit("updatePageLoading", --store.state.pageLoading)
+            return false
+        })
+    }
 
     //获取错误数
     Vue.prototype.$loadStatis = (callback) => {
@@ -91,15 +91,15 @@ util.install = function (Vue) {
             data: {
                 conditionTypeId: ''
             }
-        };
+        }
         Vue.prototype.$ajaxPost(ajaxOptions, true, (res) => {
             if (res.code === 200) {
                 callback(res.data.wrongNum)
             } else {
-                this.$showMsg("error", res.message);
+                this.$showMsg("error", res.message)
             }
         })
-    };
+    }
 
     Vue.prototype.$getUserMenu = async (current) => {
       console.log(current, 'currentcurrentcurrent')
@@ -124,7 +124,7 @@ util.install = function (Vue) {
       console.log(menu, 'menu/getMenu22222')
 
       store.dispatch('menu/setMenu', menu)
-    };
+    }
 
     // 数组对象外数组去重
     Vue.prototype.$arrayRepact = function (arr) {
@@ -133,7 +133,7 @@ util.install = function (Vue) {
 
     //表单验证
     Vue.prototype.$validate = new function () {
-        let that = this;
+        let that = this
         //验证返回信息
         this.validateMessage = {
             required: '必填项不能为空',
@@ -166,97 +166,97 @@ util.install = function (Vue) {
                     return true
                 if (value)
                     if (value === 0 || value === false)
-                        return true;
+                        return true
                 if (!value)
-                    return false;
-                let length = Array.prototype.isPrototypeOf(value) ? value.length : value.length || value > 0;
+                    return false
+                let length = Array.prototype.isPrototypeOf(value) ? value.length : value.length || value > 0
                 return length > 0
             },
             passWord: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                // const reg = /^[a-zA-Z0-9]{6,12}$/;
+                    return true
+                // const reg = /^[a-zA-Z0-9]{6,12}$/
                 const reg = /(?=.*[0-9])(?=.*[a-zA-Z]).{6,12}/
-                const result = reg.test(value);
+                const result = reg.test(value)
                 return result
             },
             number: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const reg = /^\d+(\.\d{0,2})?$/;
-                const result = value > 0 ? reg.test(value / 1) : reg.test(value / -1);
+                    return true
+                const reg = /^\d+(\.\d{0,2})?$/
+                const result = value > 0 ? reg.test(value / 1) : reg.test(value / -1)
                 return result
             },
             integer: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const reg = /^[1-9]+\d*?$/; //
-                const result = value > 0 ? reg.test(value / 1) : reg.test(value / -1);
+                    return true
+                const reg = /^[1-9]+\d*?$/ //
+                const result = value > 0 ? reg.test(value / 1) : reg.test(value / -1)
                 return result
             },
             float: (value, param) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 value = Number(value)
-                const reg = /^\d+(\.\d{0,2})?$/;
-                const result = reg.test(value / 1);
+                const reg = /^\d+(\.\d{0,2})?$/
+                const result = reg.test(value / 1)
                 return result
             },
             minlength: (value, param) => {
-                let length = Array.prototype.isPrototypeOf(value) ? value.length : value.trim().length;
+                let length = Array.prototype.isPrototypeOf(value) ? value.length : value.trim().length
                 return length >= param
             },
             maxlength: (value, param) => {
-                let length = Array.prototype.isPrototypeOf(value) ? value.length : value.trim().length;
+                let length = Array.prototype.isPrototypeOf(value) ? value.length : value.trim().length
                 return length <= param
             },
             max: (value, param) => {
-                return param >= value;
+                return param >= value
             },
             min: (value, param) => {
-                return param <= value;
+                return param <= value
             },
             faxNum: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const reg = /^(\d{3,4}-)?\d{7,8}$/;
-                const result = reg.test(value);
+                    return true
+                const reg = /^(\d{3,4}-)?\d{7,8}$/
+                const result = reg.test(value)
                 return result
             },
             phoneVal: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const reg = /^0\d{2,3}-\d{7,8}$/;
-                const result = reg.test(value);
+                    return true
+                const reg = /^0\d{2,3}-\d{7,8}$/
+                const result = reg.test(value)
                 return result
             },
             mobileVal: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-                const result = reg.test(value);
+                    return true
+                const reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/
+                const result = reg.test(value)
                 return result
             },
             email: (value) => {
               if (value === "" || value === null)
-                  return true;
-              const reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-              const result = reg.test(value);
+                  return true
+              const reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+              const result = reg.test(value)
               return result
             },
             phoneAndMobile: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const regMobile = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-                const regPhone = /^\d{7,8}$/; ///^0\d{2,3}-\d{7,8}$/;
-                const result = regMobile.test(value) ? regMobile.test(value) : regPhone.test(value);
-                return result;
+                    return true
+                const regMobile = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/
+                const regPhone = /^\d{7,8}$/ ///^0\d{2,3}-\d{7,8}$/
+                const result = regMobile.test(value) ? regMobile.test(value) : regPhone.test(value)
+                return result
             },
             departCode: (value) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 // |(\d{3}\.\d{3})|(\d{3}\.\d{3}\.\d{3})
-                // const reg = /\d{3}[\.]?\d{3}[\.]?\d{3}/; //
+                // const reg = /\d{3}[\.]?\d{3}[\.]?\d{3}/ //
                 const reg = /^\d{3}$/
                 let result = true
                 let arr = value.split('.')
@@ -267,7 +267,7 @@ util.install = function (Vue) {
                         result = false
                         return false
                     } else {
-                        let result2 = reg.test(item);
+                        let result2 = reg.test(item)
                         console.log(result)
                         if (!result2) {
                             result = false
@@ -278,34 +278,34 @@ util.install = function (Vue) {
             },
             identityNumber: (value) => {
                 if (value === "" || value === null)
-                    return true;
-                const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-                const result = reg.test(value);
+                    return true
+                const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+                const result = reg.test(value)
                 console.log(result)
-                return result;
+                return result
             },
             identityNums: (value) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 if ((value.length < 18 && value.length > 15) || value.length < 15 || value.length > 18) {
-                    return false;
+                    return false
                 } else {
                     return true
                 }
             },
             identityPattern: (value) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 if (value.indexOf("000000000000000000") != -1 && value.length === 18) {
-                    return true;
+                    return true
                 } else {
                     if (value.indexOf("111111111") != -1) {
-                        return false;
+                        return false
                     } else {
                         if (!value || !/(^\d{15}$)|(^\d{17}(\d|X)$)/) {
-                            return false;
+                            return false
                         } else {
-                            return true;
+                            return true
                         }
                     }
 
@@ -313,7 +313,7 @@ util.install = function (Vue) {
             },
             identityAddress: (value) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 let city = {
                     11: "北京",
                     12: "天津",
@@ -350,50 +350,50 @@ util.install = function (Vue) {
                     81: "香港",
                     82: "澳门",
                     91: "国外 "
-                };
+                }
                 if (!city[value.substr(0, 2)]) {
-                    return false;
+                    return false
                 } else {
                     return true
                 }
             },
             identityDate: (value) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 if (value.length == 18) {
-                    let month = value.substring(10, 12);
+                    let month = value.substring(10, 12)
                     if (month > 12 || month == 0) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                    let day = value.substring(12, 14);
-                    if (month > 31) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                    let age = new Date().getFullYear() - value.substring(6, 10);
-                    if (age < 0) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    let month = value.substring(10, 12);
-                    if (month > 12 || month == 0) {
-                        return false;
+                        return false
                     } else {
                         return true
                     }
-                    let day = value.substring(12, 14);
+                    let day = value.substring(12, 14)
                     if (month > 31) {
-                        return false;
+                        return false
+                    } else {
+                        return true
+                    }
+                    let age = new Date().getFullYear() - value.substring(6, 10)
+                    if (age < 0) {
+                        return false
+                    } else {
+                        return true
+                    }
+                } else {
+                    let month = value.substring(10, 12)
+                    if (month > 12 || month == 0) {
+                        return false
+                    } else {
+                        return true
+                    }
+                    let day = value.substring(12, 14)
+                    if (month > 31) {
+                        return false
                     } else {
                         return true
                     }
                     // if(value.length>18){
-                    //     return false;
+                    //     return false
                     // } else {
                     //     return true
                     // }
@@ -401,41 +401,41 @@ util.install = function (Vue) {
             },
             identityCheck: (value) => {
                 if (value === "" || value === null)
-                    return true;
+                    return true
                 //∑(ai×Wi)(mod 11)
                 //加权因子
-                let factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+                let factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
                 //校验位
-                let parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
-                let sum = 0;
-                let ai = 0;
-                let wi = 0;
-                let idCardLast = value.substring(17);
+                let parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2]
+                let sum = 0
+                let ai = 0
+                let wi = 0
+                let idCardLast = value.substring(17)
                 for (let i = 0; i < 17; i++) {
-                    ai = value[i];
-                    wi = factor[i];
-                    sum += ai * wi;
+                    ai = value[i]
+                    wi = factor[i]
+                    sum += ai * wi
                 }
-                let last = parity[sum % 11];
+                let last = parity[sum % 11]
                 if (last == 2) {
                     if (idCardLast == "X" || idCardLast == "x") {
-                        return false;
+                        return false
                     } else {
-                        return true;
+                        return true
                     }
                 } else {
                     if (parity[sum % 11] != value[17]) {
-                        return false;
+                        return false
                     } else {
-                        return true;
+                        return true
                     }
                 }
             },
             cardNumber: (value) => {
                 if (value === undefined || value === null || value === '')
                     return true
-                const reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
-                const result = reg.test(value);
+                const reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/
+                const result = reg.test(value)
                 return result
             },
             existData: (val, callback) => {
@@ -457,18 +457,18 @@ util.install = function (Vue) {
                     rule: rules[ruleName],
                     form: form
                 }
-                rulesResult = that.checkRules(checkRuleOptions) && rulesResult;
+                rulesResult = that.checkRules(checkRuleOptions) && rulesResult
             }
             return rulesResult
         }
         //保存时验证详细数据
         this.checkRules = (options) => {
-            let parentName = options.parentName; //->在form保存数据中的父级key
-            let arrayIndex = options.arrayIndex; //->在form保存数据中的父级是数组的当前下标
-            let ruleName = options.ruleName; //->需要验证的数据key
-            let rule = options.rule; //->验证类型
-            let form = options.form; //->form保存数据
-            let ruleResult = true; //->验证通过与否
+            let parentName = options.parentName //->在form保存数据中的父级key
+            let arrayIndex = options.arrayIndex //->在form保存数据中的父级是数组的当前下标
+            let ruleName = options.ruleName //->需要验证的数据key
+            let rule = options.rule //->验证类型
+            let form = options.form //->form保存数据
+            let ruleResult = true //->验证通过与否
             for (var ruleKey in rule) {
                 if (!rule[ruleKey]) {
                     return (ruleResult = true)
@@ -481,8 +481,8 @@ util.install = function (Vue) {
                     break
                 }
                 if (typeof that.methods[ruleKey] === 'function') {
-                    let param = rule[ruleKey];
-                    let result = null;
+                    let param = rule[ruleKey]
+                    let result = null
                     if (parentName) {
                         if (arrayIndex !== undefined) { //standardNam
                             result = that.methods[ruleKey](form[parentName][arrayIndex][ruleName], param)
@@ -493,10 +493,10 @@ util.install = function (Vue) {
                         result = that.methods[ruleKey](form[ruleName], param)
                     }
                     /*控制台输出提示开始*/
-                    let showText = ruleName + ' ' + ruleKey + ' result';
+                    let showText = ruleName + ' ' + ruleKey + ' result'
                     if (parentName)
-                        showText = parentName + ' ' + showText;
-                    console.log(showText, result);
+                        showText = parentName + ' ' + showText
+                    console.log(showText, result)
                     /*控制台输出提示结束*/
                     if (!result) {
                         rule.valid = false
@@ -514,23 +514,23 @@ util.install = function (Vue) {
         //值切换时验证初始化数据
         this.validRule = (rule, val) => {
             if (!rule.valid || rule.valid == undefined) {
-                Vue.set(rule, 'valid', true);
-                Vue.set(rule, 'msg', '');
+                Vue.set(rule, 'valid', true)
+                Vue.set(rule, 'msg', '')
             } else
-                rule.valid = true;
-            let rulesResult = true;
-            rulesResult = that.checkRule(rule, val) && rulesResult;
+                rule.valid = true
+            let rulesResult = true
+            rulesResult = that.checkRule(rule, val) && rulesResult
             return rulesResult
         }
         //值切换时验证详细数据
         this.checkRule = (rule, val) => {
-            let ruleResult = true;
+            let ruleResult = true
             for (var ruleKey in rule) {
                 if (!rule[ruleKey]) {
-                    return (ruleResult = true);
+                    return (ruleResult = true)
                 }
                 if (typeof that.methods[ruleKey] === 'function') {
-                    let param = rule[ruleKey];
+                    let param = rule[ruleKey]
 
                     let result = that.methods[ruleKey](val, param)
                     if (!result) {
@@ -545,332 +545,162 @@ util.install = function (Vue) {
                     }
                 }
             }
-            return ruleResult;
+            return ruleResult
         }
-    }();
-    Vue.prototype.$initCodeData = (type, callback) => {
-        let codeObj, result;
-        if (!type) {
-            type = [
-                "Degree", //"学位(非国标)"
-                "Education", //"文化程序"
-                "GB13745", //"学科分类"
-                "GB16835", //"专业名称",
-                "GB2261.1",//"性别",
-                "GB2261.2",//"婚姻状况",
-                "GB2261.3", //"健康状况",
-                "GB2261.4",//"从业状况",
-                "GB3304",//"民族",
-                "GB4762",//"政治面貌",
-                "GB6864",//"学位",
-                "GB6865",//"语种熟练程度"
-                "GB8561",//"技术职务"
-                "KZ21",//"培训班学制"
-                "KZ22", //"培训对象级别"
-                "KZ23", //"计费方法"
-                "KZ24", //"宗教信仰"
-                "KZ44", //"级别代码"
-                "KZ45", //"课程类别"
-                "KZ47", //"师资属性"
-                "KZ88", //"培训机构类别"
-                "SFHG", //"答卷结果状态"
-                "TB01", //"培训班状态代码表"
-                "TB02", //"培训班计划类别代码"
-                "TB03", //"培训班名称代码表"
-                "TB04", //"培训对象类别代码表"
-                "TB05", //"计费方式代码"
-                "TB06", //"预算科目代码"
-                "TB07", //"发布提交方式代码"
-                "TB08", //"题目类别"
-                "TB09", //"答案类型代码"
-                "TB10", //"住址类别代码表"
-                "TB11", //"联系方式类别代码表"
-                "TB12", //"干部类别"
-                "TB13", //"学员职务安排"
-                "TB14", //"后备干部类别"
-                "TB15", //"培训班代号类别代码"
-                "TJFS", //"答卷提交方式"
-                "UC01", //"是否录入补充表"
-                "UnitStruct", //"单位结构"
-                "WJZT", //"问卷状态"
-                "ZB01", //"行政区划"
-                "ZB03", //"单位级别"
-                "ZB04", //"单位性质类别"
-                "ZB09", //"职位级别"
-                "ZB11", //"任职方式"
-                "ZB12", //"任职原因类别"
-                "ZB13", //"职务变动类别"
-                "ZB14", //"任职状态"
-                "ZB15", //"免职方式"
-                "ZB16", //"免职原因"
-                "ZB24", //"业技术职务任职资格途径"
-                "ZB25", //"专业技术职务变动类别"
-                "ZB27", //"从学单位类别"
-                "ZB28", //"培训完成情况"
-                "ZB29", //"培训类别"
-                "ZB30", //"培训离岗状态"
-                "ZB31", //"培训班类别"
-                "ZB44", //"专业技术人才类别"
-                "ZB61", //"机构编制性质"
-                "ZB64", //"学历"
-                "ZB72", //"专家类型"
-                "ZB77", //"有效证件类别"
-                "ZB87", // "社会阶层标识"
-                "ZB89", //"单位隶属关系"
-                "ZB90", //"企业登记注册类型"
-                "ZB91", //"企业规模"
-                "ZB92", //"控制(控股)情况代码"
-                "ZB93", //"高校基地"
-                "ZB94", //"机构类型"
-                "ZB95", //"通讯信息类别"
-                "JD0007", //"基地类型"
-                "LXR0007", //"联系人类别"
-                "KWJB0007", //"刊物级别"
-                "KWLB0007", //"刊物类别"
-                "JSNR", //"讲授内容体系"
-                "QQLX0007",//"缺勤类型"
-                "TIT00023",//"培训专题"
-                "PXDXLB",//"培训对象类别"
-                "JDKRANK",//"局档库职级"
-                "PositionType",//"干部职位类型"
-                "CadreStatus",//"干部状态"
-                "SKFS",//"授课方式"
-                "BJFL",//"信息库分类标识"
-                "KCXS",//"课程形式"
-                "TrainingClassTag",//"班次标签"
-                "TrainingClassLeader",//"班干部"
-                "WJMBZT",//问卷模板状态
-                "WJMBLX",//问卷模板类型,
-                "JCGL",//就餐餐厅
-            ];
-        }
-        let dataType = Vue.prototype.$getType(type);
-        let ajaxOptions = {
-            data: {typeCode: type},
-            url: "systemCode/findCodeListByType?"
-        };
-        if (dataType === "array") {
-            ajaxOptions = {
-                data: type,
-                url: "systemCode/findCodeListByTypeMany?v=" + Vue.prototype.$moment().format("x")
-            };
-        }
-        Vue.prototype.$ajaxPost(ajaxOptions, true, (res) => {
-            if (res.code === 200) {
-                if (dataType === "array") {
-                    type.forEach((item) => {
-                        if (!res.data[item])
-                            res.data[item] = [];
-                        switch (item) {
-                            case "GB2261.1"://性别
-                                res.data["Gender"] = res.data[item];
-                                delete res.data[item];
-                                break;
-                            case "GB2261.2"://婚姻状况
-                                res.data["Marital"] = res.data[item];
-                                delete res.data[item];
-                                break;
-                            case "GB2261.3"://健康状况
-                                res.data["Healthy"] = res.data[item];
-                                delete res.data[item];
-                                break;
-                            case "GB2261.4"://从业状况
-                                res.data["Employment"] = res.data[item];
-                                delete res.data[item];
-                                break;
-                            default:
-                                break;
-                        }
-                    })
-                    result = $.extend({}, store.state.codeData, res.data, true);
-                } else {
-                    codeObj = {
-                        [type]: res.data
-                    }
-                    switch (type) {
-                        case "GB2261.1"://性别
-                            codeObj["Gender"] = res.data;
-                            delete codeObj[type];
-                            break;
-                        case "GB2261.2"://婚姻状况
-                            codeObj["Gender"] = res.data;
-                            delete codeObj[type];
-                            break;
-                        case "GB2261.3"://健康状况
-                            codeObj["Gender"] = res.data;
-                            delete codeObj[type];
-                            break;
-                        case "GB2261.4"://从业状况
-                            codeObj["Gender"] = res.data;
-                            delete codeObj[type];
-                            break;
-                        default:
-                            break;
-                    }
-                    result = $.extend({}, store.state.codeData, codeObj, true);
-                }
-                sessionStorage.setItem(store.state.sysPrefix + "codeData", JSON.stringify(result));
-                store.commit("updateCodeData", result);
-                if (callback)
-                    callback(res.data);
-            } else {
-                Vue.prototype.$showMsg("error", res.message);
-            }
-        })
-    };
+    }()
     Vue.prototype.$setCookie = (name, value) => {
         //此 cookie 将被保存 30 天
-        const Days = 30;
-        const exp = new Date();
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        const Days = 30
+        const exp = new Date()
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000)
+        document.cookie = name + "=" + escape(value) + "expires=" + exp.toGMTString()
     }
     //获取页面相对高度
     Vue.prototype.$getHeight = (event, offset, rate) => {
         if (!offset)
-            offset = 0;
+            offset = 0
         if (!rate)
-            rate = 0.5;
-        let windowHeight = $(window).height();
-        let offsetTop = $(event)[0].getBoundingClientRect().top;
-        let result = (windowHeight - offsetTop - offset) * rate;
-        let maxHeight = windowHeight - offsetTop - offset;
+            rate = 0.5
+        let windowHeight = $(window).height()
+        let offsetTop = $(event)[0].getBoundingClientRect().top
+        let result = (windowHeight - offsetTop - offset) * rate
+        let maxHeight = windowHeight - offsetTop - offset
         return {
             height: result,
             maxHeight: maxHeight
-        };
-    };
+        }
+    }
 
     //导出表格/表单
     Vue.prototype.$downLoad = (options, encode) => {
         let ajaxOptions = {
             data: {},
             url: "export/gbhmc/generateAndExport", //花名册
-        };
-        ajaxOptions = Vue.prototype.$mergeObj(ajaxOptions, options);
-        for (let key in ajaxOptions.data) {
-            ajaxOptions.url += `${key}=${ajaxOptions.data[key]}&`;
         }
-        ajaxOptions.url = ajaxOptions.url.substring(0, ajaxOptions.url.length - 1);
+        ajaxOptions = Vue.prototype.$mergeObj(ajaxOptions, options)
+        for (let key in ajaxOptions.data) {
+            ajaxOptions.url += `${key}=${ajaxOptions.data[key]}&`
+        }
+        ajaxOptions.url = ajaxOptions.url.substring(0, ajaxOptions.url.length - 1)
         if (encode)
-            ajaxOptions.url = encodeURI(ajaxOptions.url);
+            ajaxOptions.url = encodeURI(ajaxOptions.url)
         console.log(ajaxOptions.url)
-        // window.location.href = ajaxOptions.url;
-        window.open(ajaxOptions.url, '_blank');
-    };
+        // window.location.href = ajaxOptions.url
+        window.open(ajaxOptions.url, '_blank')
+    }
     //获取当前年份的前几年
     Vue.prototype.$getCurrentYear = function (yearNum) {
-        let dropData = [];
+        let dropData = []
         for (var i = 0; i < yearNum; i++) {
             dropData.push({
                 name: new Date().getFullYear() - i,
                 id: new Date().getFullYear() - i
             })
         }
-        return dropData;
+        return dropData
     }
     //导出表格POST方式
     Vue.prototype.$exportExcel = (options, type) => {
-        let fileName = "";
+        let fileName = ""
         let ajaxOptions = {
             responseType: 'blob',
             data: {},
-        };
+        }
         if (options.fileName)
-            fileName = options.fileName;
-        delete options.fileName;
-        ajaxOptions = Object.assign(ajaxOptions, options);
+            fileName = options.fileName
+        delete options.fileName
+        ajaxOptions = Object.assign(ajaxOptions, options)
         Vue.prototype.$ajaxPost(ajaxOptions, true, (data) => {
-            let blob = null;
+            let blob = null
             switch (type) {
                 case "doc":
                     blob = new Blob([data], {
-                        type: "application/vnd.ms-word;charset=utf-8"
-                    });
-                    break;
+                        type: "application/vnd.ms-wordcharset=utf-8"
+                    })
+                    break
                 case "pdf":
                     blob = new Blob([data], {
                         type: 'application/pdf'
-                    });
-                    break;
+                    })
+                    break
                 case "zip":
                     blob = new Blob([data], {
                         type: 'application/zip'
-                    });
-                    break;
+                    })
+                    break
                 case "xls":
                     blob = new Blob([data], {
                         type: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    });
-                    break;
+                    })
+                    break
                 default:
-                    break;
+                    break
             }
             if (window.navigator.msSaveOrOpenBlob) {
-                navigator.msSaveBlob(blob);
+                navigator.msSaveBlob(blob)
             } else {
-                let elink = document.createElement('a');
-                elink.download = fileName;
-                elink.style.display = 'none';
-                elink.href = URL.createObjectURL(blob);
-                document.body.appendChild(elink);
-                elink.click();
-                document.body.removeChild(elink);
+                let elink = document.createElement('a')
+                elink.download = fileName
+                elink.style.display = 'none'
+                elink.href = URL.createObjectURL(blob)
+                document.body.appendChild(elink)
+                elink.click()
+                document.body.removeChild(elink)
             }
         })
-    };
+    }
 
     //导出表格
     Vue.prototype.$exportFile = (options, callback) => {
-        let url = options.url;
-        let params = options.data;
-        let downForm = document.createElement('form'); //创建一个form表单
-        downForm.id = 'downForm'; //该表单的id为downForm
-        downForm.name = 'downForm'; //该表单的name属性为downForm
-        downForm.className = 'x-hidden'; //该表单为隐藏的
-        downForm.action = url; //表单的提交地址
-        downForm.method = 'post'; //表单的提交方法
+        let url = options.url
+        let params = options.data
+        let downForm = document.createElement('form') //创建一个form表单
+        downForm.id = 'downForm' //该表单的id为downForm
+        downForm.name = 'downForm' //该表单的name属性为downForm
+        downForm.className = 'x-hidden' //该表单为隐藏的
+        downForm.action = url //表单的提交地址
+        downForm.method = 'post' //表单的提交方法
         for (let key in params) {
-            let input = document.createElement('input'); //创建一个input节点
-            input.type = 'hidden'; //隐藏域
-            input.name = key; //需要传递给后台的参数名
-            input.value = params[key]; //参数值
-            downForm.appendChild(input); //将input节点追加到form表单里面
+            let input = document.createElement('input') //创建一个input节点
+            input.type = 'hidden' //隐藏域
+            input.name = key //需要传递给后台的参数名
+            input.value = params[key] //参数值
+            downForm.appendChild(input) //将input节点追加到form表单里面
         }
-        document.body.appendChild(downForm);
-        $('#downForm').submit(); //调用form表单的submit方法，提交表单，从而开始下载文件
-        document.body.removeChild(downForm);
+        document.body.appendChild(downForm)
+        $('#downForm').submit() //调用form表单的submit方法，提交表单，从而开始下载文件
+        document.body.removeChild(downForm)
         if (callback)
-            callback();
-    };
+            callback()
+    }
 
     //深度拷贝
     Vue.prototype.$deepClone = (options) => {
-        let dataType = Vue.prototype.$getType(options);
-        let result = dataType === "array" ? [] : {};
-        return $.extend(true, result, options);
-    };
+        let dataType = Vue.prototype.$getType(options)
+        let result = dataType === "array" ? [] : {}
+        return $.extend(true, result, options)
+    }
 
     //合并对象
     Vue.prototype.$mergeObj = (data, mergeData, deep) => {
         if (deep === undefined)
-            deep = true;
-        return $.extend(deep, data, mergeData);
+            deep = true
+        return $.extend(deep, data, mergeData)
     }
 
     //对象之间的差异化取值
     Vue.prototype.$diffObject = (options, diffOptions) => {
-        let result = {};
+        let result = {}
         for (var key in options) {
             if (diffOptions[key] !== options[key])
-                result[key] = diffOptions[key];
+                result[key] = diffOptions[key]
         }
-        return result;
-    };
+        return result
+    }
     //获取数据类型
     Vue.prototype.$getType = (obj) => {
         //tostring会返回对应不同的标签的构造函数
-        var toString = Object.prototype.toString;
+        var toString = Object.prototype.toString
         var map = {
             '[object Boolean]': 'boolean',
             '[object Number]': 'number',
@@ -882,15 +712,15 @@ util.install = function (Vue) {
             '[object Undefined]': 'undefined',
             '[object Null]': 'null',
             '[object Object]': 'object'
-        };
-        if (obj instanceof Element) {
-            return 'element';
         }
-        return map[toString.call(obj)];
-    };
+        if (obj instanceof Element) {
+            return 'element'
+        }
+        return map[toString.call(obj)]
+    }
     //获取时间名称
     Vue.prototype.$getTimeName = () => {
-        let hour = Vue.prototype.$moment().hours();
+        let hour = Vue.prototype.$moment().hours()
         if (hour < 6) {
             return "凌晨好！"
         } else if (hour < 9) {
@@ -908,7 +738,7 @@ util.install = function (Vue) {
         } else {
             return "晚上好！"
         }
-    };
+    }
     Vue.prototype.$countFormat = (data) => {
         let res = data + ''
         if (res) {
@@ -919,44 +749,44 @@ util.install = function (Vue) {
         }
     }
     Vue.prototype.$recursive = (obj, field) => {
-        var arr = [];
+        var arr = []
         if (typeof obj === 'object') {
             for (var key in obj) {
                 if (obj[field] === obj[key]) {
-                    arr.push(obj[field]);
+                    arr.push(obj[field])
                 }
-                var item = obj[key];
+                var item = obj[key]
                 if (typeof item === 'object') {
-                    Vue.prototype.$recursive(item, field);
+                    Vue.prototype.$recursive(item, field)
                 }
             }
         }
-        return arr;
+        return arr
     }
     Vue.prototype.$getNextMonth = (date) => {
-        let arr = date.split('-');
-        let year = arr[0]; //获取当前日期的年份
-        let month = arr[1]; //获取当前日期的月份
-        let day = arr[2]; //获取当前日期的日
-        let days = new Date(year, month, 0);
-        days = days.getDate(); //获取当前日期中的月的天数
-        let year2 = year;
-        let month2 = parseInt(month) + 1;
+        let arr = date.split('-')
+        let year = arr[0] //获取当前日期的年份
+        let month = arr[1] //获取当前日期的月份
+        let day = arr[2] //获取当前日期的日
+        let days = new Date(year, month, 0)
+        days = days.getDate() //获取当前日期中的月的天数
+        let year2 = year
+        let month2 = parseInt(month) + 1
         if (month2 == 13) {
-            year2 = parseInt(year2) + 1;
-            month2 = 1;
+            year2 = parseInt(year2) + 1
+            month2 = 1
         }
-        let day2 = day;
-        let days2 = new Date(year2, month2, 0);
-        days2 = days2.getDate();
+        let day2 = day
+        let days2 = new Date(year2, month2, 0)
+        days2 = days2.getDate()
         if (day2 > days2) {
-            day2 = days2;
+            day2 = days2
         }
         if (month2 < 10) {
-            month2 = '0' + month2;
+            month2 = '0' + month2
         }
-        let t2 = year2 + '-' + month2 + '-' + day2;
-        return t2;
+        let t2 = year2 + '-' + month2 + '-' + day2
+        return t2
     }
     Vue.prototype.$StringTrim = function (testStr) {
 
@@ -967,7 +797,7 @@ util.install = function (Vue) {
         // testStr = testStr.replace(/\s*$/g,"")
         testStr = testStr.replace(/(^\s*)|(\s*$)/g, "")
         testStr = testStr.replace(/\s/g, '')
-        return testStr;
+        return testStr
     }
     Vue.prototype.$fmtDate = (value) => {
         if (!value) {
@@ -983,90 +813,124 @@ util.install = function (Vue) {
         setTimeout(() => {
             var elTop = el.getBoundingClientRect().top
             el.style.height = `calc(100vh - ${offsetBottom}px - ${elTop}px)`
-            // $(el).height(`calc(100vh - ${offsetBottom}px - ${elTop}px)`);
+            // $(el).height(`calc(100vh - ${offsetBottom}px - ${elTop}px)`)
         }, time)
     }
     Vue.prototype.getFileType = (fileName) => {
-        let fileType = fileName ? fileName.substr(fileName.lastIndexOf('.') + 1) : "";
+        let fileType = fileName ? fileName.substr(fileName.lastIndexOf('.') + 1) : ""
         switch (fileType) {
             case 'docx':
             case 'doc':
-                return 'icon-DOC';
-                break;
+                return 'icon-DOC'
+                break
             case 'pdf':
-                return 'icon-PDF';
-                break;
+                return 'icon-PDF'
+                break
             case 'txt':
-                return 'icon-TXT';
-                break;
+                return 'icon-TXT'
+                break
             case 'png':
             case 'jpeg':
             case 'jpg':
             case 'bmp':
             case 'gif':
-                return 'icon-PNG';
-                break;
+                return 'icon-PNG'
+                break
             case 'xls':
             case 'xlsx':
-                return 'icon-xls1';
-                break;
+                return 'icon-xls1'
+                break
             default:
-                return 'icon-wenjian1';
-                break;
+                return 'icon-wenjian1'
+                break
         }
     }
 
     Vue.prototype.$encryptByDES = (message, key=store.state.openValue) => {
-      let keyHex = CryptoJS.enc.Utf8.parse(key);
+      let keyHex = CryptoJS.enc.Utf8.parse(key)
       let encrypted = CryptoJS.TripleDES.encrypt(message, keyHex, {
         mode: CryptoJS.mode.ECB,
         padding: CryptoJS.pad.Pkcs7
-      });
-      return encrypted.toString();
+      })
+      return encrypted.toString()
     }
 
     //DES 解密
     Vue.prototype.$decryptByDES = (ciphertext, key=store.state.openValue) => {
-      let keyHex = CryptoJS.enc.Utf8.parse(key);
+      let keyHex = CryptoJS.enc.Utf8.parse(key)
       // direct decrypt ciphertext
       let decrypted = CryptoJS.TripleDES.decrypt({
           ciphertext: CryptoJS.enc.Base64.parse(ciphertext)
       }, keyHex, {
           mode: CryptoJS.mode.ECB,
           padding: CryptoJS.pad.Pkcs7
-      });
-      return decrypted.toString(CryptoJS.enc.Utf8);
+      })
+      return decrypted.toString(CryptoJS.enc.Utf8)
     }
 
     //表格列相同数据合并
     Vue.prototype.$mergeTableByColData = (tableData, key, childKey) => {
       let spanArr = [],
-          concatOne = 0;
+          concatOne = 0
       tableData.forEach((item, index) => {
-          if (index === 0) {
-              spanArr.push(1);
-          } else {
-              if (childKey) {
-                  if (item[childKey][key] === tableData[index - 1][childKey][key]) { //第一列需合并相同内容的判断条件
-                      spanArr[concatOne] += 1;
-                      spanArr.push(0);
-                  } else {
-                      spanArr.push(1);
-                      concatOne = index;
-                  };
-              } else {
-                  if (item[key] === tableData[index - 1][key]) { //第一列需合并相同内容的判断条件
-                      spanArr[concatOne] += 1;
-                      spanArr.push(0);
-                  } else {
-                      spanArr.push(1);
-                      concatOne = index;
-                  };
-              }
-          }
-      });
-      // console.log(spanArr, 'spanArrspanArrspanArr')
-      return spanArr;
+        if (index === 0) {
+            spanArr.push(1)
+        } else {
+            if (childKey) {
+                if (item[childKey][key] === tableData[index - 1][childKey][key]) { //第一列需合并相同内容的判断条件
+                    spanArr[concatOne] += 1
+                    spanArr.push(0)
+                } else {
+                    spanArr.push(1)
+                    concatOne = index
+                }
+            } else {
+                if (item[key] === tableData[index - 1][key]) { //第一列需合并相同内容的判断条件
+                    spanArr[concatOne] += 1
+                    spanArr.push(0)
+                } else {
+                    spanArr.push(1)
+                    concatOne = index
+                }
+            }
+        }
+    })
+    // console.log(spanArr, 'spanArrspanArrspanArr')
+    return spanArr
   }
-};
-export default util;
+
+  Vue.prototype.$textAnimate = (dom, time=0.5) => {
+    if (!dom) {
+        return
+    }
+    let content = dom.textContent.split('')
+    dom.textContent = ""
+    content.forEach((item, index) => {
+        let span = document.createElement('span')
+        span.textContent = item
+        span.classList.add('animation-text')
+        span.style.display = 'inline-block'
+        span.style.opacity = '0'
+        span.style.animation = `landIn .5s ease-out ${index * time}s both`
+        // span.style.animationDelay = `${index * time}s`
+        dom.append(span)
+    })
+  }
+  // 从中间开始
+  Vue.prototype.$textAnimateTwo = (dom, time=0.5) => {
+    if (!dom) {
+        return
+    }
+    let content = dom.textContent.split('')
+    dom.textContent = ""
+    let middle = content.filter(e => e != " ").length / 2
+    content.forEach((item, index) => {
+        let span = document.createElement('span')
+        span.textContent = item
+        span.classList.add('animation-text-two')
+        span.style.animationDelay = `${time + Math.abs(index - middle) * 0.1}s`
+        dom.append(span)
+    })
+  }
+}
+export default util
