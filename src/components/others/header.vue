@@ -1,5 +1,5 @@
 <template>
-  <section id="header">
+  <section id="header" v-if="showValue > 0">
     <div class="header-main">
       <section class="header-left">
         <slot name="left"></slot>
@@ -20,6 +20,12 @@
 </template>
 <script>
   export default {
+    props: {
+      showValue: {
+        type: Number,
+        default: 1
+      }
+    },
     name: "Header",
     data() {
       return {
@@ -36,9 +42,13 @@
 </script>
 <style lang="scss" type="text/scss" scoped>
 #header {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 50px;
   width: 100%;
   background-color: $color-gray;
+  
   .header-main {
     width: 800px;
     margin: 0 auto;

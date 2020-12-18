@@ -1,286 +1,99 @@
 <template>
-  <div class="common-layout-wrapper">
-    <header class="banner">
-      <section class="banner-box" :style="`width: ${bannerList.length}00%;`">
-        <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
-          <img :src="item" alt="">
-        </div>
-      </section>
-      <div class="copywriting">
-        <h2 class="hello-text">  你 若 成 风 YXR  </h2>
-        <h2 class="edit-text-box">  
-          <p>/* </p>
-          <p class="edit-text">{{showMessage}}</p>
-          <p> */</p>
-        </h2>
-        <div class="home-button">
-          <div @click="open" class="pointer open-btn">
-            点击开启
-          <span class="jt iconfont yxrjiantou"></span></div>
-        </div>
-      </div>
-      <div class="home-bottom-link pointer">
-        <p >
-          <span class="iconfont yxrfanhui"></span>
-        </p>
-      </div>
-    </header>  
-    <Header />
+<!-- @scroll="onScroll" -->
+  <div class="common-layout-wrapper" >
+    <HomeBanner />
+    <Header :showValue="headerShowValue" />
+    <transition name="fade">
+      <div v-show="showBackTop" class="back-top iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
+    </transition>
+    
     <router-view></router-view>
   </div>
 </template>
 <script>
 import Header from '../others/header'
+import HomeBanner from '../others/homeBanner'
+
 export default {
   name: "Layout",
   data() {
     return {
-      text: [
-        '你活着的每一天都是之后日子里最年轻的时候。',
-        '即使道路坎坷不平，车轮也要前进；即使江河波涛汹涌，船只也航行。',
-        '问候不必须要慎重其事，但必须要真诚感人。'
-      ],
-      showMessage: '',
-      currentIndex: 0,
-      type: 1,
-      timer: null,
-      bannerList: [
-        require('@/assets/images/banner1.jpg'),
-        require('@/assets/images/banner2.jpg'),
-        require('@/assets/images/banner3.jpg'),
-        require('@/assets/images/banner4.jpg'),
-        require('@/assets/images/banner5.jpg'),
-        require('@/assets/images/banner1.jpg'),
-      ],
-      bannerTime: null,
-      currentBannerIndex: 0
+      containerHeight: 0,
+      headerShowValue: 0,
+      showBackTop: false
     }
   },
   components: {
-    Header
-  },
-  created() {
-    
+    Header,
+    HomeBanner
   },
   mounted() {
-    this.init()
-    this.$nextTick(() => {
-      this.$textAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
-      this.textAnimate(document.querySelectorAll('.edit-text')[0], 0.1);
-    })
-   
+    this.containerHeight = Math.floor(document.querySelector('.common-layout-wrapper').getClientRects()[0].height)
+    document.querySelector('.common-layout-wrapper').addEventListener('scroll', this.onScroll)
   },
   methods: {
-    init() {
-      let dom = document.querySelectorAll('.banner-box')[0],
-          width = document.querySelectorAll('.banner')[0].getClientRects()[0].width.toFixed(0)
-      if (this.bannerTime) clearInterval(this.bannerTime)
-      this.bannerTime = setInterval(item => {
-        console.log(this.currentBannerIndex, '1111111111')
-        dom.style.transform = `translateX(-${this.currentBannerIndex * width}px)`
-        dom.classList.add('transition-box')
-        this.currentBannerIndex++
-        if (this.currentBannerIndex > this.bannerList.length - 1) {
-          setTimeout(() => {
-            dom.classList.remove('transition-box')
-          }, 1000)
-          this.currentBannerIndex = 0
-        }
-      }, 3000)
+    onScroll(e) {
+      console.log(e.target.scrollTop, 'eeeeeee')
+      /* 
+        控制 header 组件显示与透明度
+      */
+      let scrollTop = e.target.scrollTop
+      if (this.containerHeight - scrollTop <= 50) {
+        this.headerShowValue += 0.1
+      } else this.headerShowValue = 0
+      /* 
+        控制返回顶部是否显示
+      */
+      if (scrollTop > this.containerHeight + 300) {
+        this.showBackTop = true
+      } else this.showBackTop = false
     },
-    open() {
-      
-    },
-    textAnimate(dom) {
-      if (this.type === 1) {
-        this.addText()
-      } else {
-        this.removeText()
-      }
-    },
-    addText(time = 200) {
-      let text = this.text[this.currentIndex].split('');
-      let textLen = text.length,
-          msgLen = this.showMessage.length,
-          tempText = []
-      let index = 0
-      
-      this.timer = setInterval(() => {
-        tempText.push(text[index])
-        this.showMessage = tempText.join('')
-        index++
-        if (index >= textLen) {
-          if (this.timer) clearInterval(this.timer)
-          setTimeout(() => {
-            this.removeText()
-          }, 600);
-          
-        }
-      }, time)
-    },
-    removeText(time = 100) {
-      let text = this.text[this.currentIndex].split('');
-      let textLen = text.length,
-          msgLen = this.showMessage.length,
-          tempText = text
-      let index = msgLen
-
-      if (this.timer) clearInterval(this.timer)
-      this.timer = setInterval(() => {
-        tempText.pop(text[index])
-        this.showMessage = tempText.join('')
-        index--
-        if (index <= 0) {
-          this.currentIndex++
-          if (this.currentIndex >= this.text.length) {
-            this.currentIndex = 0
-          }
-          if (this.timer) clearInterval(this.timer)
-          this.addText()
-        }
-      }, time)
+    backTop() {
+      document.querySelector('.common-layout-wrapper').scrollTop = this.containerHeight
     }
+
+    
   }
 }
 </script>
 <style lang="scss" type="text/scss" scoped>
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.fade-enter-active, .fade-leave-active {
+    // transform: translateY(20px);
+    // transform: translateY(-30px);
+    transition: all .5s ease;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active, 2.1.8 版本以下 */ {
+    transform: translateY(60px);
+    // bottom: 80px;
+}
 .common-layout-wrapper {
   user-select: none;
-  .banner {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    // background: url('../../assets/images/banner1.jpg');
-    /* 背景图片 */
-    &::after {
-      position: absolute;
-      content: "";
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, .35);
-      z-index: 1;
-    }
-    .banner-box { 
-      position: relative;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-      
-      .binner-item {
-        width: 100vw;
-        height: 100%;
-        transition: all 1s;
-      }
-      .current-binner-item {
-        // width: 100%;
-      }
-    }
-    .transition-box {
-      transition: all 1s;
-    }
-    /* 背景图部分 文字 */
-    .copywriting {
-      position: absolute;
-      width: 50%;
-      top: 48%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      h2 {
-        font-size: 36px;
-        color: $color-grayf;
-        text-align: center;
-        
-      }
-      .hello-text {
-        // font-family: 'Lobster', cursive;
-        letter-spacing: 2px;
-      }
-      .edit-text-box {
-        display: flex;
-        justify-content: center;
-        font-size: 20px;
-        margin-top: 30px;
-        letter-spacing: 4px;
-        p {
-          &:first-child {
-            margin-right: 10px;
-          }
-          &:last-child {
-            margin-left: 10px;
-          }
-        }
-      }
-      .home-button {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-top: 150px;
-        .open-btn {
-          text-align: center;
-          font-size: 18px;
-          padding: 15px 15px;
-          border-radius: 30px;
-          background-color: $color-grayf;
-          color: $color-gray3;
-          width: 180px;
-          line-height: 20px;
-          box-shadow: 0 0 10px #666;
-          &:hover {
-            background-color: $color-primary;
-            color: $color-grayf;
-            .jt {
-              margin-left: 10px;
-              font-size: 20px;
-            }
-          }
-          .jt {
-            font-size: 0;
-            margin-left: 0;
-            transition: all .5s;
-            vertical-align: middle;
-          }
-        }
-      }
-    }
-    /* 按钮 链接 */
-    .home-bottom-link {
-      position: absolute;
-      left: 50%;
-      bottom: 20px;
-      width: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      z-index: 10;
-      p {
-        line-height: 40px;
-        animation: topBottom 2s linear infinite;
-      }
-      .iconfont {
-        display: inline-block;
-        color: $color-grayf;
-        font-size: 20px;
-        transform: rotateZ(-90deg);
-        font-weight: 600;
-        
-      }
-    }
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+  .back-top {
+    position: fixed;
+    z-index: 100;
+    right: 40px;
+    bottom: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 26px;
+    text-align: center;
+    background: #fff;
+    color: $color-primary;
+    box-shadow: 0 0 10px #ccc;
+    // transition: transform .5s ease;
+    // transform: translateY(-30px);
   }
+  // .an-back-top {
+  //   opacity: 1;
+  //   transform: translateY(-30px);
+  //   // transition: transform .5s ease;
+  // }
 }
 
-@keyframes topBottom {
-  0% {
-    margin-bottom: 20px;
-    opacity: 1;
-  }
-  50% {
-    margin-bottom: 40px;
-    opacity: 0.7;
-  }
-  100% {
-    margin-bottom: 20px;
-    opacity: 1;
-  }
-}
+
 </style>
