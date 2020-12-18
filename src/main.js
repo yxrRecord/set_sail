@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+// 引入 语言
+import i18n from './lang'
 
 import axios from 'axios'
 Vue.prototype.$http = axios
@@ -20,8 +22,7 @@ import ElementUI from 'element-ui'
 import './assets/theme/elementUI.scss'
 Vue.use(ElementUI, { size: 'mini' })
 
-// 引入 语言
-import i18n from './lang'
+
 
 Vue.config.productionTip = false
 

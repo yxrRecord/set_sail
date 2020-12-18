@@ -1,5 +1,5 @@
 <template>
-  <section id="header" v-if="showValue > 0">
+  <section id="home-header" v-if="showValue > 0" :style="{ marginTop:  showValue > 0 ? `${headerHeight}px` : '0'}">
     <div class="header-main">
       <section class="header-left">
         <slot name="left"></slot>
@@ -29,14 +29,25 @@
     name: "Header",
     data() {
       return {
-        menuList: [
-          { icon: '1', name: '首页', eName: 'jummHome', hover: false},
-          { icon: '1', name: '技能标签', eName: 'jummHome', hover: false},
-          { icon: '1', name: '工作经验', eName: 'jummHome', hover: false},
-          { icon: '1', name: '项目经历', eName: 'jummHome', hover: false},
-          { icon: '1', name: '个人信息', eName: 'jummHome', hover: false},
-        ]
+        // menuList: [
+        //   { icon: '1', name: '首页', eName: 'jummHome', hover: false},
+        //   { icon: '1', name: '技能标签', eName: 'jummHome', hover: false},
+        //   { icon: '1', name: '工作经验', eName: 'jummHome', hover: false},
+        //   { icon: '1', name: '项目经历', eName: 'jummHome', hover: false},
+        //   { icon: '1', name: '个人信息', eName: 'jummHome', hover: false},
+        // ]
+        headerHeight: 0
       }
+    },
+    computed: {
+      menuList() {
+        return this.$t('home').menuList
+      }
+    },
+    mounted() {
+      // console.log(document.getElementById('#home-header'))
+      // this.headerHeight = document.querySelector('#home-header').getClientRects()[0].height
+      // console.log(this.headerHeight, 'this.headerHeight')
     }
   }
 </script>

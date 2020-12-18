@@ -20,7 +20,7 @@ export default {
     return {
       containerHeight: 0,
       headerShowValue: 0,
-      showBackTop: false
+      showBackTop: false,
     }
   },
   components: {
@@ -30,6 +30,7 @@ export default {
   mounted() {
     this.containerHeight = Math.floor(document.querySelector('.common-layout-wrapper').getClientRects()[0].height)
     document.querySelector('.common-layout-wrapper').addEventListener('scroll', this.onScroll)
+    
   },
   methods: {
     onScroll(e) {
