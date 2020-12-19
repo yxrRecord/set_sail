@@ -1,5 +1,5 @@
 <template>
-   <header class="banner" @scroll="onScroll">
+   <header class="banner">
      <!--  -->
       <section class="banner-box" :style="`background-image: url(${currentImg})`">
         <!-- <img :src="bannerList[0]" alt=""> -->
@@ -16,13 +16,13 @@
           <p class="fade-away line-beat">|</p>
           <p> */</p>
         </h2>
-        <div class="home-button">
-          <div @click="open" class="pointer open-btn">
+        <!-- <div class="home-button">
+          <div class="pointer open-btn" @click="$emit('backTop')">
             点击开启
           <span class="jt iconfont yxrjiantou"></span></div>
-        </div>
+        </div> -->
       </div>
-      <div class="home-bottom-link pointer">
+      <div class="home-bottom-link pointer" @click="$emit('backTop')">
         <p >
           <span class="iconfont yxrfanhui"></span>
         </p>
@@ -71,10 +71,6 @@
     
     },
     methods: {
-      onScroll(e) {
-      console.log(e, 'eeeeeee')
-      debugger
-    },
       init() {
         let dom = document.querySelectorAll('.banner-box')[0],
             width = document.querySelectorAll('.banner')[0].getClientRects()[0].width.toFixed(0)
@@ -98,9 +94,6 @@
             this.currentBannerIndex = 0
           }
         }, 3000)
-      },
-      open() {
-        
       },
 
       textAnimate(dom) {
@@ -208,13 +201,13 @@
     transform: translate(-50%, -50%);
     z-index: 10;
     h2 {
-      font-size: 36px;
+      font-size: 40px;
       color: $color-grayf;
       text-align: center;
       
     }
     .hello-text {
-      // font-family: 'Lobster', cursive;
+      font-family: 'qianduKaiTI';
       letter-spacing: 2px;
     }
     .edit-text-box {
@@ -224,6 +217,8 @@
       font-size: 20px;
       margin-top: 30px;
       letter-spacing: 4px;
+      font-family: '方正小标宋简体';
+      line-height: 30px;
       p {
         &:first-child {
           margin-right: 10px;

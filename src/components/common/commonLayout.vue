@@ -1,13 +1,15 @@
 <template>
 <!-- @scroll="onScroll" -->
   <div class="common-layout-wrapper" >
-    <HomeBanner />
-    <Header :showValue="headerShowValue" />
+    <HomeBanner @backTop="backTop" />
+    <Header :showValue="headerShowValue"  />
     <transition name="fade">
       <div v-show="showBackTop" class="back-top iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
     </transition>
+    <div :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}">
+      <router-view></router-view>
+    </div>
     
-    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -21,6 +23,7 @@ export default {
       containerHeight: 0,
       headerShowValue: 0,
       showBackTop: false,
+      headerHeight: 1
     }
   },
   components: {
@@ -34,13 +37,17 @@ export default {
   },
   methods: {
     onScroll(e) {
-      console.log(e.target.scrollTop, 'eeeeeee')
+      // console.log(e.target.scrollTop, this.containerHeight, this.headerHeight, 'eeeeeee')
+      console.log(this.containerHeight, 'this.containerHeight')
       /* 
         控制 header 组件显示与透明度
       */
       let scrollTop = e.target.scrollTop
-      if (this.containerHeight - scrollTop <= 50) {
+      if (this.containerHeight - scrollTop <= this.headerHeight) {
         this.headerShowValue += 0.1
+        this.$nextTick(() => {
+          this.headerHeight = document.querySelector('#home-header').getClientRects()[0].height
+        })
       } else this.headerShowValue = 0
       /* 
         控制返回顶部是否显示
@@ -50,7 +57,28 @@ export default {
       } else this.showBackTop = false
     },
     backTop() {
-      document.querySelector('.common-layout-wrapper').scrollTop = this.containerHeight
+      let scrollNumber = document.querySelector('.common-layout-wrapper').scrollTop
+      let offset = Math.abs(Math.floor((scrollNumber - this.containerHeight) / 20))
+      // console.log(offset, 'offset')
+      this.scrollTime = setInterval(() => {
+        if (scrollNumber - this.containerHeight < 0) {
+          scrollNumber += offset
+          document.querySelector('.common-layout-wrapper').scrollTop = scrollNumber
+          console.log(scrollNumber, this.containerHeight, scrollNumber >= this.containerHeight)
+          if (scrollNumber >= this.containerHeight) {
+            document.querySelector('.common-layout-wrapper').scrollTop = this.containerHeight + 1
+            clearInterval(this.scrollTime)
+          }
+        }  else {
+          if (scrollNumber <= this.containerHeight) {
+            clearInterval(this.scrollTime)
+            document.querySelector('.common-layout-wrapper').scrollTop = this.containerHeight + 1
+          } else {
+            scrollNumber -= offset
+            document.querySelector('.common-layout-wrapper').scrollTop = scrollNumber
+          }
+        }
+      },  10)
     }
 
     
