@@ -1,4 +1,4 @@
-
+@import '../theme/index.scss';
 @function calcRem ($args) {
     @return $args/14;
 }

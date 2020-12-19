@@ -77,93 +77,8 @@ input:focus {
     cursor: pointer;
 }
 
-.gray {
-    color: #333;
-}
-
-.gray9 {
-    color: #999;
-}
-
-.gray666 {
-    color: #606266
-}
-
-.gray6 {
-    color: #666
-}
-.gray3 {
-    color: #333
-}
-
-.gray-line {
-    display: inline-block;
-    padding: 0 5px;
-    color: #e8e8e8;
-}
-
-.blue {
-    color: $color-primary;
-}
-
-.purple {
-    color: $color-purple;
-}
-
-.red {
-    color: $color-danger;
-}
-
-.yellow {
-    color: $color-warning !important;
-}
-
-.green {
-    color: $color-success;
-}
-
-.black {
-    color: #000;
-}
-
-.margin {
-    margin: 10px;
-}
-
 .padding {
     padding: 10px 1em;
-}
-
-.paddingX {
-    padding-left: 1em;
-    padding-right: 1em;
-}
-
-.paddingY {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.pageBox {
-    overflow: hidden;
-    padding: 0.5em 0 1em;
-    border-bottom: 1px solid #e8e8e8;
-
-    .pageRow {
-        line-height: 2em;
-        padding: 0 1.5em;
-
-        .statusBtn {
-            font-size: 0.9em;
-            padding: 0.1em 0.2em;
-            border-radius: 0.3em;
-        }
-    }
-
-    .pageBoxItem {
-        padding: 10px 1.5em;
-        overflow: hidden;
-    }
 }
 
 .backgroundLight {
@@ -214,21 +129,6 @@ input:focus {
     }
 }
 
-.common-dialog-wrapper {
-    .pageBox {
-        padding: 0;
-    }
-
-    .pageBox:last-child {
-        border: none;
-    }
-}
-
-.common-container-wrapper {
-    .pageBox:last-child {
-        border: none;
-    }
-}
 
 //全局序列号样式
 .serialNum {
@@ -255,19 +155,6 @@ input:focus {
     padding: 0;
     cursor: pointer;
     display: inline-block;
-}
-
-//->搜索输入框样式
-.searchInput {
-    .el-input__inner {
-        height: 28px !important;
-        line-height: 28px !important;
-        border-radius: 28px !important;
-    }
-
-    .el-input__icon {
-        line-height: 28px !important;
-    }
 }
 
 //全局无数据样式
@@ -351,164 +238,8 @@ input:focus {
     }
 }
 
-//房间背景
-.title_green {
-    background: rgba(122, 202, 64, 1) !important;
-}
-
-.title_orange {
-    background: rgba(252, 157, 33, 1) !important;
-}
-
-.title_red {
-    background: rgba(247, 108, 65, 1) !important;
-}
-
-.title_blue {
-    background: rgba(101, 171, 242, 1) !important;
-}
-
-.title_darkBlue {
-    background: rgba(95, 128, 170, 1) !important;
-}
-
-.title_gray {
-    background: rgba(187, 187, 187, 1) !important;
-}
-
-.title_lightGray {
-    background: rgba(240, 240, 240, 1) !important;
-}
-
-.choosed_title_green {
-    background: rgba(122, 202, 64, 0.2) !important;
-}
-
-.choosed_title_orange {
-    background: rgba(252, 157, 33, 0.2) !important;
-}
-
-.choosed_title_red {
-    background: rgba(247, 108, 65, 0.2) !important;
-}
-
-.choosed_title_blue {
-    background: rgba(101, 171, 242, 0.2) !important;
-}
-
-.choosed_title_darkBlue {
-    background: rgba(95, 128, 170, 0.2) !important;
-}
-
-.choosed_title_gray {
-    background: rgba(187, 187, 187, 0.2) !important;
-}
-
-.choosed_title_lightGray {
-    background: rgba(240, 240, 240, 0.2) !important;
-}
-
-.room_border_green {
-    border: 2px solid rgba(70, 139, 19, 1) !important;
-}
-
-.room_border_orange {
-    border: 2px solid rgba(152, 92, 14, 1) !important;
-}
-
-.room_border_red {
-    border: 2px solid rgba(158, 55, 23, 1) !important;
-}
-
-.room_border_blue {
-    border: 2px solid rgba(20, 100, 181, 1) !important;
-}
-
-.room_border_darkBlue {
-    border: 2px solid rgba(46, 89, 145, 1) !important;
-}
-
-.title_red_color {
-  color: rgba(247, 108, 65, 1) !important;
-}
-.title_orange_color {
-  color: rgba(252, 157, 33, 1) !important;
-}
-
-.fs16 {
-    font-size: 16px;
-}
-
-//自定义表格背景色及边框色
-.customGantt .el-table--border {
-    border: 1px solid rgba(82, 82, 82, 1) !important;
-}
-
-.customGantt .el-table th.is-leaf, .customGantt .el-table td {
-    border-bottom: 1px solid rgba(82, 82, 82, 1);
-}
-
-.customGantt .el-table--border th, .customGantt .el-table--border td {
-    border-right: 1px solid rgba(82, 82, 82, 1);
-}
-
-.customGantt .el-table th {
-    background: rgba(240, 240, 240, 1);
-    color: #333;
-    font-weight: 600;
-    padding: 0;
-}
-
-.customGantt .el-table th > .cell {
-    width: 65px;
-    white-space: normal;
-    line-height: normal;
-}
-
-.customGantt .el-table--border td:first-child .cell {
-    padding-left: 5px;
-    text-overflow: initial;
-}
-//自定义日期控件样式
-.customDateRange {
-    position: relative;
-    .el-date-editor {
-        color: #fff;
-        background: rgba(122, 202, 64, 1);
-        .el-range__close-icon {
-            color: #fff;
-        }
-    }
-    .el-range-separator {
-        color: #fff;
-    }
-    .el-range-input {
-        color: #fff;
-        background: transparent;
-    }
-    .customIcon {
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 6px;
-        color: #fff;
-        font-size: 14px;
-    }
-}
-
 .textRight {
     text-align: right;
-}
-
-body .el-table th.gutter {
-    display: table-cell !important;
-}
-.el-table {
-    th.gutter,
-    colgroup.gutter {
-        display: block !important;
-        width: 8px !important
-    }
 }
 
 // 换行
@@ -542,38 +273,39 @@ body .el-table th.gutter {
       transform: translateY(0);
       text-shadow: 0 0 0px #fff;
     }
-  }
-  // 从头开始渐出 （并未生效 操作动画时）
-  .animation-text {
+}
+// 从头开始渐出 （并未生效 操作动画时）
+.animation-text {
     /* display: inline-block;
     opacity: 0;
     animation: landIn .5s ease-out both; */
-  }
+}
   
   
   
-  @keyframes landIn2 {
+@keyframes landIn2 {
     to {
       opacity: 1;
       transform: scale(1);
     }
-  }
+}
   // 中间开始放大
-  .animation-text-tow {
+.animation-text-tow {
     opacity: 0;
     display: inline-block;
     transform: scale(0);
     animation: landIn2 2s ease-out both;
-  }
-  .fade-away {
+}
+.fade-away {
     animation: fadeAway 1s linear infinite;
-  }
-  @keyframes fadeAway {
+}
+@keyframes fadeAway {
     to {
       opacity: 1;
     }
     from {
       opacity: 0;
     }
-  }
+}
+
 

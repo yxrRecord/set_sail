@@ -3,15 +3,12 @@
     <div class="header-main">
       <div class="header-left">
         <slot name="left"></slot>
-        <h1 class="iconfont yxrduoyuyan logo"></h1>
+        <h1 class="iconfont yxrlunchuan logo"></h1>
       </div>
       <div class="header-right">
-        <!-- <div class="menu-box">
-          
-        </div> -->
-        <div class="menu-item" v-for="item in menuList" :key="item.name">
+        <div class="menu-item pointer" v-for="item in menuList" :key="item.name">
           <span :class="['menu-icon', 'iconfont']" v-if="item.iconfont"></span>
-          <span>
+          <span >
             {{item.name}}
           </span>
         </div>
@@ -29,16 +26,7 @@
     },
     name: "Header",
     data() {
-      return {
-        // menuList: [
-        //   { icon: '1', name: '首页', eName: 'jummHome', hover: false},
-        //   { icon: '1', name: '技能标签', eName: 'jummHome', hover: false},
-        //   { icon: '1', name: '工作经验', eName: 'jummHome', hover: false},
-        //   { icon: '1', name: '项目经历', eName: 'jummHome', hover: false},
-        //   { icon: '1', name: '个人信息', eName: 'jummHome', hover: false},
-        // ]
-        // headerHeight: 0
-      }
+      return {}
     },
     computed: {
       menuList() {
@@ -46,9 +34,7 @@
       }
     },
     mounted() {
-      // console.log(document.getElementById('#home-header'))
-      // this.headerHeight = document.querySelector('#home-header').getClientRects()[0].height
-      // console.log(this.headerHeight, 'this.headerHeight')
+     
     }
   }
 </script>
@@ -70,17 +56,19 @@
     height: 100%;
     margin: 0 auto;
     display: flex;
-    // justify-items: center;
     justify-content: space-between;
   } 
   .header-left {
-    min-width: 20%;
     margin-right: 120px;
+    height: 100%;
+    flex: 1;
     .logo {
-      font-size: 20px;
+      font-size: 26px;
       line-height: 30px;
       padding: 10px 0;
       text-align: center;
+      color: $color-primary;
+      background-color: $color-gray;
     }
   }
   .header-right {
@@ -93,17 +81,12 @@
       line-height: 30px;
       text-align: center;
       font-size: 16px;
+      transition: all .3s;
       &:hover {
         background-color: $color-grayf;
         color: $color-gray3;
       }
     }
-    // .menu-box {
-    //   display: flex;
-    //   font-size: 16px;
-    //   text-align: center;
-      
-    // }
   }
 }
 </style>

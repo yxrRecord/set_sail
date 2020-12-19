@@ -24,7 +24,7 @@
       </div>
       <div class="home-bottom-link pointer" @click="$emit('backTop')">
         <p >
-          <span class="iconfont yxrfanhui"></span>
+          <span class="iconfont yxrfanhui1"></span>
         </p>
       </div>
     </header>  

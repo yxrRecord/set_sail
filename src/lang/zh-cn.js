@@ -7,7 +7,14 @@ let zh = {
       { icon: '1', name: '工作经验', eName: 'jummHome', hover: false},
       { icon: '1', name: '项目经历', eName: 'jummHome', hover: false},
       { icon: '1', name: '个人信息', eName: 'jummHome', hover: false},
-    ]
+    ],
+    info: {
+      username: '尹旭冉',
+      workYear: '2年+',
+      phone: '15638331203',
+      email: '913457727@qq.com',
+      address: '上海'
+    }
   }
 }
 export default zh

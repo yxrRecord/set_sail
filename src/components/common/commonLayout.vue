@@ -6,7 +6,8 @@
     <transition name="fade">
       <div v-show="showBackTop" class="back-top iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
     </transition>
-    <div :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}">
+    <!-- :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}" -->
+    <div style="margin-top: 80px">
       <router-view></router-view>
     </div>
     
@@ -31,7 +32,7 @@ export default {
     HomeBanner
   },
   mounted() {
-    this.containerHeight = Math.floor(document.querySelector('.common-layout-wrapper').getClientRects()[0].height)
+    this.containerHeight = Math.floor(document.querySelector('.common-layout-wrapper').clientHeight)
     document.querySelector('.common-layout-wrapper').addEventListener('scroll', this.onScroll)
     
   },
@@ -46,7 +47,7 @@ export default {
       if (this.containerHeight - scrollTop <= this.headerHeight) {
         this.headerShowValue += 0.1
         this.$nextTick(() => {
-          this.headerHeight = document.querySelector('#home-header').getClientRects()[0].height
+          this.headerHeight = document.querySelector('#home-header').clientHeight
         })
       } else this.headerShowValue = 0
       /* 
@@ -78,7 +79,7 @@ export default {
             document.querySelector('.common-layout-wrapper').scrollTop = scrollNumber
           }
         }
-      },  10)
+      }, 10)
     }
 
     
