@@ -1,17 +1,14 @@
 <template>
 <!-- @scroll="onScroll" -->
-  <div id="common-layout-wrapper">
-    <div class="common-layout-wrapper" >
-      <HomeBanner @backTop="backTop" />
-      <Header :showValue="headerShowValue"  />
-      <transition name="fade">
-        <div v-show="showBackTop" class="back-top iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
-      </transition>
-      <!-- :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}" -->
-      <div style="margin-top: 80px">
-        <router-view></router-view>
-      </div>
-      
+  <div class="common-layout-wrapper" >
+    <HomeBanner @backTop="backTop" />
+    <Header :showValue="headerShowValue"  />
+    <transition name="fade">
+      <div v-show="showBackTop" class="back-top pointer iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
+    </transition>
+    <!-- :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}" -->
+    <div style="margin-top: 80px">
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -49,13 +46,13 @@ export default {
     
   },
   methods: {
-    onScroll(e) {
-      // console.log(e.target.scrollTop, this.containerHeight, this.headerHeight, 'eeeeeee')
-      console.log(this.containerHeight, 'this.containerHeight')
+    onScroll() {
+      console.log(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop, this.containerHeight, this.headerHeight, 'eeeeeee')
+      // console.log(this.containerHeight, 'this.containerHeight')
       /* 
         控制 header 组件显示与透明度
       */
-      let scrollTop = e.target.scrollTop
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       if (this.containerHeight - scrollTop <= this.headerHeight) {
         this.headerShowValue += 0.1
         this.$nextTick(() => {
@@ -70,25 +67,25 @@ export default {
       } else this.showBackTop = false
     },
     backTop() {
-      let scrollNumber = document.querySelector('.common-layout-wrapper').scrollTop
+      let scrollNumber = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       let offset = Math.abs(Math.floor((scrollNumber - this.containerHeight) / 20))
       // console.log(offset, 'offset')
       this.scrollTime = setInterval(() => {
         if (scrollNumber - this.containerHeight < 0) {
           scrollNumber += offset
-          document.querySelector('.common-layout-wrapper').scrollTop = scrollNumber
+          window.scrollTo(0, scrollNumber)
           console.log(scrollNumber, this.containerHeight, scrollNumber >= this.containerHeight)
           if (scrollNumber >= this.containerHeight) {
-            document.querySelector('.common-layout-wrapper').scrollTop = this.containerHeight + 1
+            window.scrollTo(0, this.containerHeight + 1)
             clearInterval(this.scrollTime)
           }
         }  else {
           if (scrollNumber <= this.containerHeight) {
             clearInterval(this.scrollTime)
-            document.querySelector('.common-layout-wrapper').scrollTop = this.containerHeight + 1
+            window.scrollTo(0, this.containerHeight + 1)
           } else {
             scrollNumber -= offset
-            document.querySelector('.common-layout-wrapper').scrollTop = scrollNumber
+            window.scrollTo(0, scrollNumber)
           }
         }
       }, 10)
