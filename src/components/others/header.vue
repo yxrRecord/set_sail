@@ -49,6 +49,8 @@
   // background-color: $color-primary;
   background-image: url('../../assets/images/navGif.gif');
   background-size: 50%;
+  box-shadow: 0 0 10px $color-hover-shadow;
+  z-index: 999;
 
   
   .header-main {
@@ -68,7 +70,7 @@
       padding: 10px 0;
       text-align: center;
       color: $color-primary;
-      background-color: $color-gray;
+      // background-color: $color-gray;
     }
   }
   .header-right {

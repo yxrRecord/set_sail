@@ -17,6 +17,14 @@ let routes = [
           title: '首页'
         },
         component: () => import('@/pages/home')
+      },
+      {
+        path: '/transition',
+        name: 'Transition',
+        mate: {
+          title: '过渡'
+        },
+        component: () => import('@/pages/home/transition')
       }
     ]
   },

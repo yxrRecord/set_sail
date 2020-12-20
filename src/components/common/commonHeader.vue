@@ -99,12 +99,6 @@
                 formControl: {
                     visible: false
                 },
-                // dropData: [
-                //     {icon: "icon iconfont icon-phone", text: "联系方式", event: "contact"},
-                //     {icon: "el-icon-refresh", text: "清除缓存", event: "refreshLocal"},
-                //     {icon: "icon iconfont icon-baoming", text: "修改密码", event: "edit"},
-                //     {icon: "icon iconfont icon-homeclose", text: "退出账号", event: "logOut"},
-                // ],
             }
         },
         watch: {
@@ -440,19 +434,6 @@
                             width: 25px;
                             height: 25px;
                             border-radius: 50%;
-                        }
-                        .el-dropdown-link {
-                            color: #fff;
-                            
-                            .userImg {
-                                width: 25px;
-                                height: 25px;
-                                border-radius: 50%;
-                            }
-
-                            .el-button {
-                                color: #fff;
-                            }
                         }
                     }
 

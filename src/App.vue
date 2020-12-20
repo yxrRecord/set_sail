@@ -7,8 +7,20 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
+  watch: {
+    $route(to, from) {
+      this.$nextTick(() => {
+        // new WOW({ mobile: true, live: true, scrollContainer: '.common-layout-wrapper' }).init()
+        // new WOW({
+        //   live: true,
+        // }).init()
+        // new this.$wow.WOW.init()
+      })
+    }
+  },
   mounted() {
     document.querySelectorAll('title')[0].innerHTML = this.$store.state.appInfo.appName
   },

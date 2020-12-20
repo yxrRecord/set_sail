@@ -1,5 +1,5 @@
 <template>
-   <header class="banner">
+   <header id="home-banner" class="banner">
      <!--  -->
       <section class="banner-box" :style="`background-image: url(${currentImg})`">
         <!-- <img :src="bannerList[0]" alt=""> -->

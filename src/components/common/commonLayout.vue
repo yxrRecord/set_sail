@@ -1,16 +1,18 @@
 <template>
 <!-- @scroll="onScroll" -->
-  <div class="common-layout-wrapper" >
-    <HomeBanner @backTop="backTop" />
-    <Header :showValue="headerShowValue"  />
-    <transition name="fade">
-      <div v-show="showBackTop" class="back-top iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
-    </transition>
-    <!-- :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}" -->
-    <div style="margin-top: 80px">
-      <router-view></router-view>
+  <div id="common-layout-wrapper">
+    <div class="common-layout-wrapper" >
+      <HomeBanner @backTop="backTop" />
+      <Header :showValue="headerShowValue"  />
+      <transition name="fade">
+        <div v-show="showBackTop" class="back-top iconfont yxricon-test" :class="{'an-back-top': showBackTop}" key="back-top" @click="backTop"></div>
+      </transition>
+      <!-- :style="{ marginTop:  headerShowValue > 0 ? `${headerHeight}px` : '0'}" -->
+      <div style="margin-top: 80px">
+        <router-view></router-view>
+      </div>
+      
     </div>
-    
   </div>
 </template>
 <script>
@@ -32,8 +34,18 @@ export default {
     HomeBanner
   },
   mounted() {
-    this.containerHeight = Math.floor(document.querySelector('.common-layout-wrapper').clientHeight)
-    document.querySelector('.common-layout-wrapper').addEventListener('scroll', this.onScroll)
+    this.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
+    // document.querySelector('.common-layout-wrapper').addEventListener('scroll', this.onScroll)
+    window.addEventListener('scroll',this.onScroll)
+
+    this.$nextTick(() => {
+      new this.$wow.WOW({
+        // mobile: true,
+        live: true,
+        // scrollContainer: '.common-layout-wrapper'
+      }).init()
+     
+    })
     
   },
   methods: {
@@ -81,8 +93,6 @@ export default {
         }
       }, 10)
     }
-
-    
   }
 }
 </script>
@@ -98,11 +108,17 @@ export default {
     transform: translateY(60px);
     // bottom: 80px;
 }
+// #common-layout-wrapper {
+//   height: 100vh;
+//   width: 100vw;
+//   overflow-y: auto;
+// }
+
 .common-layout-wrapper {
   user-select: none;
-  height: 100vh;
-  width: 100vw;
-  overflow-y: scroll;
+  // height: 100vh;
+  // width: 100vw;
+  // overflow-y: scroll;
   .back-top {
     position: fixed;
     z-index: 100;

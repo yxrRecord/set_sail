@@ -22,6 +22,24 @@ import ElementUI from 'element-ui'
 import './assets/theme/elementUI.scss'
 Vue.use(ElementUI, { size: 'mini' })
 
+// 引入动画库
+import 'animate.css'
+
+import WOW from 'wowjs'
+Vue.prototype.$wow = WOW
+/* 配置方法
+var wow = new WOW({
+    boxClass: 'wow',
+    animateClass: 'animated',
+    offset: 0,
+    mobile: true,
+    live: true
+});
+boxClass	字符串	‘wow’	需要执行动画的元素的 class
+animateClass	字符串	‘animated’	animation.css 动画的 class
+offset	整数	0	距离可视区域多少开始执行动画
+mobile	布尔值	true	是否在移动设备上执行动画
+live	布尔值	true	异步加载的内容是否有效 */
 
 
 Vue.config.productionTip = false

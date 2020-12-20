@@ -1,9 +1,8 @@
 <template>
-<!-- {{$t('home').title}} -->
   <div id="home">
     <div class="home-contariner">
       <div class="contariner-left">
-        <div class="article-item hover-shadow contariner-box" v-for="item in 30" :key="item">
+        <div class="article-item hover-shadow contariner-box wow slideInLeft" v-for="item in 30" :key="item" data-wow-duration="1s" :data-wow-delay="`${item + 5}s`">
           <p>{{item}}</p>
           <p>{{item}}</p>
           <p>{{item}}</p>
@@ -14,7 +13,7 @@
         </div>
       </div>
       <div class="contariner-right">
-        <div class="info-my hover-shadow contariner-box">
+        <div class="info-my hover-shadow contariner-box wow slideInRight" data-wow-duration="2s" data-wow-delay="5s">
           <img class="cover" :src="headPortrait" alt="头像">
           <p class="username">{{$t('home').info.username}}</p>
           <div class="essential-info">
@@ -54,7 +53,15 @@ export default {
     }
   },
   mounted() {
-   
+    // this.$nextTick(() => {
+    //   // new WOW({ mobile: true, live: true, scrollContainer: '.common-layout-wrapper' }).init()
+    //   new this.$wow.WOW({
+    //     mobile: true,
+    //     live: true,
+    //     scrollContainer: '.common-layout-wrapper'
+    //   }).init()
+     
+    // })
   },
   methods: {
     homeScroll() {
@@ -75,7 +82,7 @@ export default {
   }
   .contariner-box {
     border-radius: 10px;
-    padding: 15px;
+    padding: 20px;
     background: $color-bgf;
   }
 
@@ -83,6 +90,7 @@ export default {
     width: 70%;
     .article-item {
       margin-bottom: 15px;
+      // display: inline-block;
     }
   }
 
