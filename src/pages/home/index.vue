@@ -2,7 +2,7 @@
   <div id="home">
     <div class="home-contariner">
       <div class="contariner-left">
-        <div class="article-item hover-shadow contariner-box wow slideInLeft" v-for="item in 30" :key="item" data-wow-duration="1s" :data-wow-delay="`${item + 5}s`">
+        <div class="article-item hover-shadow contariner-box wow bounceInLeft" v-for="item in 30" :key="item" data-wow-duration="1s" :data-wow-delay="`0.5s`">
           <p>{{item}}</p>
           <p>{{item}}</p>
           <p>{{item}}</p>
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="contariner-right">
-        <div class="info-my hover-shadow contariner-box wow slideInRight" data-wow-duration="2s" data-wow-delay="5s">
+        <div class="info-my hover-shadow contariner-box wow bounceInRight" data-wow-duration="1s" data-wow-delay="1s">
           <img class="cover" :src="headPortrait" alt="头像">
           <p class="username">{{$t('home').info.username}}</p>
           <div class="essential-info">

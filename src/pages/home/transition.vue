@@ -67,7 +67,6 @@ export default {
     },
     //监听滚轮方法
     handleScroll(val) {
-      debugger
       let _this = this;
       let scrollTop =
         window.pageYOffset ||

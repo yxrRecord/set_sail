@@ -18,9 +18,9 @@ Vue.prototype.$moment = moment
 moment.locale('zh-cn')
 
 // 引入ui 组件库
-import ElementUI from 'element-ui'
-import './assets/theme/elementUI.scss'
-Vue.use(ElementUI, { size: 'mini' })
+// import ElementUI from 'element-ui'
+// import './assets/theme/elementUI.scss'
+// Vue.use(ElementUI, { size: 'mini' })
 
 // 引入动画库
 import 'animate.css'
