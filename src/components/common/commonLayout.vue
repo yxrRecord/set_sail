@@ -53,6 +53,8 @@ export default {
         控制 header 组件显示与透明度
       */
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      this.$store.dispatch('setWindowScrollTop', scrollTop)
+      console.log(this.$store.getters.windowScrollTop, '111111111')
       if (this.containerHeight - scrollTop <= this.headerHeight) {
         this.headerShowValue += 0.1
         this.$nextTick(() => {
