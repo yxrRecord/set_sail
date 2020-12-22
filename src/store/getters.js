@@ -8,7 +8,7 @@ const getters = {
   // },
   showBanner: state => state.app.showBanner,
   
-  // showNavBar: state => {
+  // showNavBar: state => { 采用这种方式，computed 计算属性无法实施更新
   //   if (sessionStorage.getItem(`${state.app.prefix}showNavBar`)) {
   //     return sessionStorage.getItem(`${state.app.prefix}showNavBar`)
   //   } else return state.app.showNavBar
