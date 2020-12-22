@@ -22,7 +22,7 @@
           <span class="jt iconfont yxrjiantou"></span></div>
         </div> -->
       </div>
-      <div class="home-bottom-link pointer" @click="$emit('backTop')">
+      <div class="home-bottom-link pointer" @click="$emit('backTop', 'bottom')">
         <p >
           <span class="iconfont yxrfanhui1"></span>
         </p>

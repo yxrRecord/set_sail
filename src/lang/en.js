@@ -2,12 +2,11 @@ let en = {
   home: {
     title: 'YXR Sail and sail',
     menuList: [
-      { icon: '1', name: 'Home', eName: 'jummHome', hover: false},
-      { icon: '1', name: 'Tags', eName: 'jummHome', hover: false},
-      // Experience
-      { icon: '1', name: 'Work', eName: 'jummHome', hover: false},
-      { icon: '1', name: 'Project', eName: 'jummHome', hover: false},
-      { icon: '1', name: 'About', eName: 'jummHome', hover: false},
+      { icon: '1', name: 'Home', eName: 'toHome', hover: false, url: 'home'},
+      { icon: '1', name: 'Tags', eName: 'toTahs', hover: false, url: 'skill'},
+      { icon: '1', name: 'Work', eName: 'toWork', hover: false, url: 'work'},
+      { icon: '1', name: 'Project', eName: 'toProject', hover: false, url: 'project'},
+      { icon: '1', name: 'About', eName: 'toAbout', hover: false, url: 'about'},
     ],
     info: {
       username: 'YXR',

@@ -1,5 +1,8 @@
 <template>
   <div id="home">
+    <div class="back-img">
+      
+    </div>
     <div class="home-contariner">
       <div class="contariner-left">
         <div class="article-item hover-shadow contariner-box wow bounceInLeft" v-for="item in 30" :key="item" data-wow-duration="1s" :data-wow-delay="`0.1s`">
@@ -47,7 +50,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'home',
   data() {
     return {
       headPortrait: require('../../assets/images/headPortrait.jpg')
@@ -77,14 +80,32 @@ export default {
   width: 65%;
   margin: 0 auto;
   padding: 20px;
+  .back-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('../../assets/images/homebg.svg') 50%/cover no-repeat;
+    z-index: -1;
+  }
   .home-contariner {
     display: flex;
     justify-content: space-between;
   }
   .contariner-box {
+    position: relative;
     border-radius: 10px;
     padding: 20px;
-    background: $color-bgf;
+    // background: $color-bgf;
+    &::after {
+      width: 100%;
+      left: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      filter: blur(20px);
+    }
   }
 
   .contariner-left {
