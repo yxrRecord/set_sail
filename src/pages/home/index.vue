@@ -1,18 +1,33 @@
 <template>
   <div id="home">
-    <div class="back-img">
-      
-    </div>
+    <div class="back-img"></div>
     <div class="home-contariner">
       <div class="contariner-left">
         <div class="article-item hover-shadow contariner-box wow bounceInLeft" v-for="item in 30" :key="item" data-wow-duration="1s" :data-wow-delay="`0.1s`">
-          <p>{{item}}</p>
-          <p>{{item}}</p>
-          <p>{{item}}</p>
-          <p>{{item}}</p>
-          <p>{{item}}</p>
-          <p>{{item}}</p>
-          <p>{{item}}</p>
+          <p>Canvas 的默认宽高是 width: 300 height: 150 可以通过属性的方式设置,也可以在style样式中直接设置,但是这两种设置的方式显示的效果是不一样的,下面我们看下有哪些不一样。&lt;br&gt;</p>
+          <p>直接加在属性&lt;br&gt;</p>
+          <p>###方法一<br />```<br />&lt;canvas id="canvas" width="500" height="300" style="border:1px solid #d3d3d3;"&gt;&lt;/canvas&gt;</p>
+          <p>&lt;script&gt;</p>
+          <p>&nbsp; &nbsp; let canvas = document.querySelectorAll("#canvas")[0];</p>
+          <p>&nbsp; &nbsp; let ctx = canvas.getContext('2d');</p>
+          <p>&nbsp; &nbsp; ctx.moveTo(0, 0);</p>
+          <p>&nbsp; &nbsp; ctx.lineTo(200, 150);</p>
+          <p>&nbsp; &nbsp; ctx.stroke();</p>
+          <p>&lt;/script&gt;<br />```</p>
+          <p>显示效果如图所示:</p>
+          <p>![image](https://upload-images.jianshu.io/upload_images/14547343-5e4639cbde80b49b?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</p>
+          <p>也可以这样加</p>
+          <p>### 方法二<br />```<br />&nbsp; &nbsp;JavaScript</p>
+          <p>&lt;canvas id="canvas" style="border:1px solid #d3d3d3;"&gt;&lt;/canvas&gt;</p>
+          <p>&lt;script&gt;</p>
+          <p>&nbsp; &nbsp; let canvas = document.querySelectorAll("#canvas")[0];</p>
+          <p>&nbsp; &nbsp; canvas.width = "500";</p>
+          <p>&nbsp; &nbsp; canvas.height = "300";</p>
+          <p>&nbsp; &nbsp; let ctx = canvas.getContext('2d');</p>
+          <p>&nbsp; &nbsp; ctx.moveTo(0, 0);</p>
+          <p>&nbsp; &nbsp; ctx.lineTo(200, 150);</p>
+          <p>&nbsp; &nbsp; ctx.stroke();</p>
+          <p>&lt;/script&gt;<br />```<br />![image](https://upload-images.jianshu.io/upload_images/14547343-766d70c13afb9f31?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</p>
         </div>
       </div>
       <div class="contariner-right">
@@ -57,15 +72,6 @@ export default {
     }
   },
   mounted() {
-    // this.$nextTick(() => {
-    //   // new WOW({ mobile: true, live: true, scrollContainer: '.common-layout-wrapper' }).init()
-    //   new this.$wow.WOW({
-    //     mobile: true,
-    //     live: true,
-    //     scrollContainer: '.common-layout-wrapper'
-    //   }).init()
-     
-    // })
   },
   methods: {
     homeScroll() {
@@ -99,14 +105,16 @@ export default {
     padding: 20px;
     // background: $color-bgf;
     &::after {
+      content: "";
       width: 100%;
-      left: 100%;
+      height: 100%;
       position: absolute;
       top: 0;
       left: 0;
       filter: blur(20px);
     }
   }
+
 
   .contariner-left {
     width: 70%;

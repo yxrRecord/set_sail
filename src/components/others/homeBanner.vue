@@ -47,7 +47,7 @@
         currentIndex: 0,
         type: 1,
         timer: null,
-        currentImg: require('@/assets/images/banner1.jpg'),
+        currentImg: require('../../../public/image/banner1.jpg'),
         bannerList: [
           // require('@/assets/images/banner1.jpg'),
           // require('@/assets/images/banner2.jpg'),
@@ -56,7 +56,7 @@
           // require('@/assets/images/banner5.jpg'),
           // require('@/assets/images/banner1.jpg'),
 
-          '../../assets/images/banner1.jpg',
+          // '../../assets/images/banner1.jpg',
         ],
         bannerTime: null,
         currentBannerIndex: 0

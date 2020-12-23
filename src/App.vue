@@ -13,11 +13,11 @@ export default {
   watch: {
     $route(to, from) {
       this.$nextTick(() => {
-        // new WOW({ mobile: true, live: true, scrollContainer: '.common-layout-wrapper' }).init()
-        // new WOW({
-        //   live: true,
-        // }).init()
-        // new this.$wow.WOW.init()
+        new this.$wow.WOW({
+          // mobile: true,
+          live: true,
+          // scrollContainer: '.common-layout-wrapper'
+        }).init()
       })
     }
   },

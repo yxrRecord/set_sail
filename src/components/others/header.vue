@@ -7,7 +7,7 @@
       </div>
       <div class="header-right">
         <ul class="header-right-con">
-          <li class="menu-item pointer" v-for="(item, index) in menuList" :key="item.name" @click="jumpPage(item)" :class="[`menu-item-${index + 1}`]">
+          <li class="menu-item pointer" v-for="(item, index) in menuList" :key="item.name" @click="jumpPage(item)" :class="[`menu-item-${index + 1}`, routeName === item.url ? 'currentPage' : '']">
             <span :class="['menu-icon', 'iconfont']" v-if="item.iconfont"></span>
             <span >
               {{item.name}}
@@ -21,16 +21,12 @@
 </template>
 <script>
   export default {
-    props: {
-      // showValue: {
-      //   type: Boolean,
-      //   default: false
-      // },
-    },
+    props: {},
     name: "Header",
     data() {
       return {
-        routeNameList: ['skill', 'work', 'project', 'about']
+        routeNameList: ['skill', 'work', 'project', 'about'],
+        routeName: 'home'
       }
     },
     computed: {
@@ -42,6 +38,8 @@
       }
     },
     mounted() {
+      sessionStorage.setItem('currentRoute', this.$route.name)
+      this.routeName = this.$route.name
       console.log(this.$route.name, 'this.$route.namethis.$route.namethis.$route.name')
       this.$store.dispatch('setShowBanner', !this.routeNameList.includes(this.$route.name))
       this.$store.dispatch('setShowNavBar', this.routeNameList.includes(this.$route.name))
@@ -49,6 +47,8 @@
     methods: {
       jumpPage(item) {
         if (this.$route.name !== item.name) {
+          sessionStorage.setItem('currentRoute', item.url)
+          this.routeName = item.url
           this.$store.dispatch('setShowBanner', !this.routeNameList.includes(item.url))
           this.$store.dispatch('setShowNavBar', false)
           this.$router.push({
@@ -72,7 +72,7 @@ $offsetW: 120px;
   width: 100%;
   background-color: $color-gray;
   // background-color: $color-primary;
-  background-image: url('../../assets/images/navGif.gif');
+  // background-image: url('../../assets/images/navGif.gif');
   background-size: 50%;
   box-shadow: 0 0 10px $color-hover-shadow;
   z-index: 999;
@@ -145,10 +145,23 @@ $offsetW: 120px;
       text-align: center;
       font-size: 16px;
       transition: all .3s;
-      // &:hover {
-      //   background-color: $color-grayf;
-      //   color: $color-gray3;
-      // }
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    .currentPage {
+      position: relative;
+      color: $color-primary;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: $color-primary;
+      }
     }
 
     .menu-item:nth-child(1):hover~.dot {

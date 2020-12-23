@@ -70,13 +70,6 @@ export default {
       // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
 
       window.addEventListener('scroll',this.onScroll)
-      this.$nextTick(() => {
-        new this.$wow.WOW({
-          // mobile: true,
-          live: true,
-          // scrollContainer: '.common-layout-wrapper'
-        }).init()
-      })
     },
     onScroll() {
       this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0

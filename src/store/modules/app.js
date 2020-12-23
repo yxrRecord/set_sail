@@ -6,7 +6,7 @@ const state = {
   },
   windowScrollTop: 0,
   showBanner: true,
-  showNavBar: false
+  showNavBar: false,
 }
 const mutations = {
   SET_APP_INFO(state, data) {
