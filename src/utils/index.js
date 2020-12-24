@@ -65,21 +65,21 @@ util.install = function (Vue) {
         console.log('ajaxOptions+++++')
         console.log(ajaxOptions)
         if (showLoading) {
-            store.commit("updatePageLoading", ++store.state.pageLoading)
+            // store.commit("updatePageLoading", ++store.state.pageLoading)
         }
         Vue.prototype.$http(ajaxOptions).then((response)=> {
             console.log("请求返回++++++++++" + ajaxOptions.url)
             console.log('response++++')
             console.log(response)
             if (showLoading)
-                store.commit("updatePageLoading", --store.state.pageLoading)
+                // store.commit("updatePageLoading", --store.state.pageLoading)
             if (callback)
                 callback(response.data)
         }).catch((error)=> {
             console.log('error+++++')
             console.log(error)
             if (showLoading)
-                store.commit("updatePageLoading", --store.state.pageLoading)
+                // store.commit("updatePageLoading", --store.state.pageLoading)
             return false
         })
     }

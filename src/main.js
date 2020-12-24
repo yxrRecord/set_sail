@@ -41,8 +41,12 @@ offset	整数	0	距离可视区域多少开始执行动画
 mobile	布尔值	true	是否在移动设备上执行动画
 live	布尔值	true	异步加载的内容是否有效 */
 
+// 引入swiper 样式
+import 'swiper/dist/css/swiper.css';
 
 Vue.config.productionTip = false
+// 代理路径
+Vue.prototype.$baseUrl = process.env.NODE_ENV === 'development' ? '/dev/' : '/'
 
 const commonComponents = require.context('./components/common', false, /\.vue$/)
 const customComponents = require.context('./components/custom', false, /\.vue$/)

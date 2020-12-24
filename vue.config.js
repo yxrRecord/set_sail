@@ -34,14 +34,9 @@ module.exports = {
     open: true,         //配置自动启动浏览器
     proxy: {
       '/dev': {
-        target:'http://119.36.55.50:10086',
-        // target:'http://119.36.55.50:10099/',
-        pathRewrite: {
-          '^/dev': '/'
-        },        
-        ws: true,  // 允许跨域
-        changeOrigin: true,//允许跨域
-        secure: false,      
+          target: 'http://a2dc.cn:8080',
+          pathRewrite: {'^/dev': ''},
+          changeOrigin: true,
       },
     },
   },

@@ -132,6 +132,7 @@ export default {
   }
 
   .work-experience {
+    position: relative;
     h2 {
       font-size: 18px;
       letter-spacing: 1px;
@@ -169,14 +170,45 @@ export default {
 
   .line-left,
   .line-right  {
-
+    &::after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      width: 0px;
+      height: 0px;
+      z-index: -2;
+      transition: all .3s;
+    }
   }
   .line-left {
+    left: 0;
+    &::after {
+      right: 0px;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 20px solid #fff;
+    }
 
+    &:hover::after {
+      border-left: 20px solid #ccc;
+      right: -20px;
+      z-index: 1;
+    }
   }
 
   .line-right {
     left: 50%;
+    &::after {
+      left: 0px;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-right: 20px solid  #fff;
+    }
+    &:hover::after {
+      border-right: 20px solid #ccc;
+      left: -20px;
+      z-index: 1;
+    }
   }
   
 }
