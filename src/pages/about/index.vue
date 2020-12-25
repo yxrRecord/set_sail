@@ -40,7 +40,7 @@
 
       </div>
       <div class="aihao aihao-swiper-box">
-        <div v-for="item in "></div>
+        <!-- <div v-for="item in></div> -->
       </div>
       <div class="aihao"></div>
     </section>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import Swiper from 'swiper';
+// import Swiper from 'swiper';
 export default {
   name: 'about',
   data() {
@@ -182,19 +182,19 @@ export default {
       ]
     }, 500)
 
-    new Swiper('.aihao-swiper-box', {
-      slidesPerView: "auto",//每页显示数量，auto为自动填充，3为每页显示3块
-      centeredSlides: true,//轮播图自动居中
-      spaceBetween: 20,//轮播图左右之间的间距，配合css样式中的width实现效果
-      initialSlide: 1, //轮播图初始下标位置
-      //方法事件
-      on: {
-       //回调函数，swiper从当前slide开始过渡到另一个slide时执行
-        slideChangeTransitionStart: function() {
-           console.log('点击了')
-        }
-      }
-    })
+    // new Swiper('.aihao-swiper-box', {
+    //   slidesPerView: "auto",//每页显示数量，auto为自动填充，3为每页显示3块
+    //   centeredSlides: true,//轮播图自动居中
+    //   spaceBetween: 20,//轮播图左右之间的间距，配合css样式中的width实现效果
+    //   initialSlide: 1, //轮播图初始下标位置
+    //   //方法事件
+    //   on: {
+    //    //回调函数，swiper从当前slide开始过渡到另一个slide时执行
+    //     slideChangeTransitionStart: function() {
+    //        console.log('点击了')
+    //     }
+    //   }
+    // })
   },
   methods: {
     linkTo({ url }) {

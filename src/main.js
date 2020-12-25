@@ -42,7 +42,7 @@ mobile	布尔值	true	是否在移动设备上执行动画
 live	布尔值	true	异步加载的内容是否有效 */
 
 // 引入swiper 样式
-import 'swiper/dist/css/swiper.css';
+// import 'swiper/dist/css/swiper.css';
 
 Vue.config.productionTip = false
 // 代理路径
