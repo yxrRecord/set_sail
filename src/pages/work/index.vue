@@ -70,7 +70,7 @@ export default {
 }
 </script>
 
-<style lang="scss" type="text/scss" scoped>
+<style lang="scss" scoped>
 .time-line {
   position: fixed;
   background-color: #000;
@@ -80,14 +80,6 @@ export default {
   left: 50%;
   z-index: 10;
   animation: timeLine 1.5s ease-in forwards;
-}
-@keyframes timeLine {
-  form {
-    height: 0px;
-  }
-  to {
-    height: 100vh;
-  }
 }
 #work {
   width: 65%;

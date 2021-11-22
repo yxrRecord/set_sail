@@ -283,6 +283,14 @@ input:focus {
       transform: scale(1);
     }
 }
+@keyframes timeLine {
+    form {
+      height: 0px;
+    }
+    to {
+      height: 100vh;
+    }
+}
   // 中间开始放大
 .animation-text-tow {
     opacity: 0;

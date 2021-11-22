@@ -107,7 +107,6 @@
       addText(time = 200) {
         let text = this.text[this.currentIndex].split('');
         let textLen = text.length,
-            msgLen = this.showMessage.length,
             tempText = []
         let index = 0
         
@@ -126,8 +125,7 @@
       },
       removeText(time = 100) {
         let text = this.text[this.currentIndex].split('');
-        let textLen = text.length,
-            msgLen = this.showMessage.length,
+        let msgLen = this.showMessage.length,
             tempText = text
         let index = msgLen
 
@@ -177,13 +175,6 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     // background-image: url('../../assets/images/banner1.jpg');
-    
-  //   .binner-item {
-  //     width: 100vw;
-  //     height: 100%;
-  //     transition: all 1s;
-  //   }
-  //   .current-binner-item { }
   }
   /* canvas */
   .canvas-banner {
