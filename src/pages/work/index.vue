@@ -81,6 +81,14 @@ export default {
   z-index: 10;
   animation: timeLine 1.5s ease-in forwards;
 }
+/* @keyframes timeLine {
+    form {
+      height: 0px;
+    }
+    to {
+      height: 100vh;
+    }
+} */
 #work {
   width: 65%;
   margin: 0 auto;

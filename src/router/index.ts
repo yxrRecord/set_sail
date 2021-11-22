@@ -1,14 +1,13 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 
-let routes = [
+const routes = [
   {
     path: '/',
     name: 'layout',
-    component: () => import('@/components/common/commonLayout'),
     redirect: {
       name: "home"
     },
+    component: () => import('@components/common/Layout.vue'),
     children: [
       {
         path: '/home',
@@ -17,7 +16,7 @@ let routes = [
           title: '首页',
           showBanner: true
         },
-        component: () => import('@/pages/home')
+        component: () => import('@pages/home/index.vue')
       },
       {
         path: '/transition',
@@ -26,7 +25,7 @@ let routes = [
           title: '过渡',
           showBanner: true
         },
-        component: () => import('@/pages/home/transition')
+        component: () => import('@pages/home/transition.vue')
       },
       {
         path: '/skill',
@@ -35,7 +34,7 @@ let routes = [
           title: '技能',
           showBanner: false
         },
-        component: () => import('@/pages/skill')
+        component: () => import('@pages/skill/index.vue')
       },
       {
         path: '/work',
@@ -44,7 +43,7 @@ let routes = [
           title: '工作',
           showBanner: false
         },
-        component: () => import('@/pages/work')
+        component: () => import('@pages/work/index.vue')
       },
       {
         path: '/project',
@@ -53,7 +52,7 @@ let routes = [
           title: '项目',
           showBanner: false
         },
-        component: () => import('@/pages/project')
+        component: () => import('@pages/project/index.vue')
       },
       {
         path: '/about',
@@ -62,21 +61,21 @@ let routes = [
           title: '关于我',
           showBanner: false
         },
-        component: () => import('@/pages/about')
+        component: () => import('@pages/about/index.vue')
       },
     ]
   },
   {
-    path: '*',
+    path: '/',
     name: '404',
-    component: () => import('@/pages/404')
+    component: () => import('@pages/404/index.vue')
   }
-]
+];
 
-Vue.use(Router)
-
-let router = new Router({
-  routes,
-  // mode: 'hash',
+// 在 Vue-router新版本中，需要使用createRouter来创建路由
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes
 })
-export default router
+
+export default router;

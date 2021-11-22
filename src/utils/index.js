@@ -61,23 +61,15 @@ util.install = function (Vue) {
             delete ajaxOptions.headers
             delete ajaxOptions.responseType
         }
-        console.log("请求开始++++++++++" + ajaxOptions.url)
-        console.log('ajaxOptions+++++')
-        console.log(ajaxOptions)
         if (showLoading) {
             // store.commit("updatePageLoading", ++store.state.pageLoading)
         }
         Vue.prototype.$http(ajaxOptions).then((response)=> {
-            console.log("请求返回++++++++++" + ajaxOptions.url)
-            console.log('response++++')
-            console.log(response)
             if (showLoading)
                 // store.commit("updatePageLoading", --store.state.pageLoading)
             if (callback)
                 callback(response.data)
         }).catch((error)=> {
-            console.log('error+++++')
-            console.log(error)
             if (showLoading)
                 // store.commit("updatePageLoading", --store.state.pageLoading)
             return false
@@ -102,10 +94,8 @@ util.install = function (Vue) {
     }
 
     Vue.prototype.$getUserMenu = async (current) => {
-      console.log(current, 'currentcurrentcurrent')
       // 获取缓存的菜单
       let menu = await store.dispatch('menu/getMenu')
-      console.log(menu, 'menu/getMenu')
       // 取出name
       let names = Vue.prototype.$arrayRepact(menu.map(item => item.name))
       // 判断是否含有菜单
@@ -121,8 +111,6 @@ util.install = function (Vue) {
         return item2.count - item1.count
       })
       // 更新数据
-      console.log(menu, 'menu/getMenu22222')
-
       store.dispatch('menu/setMenu', menu)
     }
 
@@ -255,20 +243,15 @@ util.install = function (Vue) {
             departCode: (value) => {
                 if (value === "" || value === null)
                     return true
-                // |(\d{3}\.\d{3})|(\d{3}\.\d{3}\.\d{3})
-                // const reg = /\d{3}[\.]?\d{3}[\.]?\d{3}/ //
                 const reg = /^\d{3}$/
                 let result = true
                 let arr = value.split('.')
-                console.log(arr)
                 arr.forEach(item => {
-                    console.log(item.length)
                     if (item.length != 3) {
                         result = false
                         return false
                     } else {
                         let result2 = reg.test(item)
-                        console.log(result)
                         if (!result2) {
                             result = false
                         }
@@ -281,7 +264,6 @@ util.install = function (Vue) {
                     return true
                 const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
                 const result = reg.test(value)
-                console.log(result)
                 return result
             },
             identityNums: (value) => {
@@ -496,7 +478,6 @@ util.install = function (Vue) {
                     let showText = ruleName + ' ' + ruleKey + ' result'
                     if (parentName)
                         showText = parentName + ' ' + showText
-                    console.log(showText, result)
                     /*控制台输出提示结束*/
                     if (!result) {
                         rule.valid = false
@@ -584,7 +565,6 @@ util.install = function (Vue) {
         ajaxOptions.url = ajaxOptions.url.substring(0, ajaxOptions.url.length - 1)
         if (encode)
             ajaxOptions.url = encodeURI(ajaxOptions.url)
-        console.log(ajaxOptions.url)
         // window.location.href = ajaxOptions.url
         window.open(ajaxOptions.url, '_blank')
     }
@@ -895,11 +875,10 @@ util.install = function (Vue) {
             }
         }
     })
-    // console.log(spanArr, 'spanArrspanArrspanArr')
     return spanArr
   }
 
-  Vue.prototype.$textAnimate = (dom, time=0.5) => {
+  Vue.prototype.$setTextAnimate = (dom, time=0.5) => {
     if (!dom) {
         return
     }
@@ -917,7 +896,7 @@ util.install = function (Vue) {
     })
   }
   // 从中间开始
-  Vue.prototype.$textAnimateTwo = (dom, time=0.5) => {
+  Vue.prototype.$setTextAnimateTwo = (dom, time=0.5) => {
     if (!dom) {
         return
     }

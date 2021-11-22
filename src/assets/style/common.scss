@@ -237,7 +237,7 @@ input:focus {
 }
 
 // 换行
-.wordWrap {
+.word-wrap {
     width: 100%;
     white-space: normal;
 }
@@ -283,15 +283,7 @@ input:focus {
       transform: scale(1);
     }
 }
-@keyframes timeLine {
-    form {
-      height: 0px;
-    }
-    to {
-      height: 100vh;
-    }
-}
-  // 中间开始放大
+// 中间开始放大
 .animation-text-tow {
     opacity: 0;
     display: inline-block;

@@ -1,4 +1,4 @@
-let zh = {
+const zh = {
   home: {
     title: 'YXR 扬帆起航-未来可期',
     menuList: [

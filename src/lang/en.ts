@@ -1,4 +1,4 @@
-let en = {
+const en = {
   home: {
     title: 'YXR Sail and sail',
     menuList: [

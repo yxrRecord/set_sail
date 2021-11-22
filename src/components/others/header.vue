@@ -1,5 +1,5 @@
 <template>
-  <div id="home-header">
+  <header id="home-header">
     <div class="header-main">
       <div class="header-left">
         <slot name="left"></slot>
@@ -15,53 +15,66 @@
           </li>
           <li class="dot"></li>
         </ul>
-    </div>
       </div>
-  </div>
+    </div>
+  </header>
 </template>
 <script>
-  export default {
-    props: {},
+  import { computed, defineComponent, onBeforeMount, toRefs, reactive, getCurrentInstance } from 'vue';
+  import { useRoute, useRouter } from "vue-router";
+  import test from 'vuex';
+  debugger
+  export default defineComponent({
     name: "Header",
-    data() {
-      return {
+    setup() {
+      const { proxy } = getCurrentInstance();
+      
+      const route = useRoute();
+      const router = useRouter();
+      const state = reactive({
         routeNameList: ['skill', 'work', 'project', 'about'],
         routeName: 'home'
-      }
-    },
-    computed: {
-      menuList() {
+      })
+
+      // computed
+      const menuList = computed(() => {
         return this.$t('home').menuList
-      },
-      showNavBar() {
+      })
+
+      const showNavBar = computed(() => {
         return this.$store.getters.showNavBar
-      }
-    },
-    mounted() {
-      sessionStorage.setItem('currentRoute', this.$route.name)
-      this.routeName = this.$route.name
-      console.log(this.$route.name, 'this.$route.namethis.$route.namethis.$route.name')
-      this.$store.dispatch('setShowBanner', !this.routeNameList.includes(this.$route.name))
-      this.$store.dispatch('setShowNavBar', this.routeNameList.includes(this.$route.name))
-    },
-    methods: {
-      jumpPage(item) {
-        if (this.$route.name !== item.name) {
+      })
+
+      // mounted
+      const jumpPage = (item) => {
+        if (route.name !== item.name) {
           sessionStorage.setItem('currentRoute', item.url)
-          this.routeName = item.url
+          state.routeName = item.url
           this.$store.dispatch('setShowBanner', !this.routeNameList.includes(item.url))
           this.$store.dispatch('setShowNavBar', false)
-          this.$router.push({
+          router.push({
             name: item.url
           })
         }
       }
+
+      onBeforeMount(() => {
+        sessionStorage.setItem('currentRoute', route.name);
+        state.routeName = route.name;
+        this.$store.dispatch('setShowBanner', !this.routeNameList.includes(route.name));
+        this.$store.dispatch('setShowNavBar', this.routeNameList.includes(route.name));
+      })
+      return {
+        ...toRefs(state),
+        jumpPage,
+        menuList,
+        showNavBar,
+      }
     }
-  }
+  })
 </script>
 <style lang="scss" type="text/scss" scoped>
 $offsetW: 120px;
-
 .nav-fixed {
   position: fixed;
   top: 0;
@@ -71,13 +84,9 @@ $offsetW: 120px;
   height: 50px;
   width: 100%;
   background-color: $color-gray;
-  // background-color: $color-primary;
-  // background-image: url('../../assets/images/navGif.gif');
   background-size: 50%;
   box-shadow: 0 0 10px $color-hover-shadow;
   z-index: 999;
-
-  
   .header-main {
     width: 800px;
     height: 100%;
@@ -85,7 +94,6 @@ $offsetW: 120px;
     display: flex;
     justify-content: space-between;
   } 
-  /*  */
   .header-left {
     margin-right: 120px;
     height: 100%;
@@ -100,32 +108,12 @@ $offsetW: 120px;
     }
   }
   .header-right {
-    
     flex: 1;
     .header-right-con {
       color: $color-grayf;
       display: flex;
       position: relative;
       overflow: hidden;
-
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   border-bottom: 3px solid $color-primary;
-      //   min-width: 120px;
-      //   left: 0;
-      //   bottom: 0;
-      // }
-
-      // &::before {
-      //   content: "";
-      //   position: absolute;
-      //   border-bottom: 3px solid $color-primary;
-      //   min-width: 120px;
-      //   left: -120px;
-      //   bottom: 0;
-      //   transition: all .3s;
-      // }
     }
     
     .dot {
@@ -134,9 +122,7 @@ $offsetW: 120px;
       min-width: 120px;
       left: -120px;
       bottom: 0;
-      
     }
-
     
     .menu-item {
       padding: 10px;

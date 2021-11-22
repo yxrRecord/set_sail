@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" class="common-container-wrapper" :style='{height:Height}' ref="commonContainer">
+    <div :id="id" class="common-container-wrapper" :style='{height:Height}' ref="Container">
         <slot></slot>
     </div>
 </template>
@@ -63,7 +63,7 @@
         methods: {
             //更新内容框距离浏览器顶端的距离
             updateOffsetTop() {
-                this.offsetTop = this.$refs.commonContainer.getBoundingClientRect().top;
+                this.offsetTop = this.$refs.Container.getBoundingClientRect().top;
             }
         },
     }

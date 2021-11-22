@@ -1,6 +1,5 @@
 <template>
    <header id="home-banner" class="banner">
-     <!--  -->
       <section class="banner-box" :style="`background-image: url(${currentImg})`">
         <!-- <img :src="bannerList[0]" alt=""> -->
         <!-- <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
@@ -10,12 +9,12 @@
       <Banner class="canvas-banner" />
       <div class="copywriting">
         <h2 class="hello-text">  你 若 成 风 YXR  </h2>
-        <h2 class="edit-text-box">  
-          <p>/* </p>
-          <p class="edit-text">{{showMessage}}</p>
-          <p class="fade-away line-beat">|</p>
-          <p> */</p>
-        </h2>
+        <p class="edit-text-box word-wrap">  
+          <span class="text-before">/* </span>
+          <span class="edit-text">{{showMessage}}</span>
+          <span class="fade-away line-beat">|</span>
+          <span class="text-after"> */</span>
+        </p>
         <!-- <div class="home-button">
           <div class="pointer open-btn" @click="$emit('backTop')">
             点击开启
@@ -30,7 +29,7 @@
     </header>  
 </template>
 <script>
-  import Banner from '../canvas/banner'
+  import Banner from '@components/others/Banner.vue'
   export default {
     name: "homeBanner",
     components: {
@@ -55,7 +54,6 @@
           // require('@/assets/images/banner4.jpg'),
           // require('@/assets/images/banner5.jpg'),
           // require('@/assets/images/banner1.jpg'),
-
           // '../../assets/images/banner1.jpg',
         ],
         bannerTime: null,
@@ -63,10 +61,9 @@
       }
     },
     mounted() {
-      // this.init()
       this.$nextTick(() => {
-        this.$textAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
-        this.textAnimate(document.querySelectorAll('.edit-text')[0], 0.1);
+        this.$setTextAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
+        this.beginTextAnimate();
       })
     
     },
@@ -96,7 +93,7 @@
         }, 3000)
       },
 
-      textAnimate(dom) {
+      beginTextAnimate() {
         if (this.type === 1) {
           this.addText()
         } else {
@@ -196,7 +193,6 @@
       font-size: 40px;
       color: $color-grayf;
       text-align: center;
-      
     }
     .hello-text {
       font-family: 'qianduKaiTI';
@@ -211,19 +207,23 @@
       letter-spacing: 4px;
       font-family: '方正小标宋简体';
       line-height: 30px;
-      p {
-        &:first-child {
+      color: $color-grayf;
+      white-space: nowrap;
+      .text-before {
           margin-right: 10px;
-        }
-        &:last-child {
-          margin-left: 10px;
-        }
+      }
+      .text-after {
+        margin-left: 10px;
       }
       .line-beat {
         margin-left: 10px;
         font-size: 16px;
       }
+      .edit-text {
+        white-space: nowrap;
+      }
     }
+
     .home-button {
       display: flex;
       justify-content: space-around;
@@ -275,7 +275,6 @@
       font-size: 20px;
       transform: rotateZ(-90deg);
       font-weight: 600;
-      
     }
   }
 }
