@@ -1,6 +1,5 @@
 <template>
   <div class="common-layout-wrapper">
-    11222
     <HomeBanner @backTop="backTop" v-if="showBanner" />
     <Header />
     <transition name="fade">
@@ -22,6 +21,7 @@ import Header from "@components/others/Header.vue";
 import HomeBanner from "@components/others/HomeBanner.vue";
 import { defineComponent, reactive, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import vuex from 'vuex';
 export default defineComponent({
   name: "Layout",
   components: {
@@ -30,6 +30,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
+    const store = vuex.useStore();
     const state = reactive({
       containerHeight: 0,
       showBackTop: false,
@@ -38,16 +39,16 @@ export default defineComponent({
 
     // cpmputed
     const showBanner = computed(() => {
-      return this.$store.getters.showBanner;
+      return store.getters.showBanner;
     })
 
     // watch
     watch(() => router, (to, from) => {
-      if (this.routeNameList.includes(to.name)) {
-        this.containerHeight = 0
+      if (state.routeNameList.includes(to.name)) {
+        state.containerHeight = 0
         return
       }
-      this.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
+      state.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
     }, {
       deep: true
     })
@@ -58,7 +59,7 @@ export default defineComponent({
       window.addEventListener("scroll", onScroll);
     }
     const onScroll = () => {
-      /* state.containerHeight = document.querySelector("#home-banner")
+      state.containerHeight = document.querySelector("#home-banner")
         ? Math.floor(document.querySelector("#home-banner").clientHeight)
         : 0;
       
@@ -89,11 +90,11 @@ export default defineComponent({
       // 控制返回顶部是否显示
       if (scrollTop > state.containerHeight + 300) {
         state.showBackTop = true;
-      } else state.showBackTop = false; */
+      } else state.showBackTop = false;
     }
 
     const backTop = (type) => {
-      /* let scrollNumber =
+      let scrollNumber =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
@@ -126,7 +127,7 @@ export default defineComponent({
             window.scrollTo(0, scrollNumber);
           }
         }
-      }, 10); */
+      }, 10);
     }
 
 
@@ -135,20 +136,19 @@ export default defineComponent({
     return {
       ...state.state,
       onScroll,
-      backTop
+      backTop,
+      showBanner
     }
   }
-  
-  
 
   // watch: {
   //   $route: {
   //     handler: function(to, from){
-  //       if (this.routeNameList.includes(to.name)) {
-  //         this.containerHeight = 0
+  //       if (state.routeNameList.includes(to.name)) {
+  //         state.containerHeight = 0
   //         return
   //       }
-  //       this.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
+  //       state.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
   //     },
   //     // 深度观察监听
   //     deep: true
@@ -164,7 +164,7 @@ export default defineComponent({
   /* watch: {
     $route() {
       window.scrollTo(0, 0);
-      if (!this.routeNameList.includes(this.$route.name)) {
+      if (!state.routeNameList.includes(route.name)) {
         document.querySelector("#home-header").classList.remove("nav-fixed");
       }
     },

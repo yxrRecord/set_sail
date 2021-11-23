@@ -2,7 +2,7 @@ import {createApp, h, resolveDirective, withDirectives} from 'vue';
 import App from './App.vue';
 import router from './router'; // 引入路由
 import config from "./config"; // 通用配置文件
-import store from '@store';
+import store from './store';
 import i18n from './lang'; // 引入 语言
 import {done, start} from "nprogress";
 import "nprogress/nprogress.css";
@@ -20,10 +20,9 @@ router.afterEach(transition => {
 }); */
 
 const app = createApp(App);
-app.use(router);
-app.use(router);
-app.use(i18n);
-app.use(store);
 // 配置全局属性
 app.config.globalProperties.$config = config;
-app.mount('#app');
+
+app.use(router).use(i18n).use(store).mount('#app');
+
+

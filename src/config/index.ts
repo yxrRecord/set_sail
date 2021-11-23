@@ -1,3 +1,4 @@
 export default {
-  language: "en"
+  language: "en",
+  localPrefix: "set_sail"
 }

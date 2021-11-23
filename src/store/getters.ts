@@ -1,3 +1,4 @@
+import { app } from './type';
 const getters = {
   appInfo: state => state.app.appInfo,
   windowScrollTop: state => state.app.windowScrollTop,
@@ -15,4 +16,5 @@ const getters = {
   // },
   showNavBar: state => state.app.showNavBar,
 }
+
 export default getters

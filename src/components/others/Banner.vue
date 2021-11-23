@@ -2,72 +2,79 @@
   <canvas :id="id"></canvas>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      id: 'canvas' + this.$moment().format("x"),
+import { defineComponent, onBeforeMount, toRefs, reactive } from 'vue';
+import moment from 'moment';
+export default defineComponent({
+  setup() {
+    const state = reactive({
+      id: 'canvas' + moment().format("x"),
       canvas: null,
       ctx: null,
       af: null,
-    }
-  },
-  mounted() {
-      this.init()
-      window.onresize = this.init;
-  },
-  methods: {
-    init() {
-      this.canvas = null;
+    })
+    // methods
+    const init = () => {
+      state.canvas = null;
       const numLasers = 400;
-      this.canvas = document.getElementById(`${this.id}`);
-      this.ctx = this.canvas.getContext("2d");
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
-      cancelAnimationFrame(this.af);
-      this.render(this.createLasers(numLasers));
-    },
+      state.canvas = document.getElementById(`${state.id}`);
+      state.ctx = state.canvas.getContext("2d");
+      state.canvas.width = window.innerWidth;
+      state.canvas.height = window.innerHeight;
 
-    createLasers(n) {
+      cancelAnimationFrame(state.af);
+      render(createLasers(numLasers));
+    }
+
+    const createLasers = (n) => {
       const lasers = [];
       for (let i = 0; i < n; ++i) {
         lasers.push({
-          x: Math.random() * this.canvas.width,
-          y: Math.random() * (1200 - this.canvas.height) + this.canvas.height,
-          maxY: (Math.random() * (this.canvas.height - 450) + 350),
+          x: Math.random() * state.canvas.width,
+          y: Math.random() * (1200 - state.canvas.height) + state.canvas.height,
+          maxY: (Math.random() * (state.canvas.height - 450) + 350),
           s: Math.random() * 0.5 + 0.3,
           r: Math.random() * (6 - 3) + 2.5
         });
       }
       return lasers;
-    },
+    }
     
-    renderLaser(l) {
-      this.ctx.beginPath();
-      this.ctx.arc(l.x, l.y, l.r, 0, 2 * Math.PI, false);
-      this.ctx.fillStyle = 'rgba(255, 255, 255, .3)'
-      this.ctx.strokeStyle = 'rgba(255, 255, 255, 0)';//填充边框颜色
-      this.ctx.closePath();
-      this.ctx.fill();
-      this.ctx.moveTo(l.x, l);
-      this.ctx.stroke();
-    },
-    updateLaser(l) {
+    const renderLaser = (l) => {
+      state.ctx.beginPath();
+      state.ctx.arc(l.x, l.y, l.r, 0, 2 * Math.PI, false);
+      state.ctx.fillStyle = 'rgba(255, 255, 255, .3)'
+      state.ctx.strokeStyle = 'rgba(255, 255, 255, 0)';//填充边框颜色
+      state.ctx.closePath();
+      state.ctx.fill();
+      state.ctx.moveTo(l.x, l);
+      state.ctx.stroke();
+    }
+    const updateLaser = (l) => {
       l.y -= l.s;
       if (l.y < l.maxY) {
-        l.y = this.canvas.height;
+        l.y = state.canvas.height;
       }
-    },
-    render(lasers) {
-      this.ctx.fillStyle = "rgba(255, 255, 255, 0)";
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    }
+    const render = (lasers) => {
+      state.ctx.fillStyle = "rgba(255, 255, 255, 0)";
+      state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height)
       for (let l of lasers) {
-        this.renderLaser(l);
-        this.updateLaser(l);
+        renderLaser(l);
+        updateLaser(l);
       }
-      this.af = requestAnimationFrame(() => this.render(lasers));
-    },
+      state.af = requestAnimationFrame(() => render(lasers));
+    }
+
+
+    onBeforeMount(() => {
+      init()
+      window.onresize = init();
+    })
+    return {
+      ...toRefs(state),
+    }
   }
-}
+})
 </script>
 <style lang="scss" type="text/scss" scoped>
 canvas {

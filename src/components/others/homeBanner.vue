@@ -5,6 +5,7 @@
         <!-- <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
           <img :src="item" alt="">
         </div> -->
+
       </section>
       <Banner class="canvas-banner" />
       <div class="copywriting">
@@ -15,11 +16,6 @@
           <span class="fade-away line-beat">|</span>
           <span class="text-after"> */</span>
         </p>
-        <!-- <div class="home-button">
-          <div class="pointer open-btn" @click="$emit('backTop')">
-            点击开启
-          <span class="jt iconfont yxrjiantou"></span></div>
-        </div> -->
       </div>
       <div class="home-bottom-link pointer" @click="$emit('backTop', 'bottom')">
         <p >
@@ -29,14 +25,18 @@
     </header>  
 </template>
 <script>
+  import { computed, defineComponent, onBeforeMount, toRefs, reactive, nextTick, getCurrentInstance } from 'vue';
+  import { useRoute, useRouter } from "vue-router";
+  import vuex from 'vuex';
   import Banner from '@components/others/Banner.vue'
-  export default {
+  import Tools from '@tools';
+  export default defineComponent({
     name: "homeBanner",
     components: {
       Banner
     },
-    data() {
-      return {
+    setup() {
+      const state = reactive({
         text: [
           '你活着的每一天都是之后日子里最年轻的时候。',
           '即使道路坎坷不平，车轮也要前进；即使江河波涛汹涌，船只也航行。',
@@ -58,91 +58,93 @@
         ],
         bannerTime: null,
         currentBannerIndex: 0
-      }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.$setTextAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
-        this.beginTextAnimate();
       })
-    
-    },
-    methods: {
-      init() {
+      
+      onBeforeMount(() => {
+       nextTick(() => {
+          Tools.setTextAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
+          beginTextAnimate();
+        })
+      })
+
+      // methods
+      const init = () => {
         let dom = document.querySelectorAll('.banner-box')[0],
             width = document.querySelectorAll('.banner')[0].getClientRects()[0].width.toFixed(0)
-        if (this.bannerTime) clearInterval(this.bannerTime)
-        this.bannerTime = setInterval(item => {
-          console.log(this.currentBannerIndex, '1111111111')
-          dom.style.transform = `translateX(-${this.currentBannerIndex * width}px)`
-          if (this.currentBannerIndex > this.bannerList.length - 1) {
+        if (state.bannerTime) clearInterval(state.bannerTime)
+        state.bannerTime = setInterval(item => {
+          dom.style.transform = `translateX(-${state.currentBannerIndex * width}px)`
+          if (state.currentBannerIndex > state.bannerList.length - 1) {
             setTimeout(() => {
               dom.classList.remove('transition-box')
             }, 1000)
           } else {
             dom.classList.add('transition-box')
           }
-          this.currentBannerIndex++
-          if (this.currentBannerIndex > this.bannerList.length - 1) {
+          state.currentBannerIndex++
+          if (state.currentBannerIndex > state.bannerList.length - 1) {
             // setTimeout(() => {
             //   dom.classList.remove('transition-box')
             // }, 1000)
             dom.classList.remove('transition-box')
-            this.currentBannerIndex = 0
+            state.currentBannerIndex = 0
           }
         }, 3000)
-      },
+      }
 
-      beginTextAnimate() {
-        if (this.type === 1) {
-          this.addText()
+      const beginTextAnimate = () => {
+        if (state.type === 1) {
+          addText()
         } else {
-          this.removeText()
+          removeText()
         }
-      },
+      }
 
-      addText(time = 200) {
-        let text = this.text[this.currentIndex].split('');
+      const addText = (time = 200) => {
+        let text = state.text[state.currentIndex].split('');
         let textLen = text.length,
             tempText = []
         let index = 0
-        
-        this.timer = setInterval(() => {
+        state.timer = setInterval(() => {
           tempText.push(text[index])
-          this.showMessage = tempText.join('')
+          state.showMessage = tempText.join('')
           index++
           if (index >= textLen) {
-            if (this.timer) clearInterval(this.timer)
+            if (state.timer) clearInterval(state.timer)
             setTimeout(() => {
-              this.removeText()
+              removeText()
             }, 600);
-            
-          }
-        }, time)
-      },
-      removeText(time = 100) {
-        let text = this.text[this.currentIndex].split('');
-        let msgLen = this.showMessage.length,
-            tempText = text
-        let index = msgLen
-
-        if (this.timer) clearInterval(this.timer)
-        this.timer = setInterval(() => {
-          tempText.pop(text[index])
-          this.showMessage = tempText.join('')
-          index--
-          if (index <= 0) {
-            this.currentIndex++
-            if (this.currentIndex >= this.text.length) {
-              this.currentIndex = 0
-            }
-            if (this.timer) clearInterval(this.timer)
-            this.addText()
           }
         }, time)
       }
-    }
-}
+
+      const removeText = (time = 100) => {
+        let text = state.text[state.currentIndex].split('');
+        let msgLen = state.showMessage.length,
+            tempText = text
+        let index = msgLen
+
+        if (state.timer) clearInterval(state.timer)
+        state.timer = setInterval(() => {
+          tempText.pop(text[index])
+          state.showMessage = tempText.join('')
+          index--
+          if (index <= 0) {
+            state.currentIndex++
+            if (state.currentIndex >= state.text.length) {
+              state.currentIndex = 0
+            }
+            if (state.timer) clearInterval(state.timer)
+            addText()
+          }
+        }, time)
+      }
+
+      return {
+        ...toRefs(state),
+      }
+    },
+})
 </script>
 <style lang="scss" type="text/scss" scoped>
 .banner {
@@ -221,38 +223,6 @@
       }
       .edit-text {
         white-space: nowrap;
-      }
-    }
-
-    .home-button {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-top: 150px;
-      .open-btn {
-        text-align: center;
-        font-size: 18px;
-        padding: 15px 15px;
-        border-radius: 30px;
-        background-color: $color-grayf;
-        color: $color-gray3;
-        width: 180px;
-        line-height: 20px;
-        box-shadow: 0 0 10px #666;
-        &:hover {
-          background-color: $color-primary;
-          color: $color-grayf;
-          .jt {
-            margin-left: 10px;
-            font-size: 20px;
-          }
-        }
-        .jt {
-          font-size: 0;
-          margin-left: 0;
-          transition: all .5s;
-          vertical-align: middle;
-        }
       }
     }
   }

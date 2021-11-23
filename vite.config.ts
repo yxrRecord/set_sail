@@ -82,6 +82,7 @@ export default ({command, mode}: ConfigEnv) => {
                 '@config': resolve(__dirname, 'src/config'),
                 '@router': resolve(__dirname, 'src/router'),
                 '@store': resolve(__dirname, 'src/store'),
+                '@tools': resolve(__dirname, 'src/tools'),
                 '@utils': resolve(__dirname, 'src/utils'),
                 '@pages': resolve(__dirname, 'src/pages'),
                 '@types': resolve(__dirname, 'src/types'),

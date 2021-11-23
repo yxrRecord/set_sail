@@ -22,15 +22,15 @@
 <script>
   import { computed, defineComponent, onBeforeMount, toRefs, reactive, getCurrentInstance } from 'vue';
   import { useRoute, useRouter } from "vue-router";
-  import test from 'vuex';
-  debugger
+  import vuex from 'vuex';
   export default defineComponent({
     name: "Header",
     setup() {
       const { proxy } = getCurrentInstance();
-      
       const route = useRoute();
       const router = useRouter();
+      const store = vuex.useStore();
+      // console.log(store.dispatch, store.state, store.getters, '2222');
       const state = reactive({
         routeNameList: ['skill', 'work', 'project', 'about'],
         routeName: 'home'
@@ -38,11 +38,11 @@
 
       // computed
       const menuList = computed(() => {
-        return this.$t('home').menuList
+        return proxy.$t('home').menuList
       })
 
       const showNavBar = computed(() => {
-        return this.$store.getters.showNavBar
+        return store.getters.appInfo.showNavBar
       })
 
       // mounted
@@ -50,8 +50,8 @@
         if (route.name !== item.name) {
           sessionStorage.setItem('currentRoute', item.url)
           state.routeName = item.url
-          this.$store.dispatch('setShowBanner', !this.routeNameList.includes(item.url))
-          this.$store.dispatch('setShowNavBar', false)
+          store.dispatch('setShowBanner', !state.routeNameList.includes(item.url))
+          store.dispatch('setShowNavBar', false)
           router.push({
             name: item.url
           })
@@ -61,8 +61,8 @@
       onBeforeMount(() => {
         sessionStorage.setItem('currentRoute', route.name);
         state.routeName = route.name;
-        this.$store.dispatch('setShowBanner', !this.routeNameList.includes(route.name));
-        this.$store.dispatch('setShowNavBar', this.routeNameList.includes(route.name));
+        store.dispatch('setShowBanner', !state.routeNameList.includes(route.name));
+        store.dispatch('setShowNavBar', state.routeNameList.includes(route.name));
       })
       return {
         ...toRefs(state),
