@@ -20,7 +20,7 @@
   </header>
 </template>
 <script>
-  import { computed, defineComponent, onBeforeMount, toRefs, reactive, getCurrentInstance } from 'vue';
+  import { computed, defineComponent, onMounted, toRefs, reactive, getCurrentInstance } from 'vue';
   import { useRoute, useRouter } from "vue-router";
   import vuex from 'vuex';
   export default defineComponent({
@@ -30,7 +30,6 @@
       const route = useRoute();
       const router = useRouter();
       const store = vuex.useStore();
-      // console.log(store.dispatch, store.state, store.getters, '2222');
       const state = reactive({
         routeNameList: ['skill', 'work', 'project', 'about'],
         routeName: 'home'
@@ -58,7 +57,7 @@
         }
       }
 
-      onBeforeMount(() => {
+      onMounted(() => {
         sessionStorage.setItem('currentRoute', route.name);
         state.routeName = route.name;
         store.dispatch('setShowBanner', !state.routeNameList.includes(route.name));

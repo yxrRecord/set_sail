@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import {defineComponent, nextTick, onBeforeMount, reactive, toRefs} from 'vue';
+import {defineComponent, nextTick, onMounted, reactive, toRefs} from 'vue';
+import vuex from 'vuex';
 export default defineComponent({
   name: 'App',
   /* watch: {
@@ -22,6 +23,7 @@ export default defineComponent({
     }
   }, */
   setup() {
+    const store = vuex.useStore();
     const state = reactive({
       model: 'haru_1',
     })
@@ -43,11 +45,11 @@ export default defineComponent({
       })
     }
 
-    onBeforeMount(() => {
-      // document.querySelectorAll('title')[0].innerHTML = this.$store.getters.appInfo.appName
-      //nextTick(() => {
-      //   this.live2dInit()
-      // })
+    onMounted(() => {
+      document.querySelectorAll('title')[0].innerHTML = store.getters.appInfo.appName
+      nextTick(() => {
+        live2dInit()
+      })
     })
     return {
       ...toRefs(state)
@@ -57,10 +59,9 @@ export default defineComponent({
 </script>
 
 <style type="text/scss" lang="scss">
-    /* @import url('@assets/style/reset.scss');
-    // 登录样式
-    @import url('@assets/style/access.scss');
-    @import url('@assets/style/common.scss');
+    @import '@assets/style/reset.scss';
+    @import '@assets/style/access.scss';
+    @import '@assets/style/common.scss';
     // ui 库样式
-    @import url('@assets/style/plugin.scss'); */
+    @import '@assets/style/plugin.scss';
 </style>

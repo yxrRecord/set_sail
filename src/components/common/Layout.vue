@@ -21,7 +21,7 @@ import Header from "@components/others/Header.vue";
 import HomeBanner from "@components/others/HomeBanner.vue";
 import { defineComponent, reactive, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import vuex from 'vuex';
+import vuex from "vuex";
 export default defineComponent({
   name: "Layout",
   components: {
@@ -35,42 +35,47 @@ export default defineComponent({
       containerHeight: 0,
       showBackTop: false,
       routeNameList: ["skill", "work", "project", "about"],
-    })
+    });
 
     // cpmputed
     const showBanner = computed(() => {
       return store.getters.showBanner;
-    })
+    });
 
     // watch
-    watch(() => router, (to, from) => {
-      if (state.routeNameList.includes(to.name)) {
-        state.containerHeight = 0
-        return
+    watch(
+      () => router,
+      (to, from) => {
+        if (state.routeNameList.includes(to.name)) {
+          state.containerHeight = 0;
+          return;
+        }
+        state.containerHeight = Math.floor(
+          document.querySelector("#home-banner").clientHeight
+        );
+      },
+      {
+        deep: true,
       }
-      state.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
-    }, {
-      deep: true
-    })
+    );
 
     // methods
     const init = () => {
       // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
       window.addEventListener("scroll", onScroll);
-    }
+    };
     const onScroll = () => {
       state.containerHeight = document.querySelector("#home-banner")
         ? Math.floor(document.querySelector("#home-banner").clientHeight)
         : 0;
-      
+
       // 控制 header 组件显示与透明度
-     
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      state.$store.dispatch("setWindowScrollTop", scrollTop);
 
+      store.dispatch("setWindowScrollTop", scrollTop);
       // nav-fixed
       console.log(
         document.querySelector("#home-header").getBoundingClientRect(),
@@ -86,12 +91,11 @@ export default defineComponent({
         document.querySelector("#home-header").classList.remove("nav-fixed");
       }
 
-      
       // 控制返回顶部是否显示
       if (scrollTop > state.containerHeight + 300) {
         state.showBackTop = true;
       } else state.showBackTop = false;
-    }
+    };
 
     const backTop = (type) => {
       let scrollNumber =
@@ -128,8 +132,7 @@ export default defineComponent({
           }
         }
       }, 10);
-    }
-
+    };
 
     init();
 
@@ -137,9 +140,9 @@ export default defineComponent({
       ...state.state,
       onScroll,
       backTop,
-      showBanner
-    }
-  }
+      showBanner,
+    };
+  },
 
   // watch: {
   //   $route: {

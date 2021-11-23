@@ -2,7 +2,7 @@
   <canvas :id="id"></canvas>
 </template>
 <script>
-import { defineComponent, onBeforeMount, toRefs, reactive } from 'vue';
+import { defineComponent, toRefs, reactive, onMounted } from 'vue';
 import moment from 'moment';
 export default defineComponent({
   setup() {
@@ -12,6 +12,7 @@ export default defineComponent({
       ctx: null,
       af: null,
     })
+
     // methods
     const init = () => {
       state.canvas = null;
@@ -66,7 +67,7 @@ export default defineComponent({
     }
 
 
-    onBeforeMount(() => {
+    onMounted(() => {
       init()
       window.onresize = init();
     })

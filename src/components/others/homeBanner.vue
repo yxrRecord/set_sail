@@ -25,11 +25,12 @@
     </header>  
 </template>
 <script>
-  import { computed, defineComponent, onBeforeMount, toRefs, reactive, nextTick, getCurrentInstance } from 'vue';
+  import { computed, defineComponent, onMounted, toRefs, reactive, nextTick, getCurrentInstance } from 'vue';
   import { useRoute, useRouter } from "vue-router";
   import vuex from 'vuex';
   import Banner from '@components/others/Banner.vue'
   import Tools from '@tools';
+  import banner1 from "@assets/images/banner1.jpg"
   export default defineComponent({
     name: "homeBanner",
     components: {
@@ -46,7 +47,7 @@
         currentIndex: 0,
         type: 1,
         timer: null,
-        currentImg: require('../../../public/image/banner1.jpg'),
+        currentImg: banner1,
         bannerList: [
           // require('@/assets/images/banner1.jpg'),
           // require('@/assets/images/banner2.jpg'),
@@ -60,7 +61,7 @@
         currentBannerIndex: 0
       })
       
-      onBeforeMount(() => {
+      onMounted(() => {
        nextTick(() => {
           Tools.setTextAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
           beginTextAnimate();
@@ -173,7 +174,6 @@
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    // background-image: url('../../assets/images/banner1.jpg');
   }
   /* canvas */
   .canvas-banner {
