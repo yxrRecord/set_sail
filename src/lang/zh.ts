@@ -1,4 +1,4 @@
-const zh = {
+export default {
   home: {
     title: 'YXR 扬帆起航-未来可期',
     menuList: [
@@ -17,4 +17,3 @@ const zh = {
     }
   }
 }
-export default zh

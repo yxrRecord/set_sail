@@ -1,4 +1,4 @@
-const en = {
+export default {
   home: {
     title: 'YXR Sail and sail',
     menuList: [
@@ -17,4 +17,3 @@ const en = {
     }
   }
 }
-export default en

@@ -30,7 +30,7 @@ export default defineComponent({
     /* meyhods */
     const live2dInit = () => {
       console.log(window.L2Dwidget, 'this.L2Dwidget')
-      this.L2Dwidget.init({
+      /* this.L2Dwidget.init({
         pluginRootPath: 'static/live2dw/',
         pluginJsPath: 'lib/',
         pluginModelPath: `live2d-widget-model-${this.model}/assets/`,
@@ -42,7 +42,7 @@ export default defineComponent({
         display: { position: 'right', width: 150, height: 300 },
         mobile: { show: true },
         log: false,
-      })
+      }) */
     }
 
     onMounted(() => {

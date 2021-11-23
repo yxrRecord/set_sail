@@ -7,6 +7,7 @@
       </div>
       <div class="header-right">
         <ul class="header-right-con">
+          {{$t('home')}}
           <li class="menu-item pointer" v-for="(item, index) in menuList" :key="item.name" @click="jumpPage(item)" :class="[`menu-item-${index + 1}`, routeName === item.url ? 'currentPage' : '']">
             <span :class="['menu-icon', 'iconfont']" v-if="item.iconfont"></span>
             <span >
@@ -20,13 +21,15 @@
   </header>
 </template>
 <script>
-  import { computed, defineComponent, onMounted, toRefs, reactive, getCurrentInstance } from 'vue';
+  import { computed, defineComponent, onMounted, toRefs, reactive, getCurrentInstance, nextTick } from 'vue';
   import { useRoute, useRouter } from "vue-router";
   import vuex from 'vuex';
+  import { useI18n } from 'vue-i18n';
   export default defineComponent({
     name: "Header",
     setup() {
       const { proxy } = getCurrentInstance();
+      const { t } = useI18n();
       const route = useRoute();
       const router = useRouter();
       const store = vuex.useStore();
@@ -35,9 +38,14 @@
         routeName: 'home'
       })
 
+      nextTick(() => {
+        // console.log(t('a'), proxy, proxy.$rt('home'), t('home'), "2222");
+      })
+      // debugger
+
       // computed
       const menuList = computed(() => {
-        return proxy.$t('home').menuList
+        return t('home.menuList')
       })
 
       const showNavBar = computed(() => {
