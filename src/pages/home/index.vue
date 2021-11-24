@@ -71,7 +71,7 @@ export default {
   name: "home",
   data() {
     return {
-      headPortrait: require("../../assets/images/headPortrait.jpg"),
+      // headPortrait: require("../../assets/images/headPortrait.jpg"),
     };
   },
   mounted() {},

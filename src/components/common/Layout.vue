@@ -11,9 +11,9 @@
         @click="backTop('top')"
       ></div>
     </transition>
-    <!-- <div style="margin-top: 80px">
+    <div style="margin-top: 80px">
       <router-view></router-view>
-    </div> -->
+    </div>
   </div>
 </template>
 <script lang="ts">
