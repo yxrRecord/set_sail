@@ -16,12 +16,12 @@
     </div> -->
   </div>
 </template>
-<script>
+<script lang="ts">
 import Header from "@components/others/Header.vue";
 import HomeBanner from "@components/others/HomeBanner.vue";
-import { defineComponent, reactive, computed, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import vuex from "vuex";
+import { defineComponent, reactive, computed, watch, ref, toRefs } from "vue";
+import { useRouter, Router } from "vue-router";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "Layout",
   components: {
@@ -29,30 +29,29 @@ export default defineComponent({
     HomeBanner,
   },
   setup() {
-    const router = useRouter();
-    const store = vuex.useStore();
+    const router: Router = useRouter();
+    const store = useStore();
     const state = reactive({
-      containerHeight: 0,
-      showBackTop: false,
-      routeNameList: ["skill", "work", "project", "about"],
+      containerHeight: 0 as number,
+      showBackTop: false as boolean,
+      routeNameList: ["skill", "work", "project", "about"] as string[],
+      scrollTime: null as number | null
     });
-
+    let honeBanner = ref<HTMLElement>();
+    let honeHeader = ref<HTMLElement>();
     // cpmputed
     const showBanner = computed(() => {
       return store.getters.showBanner;
     });
 
     // watch
-    watch(
-      () => router,
-      (to, from) => {
+    watch(() => router,
+      (to: any, from: any) => {
         if (state.routeNameList.includes(to.name)) {
           state.containerHeight = 0;
           return;
         }
-        state.containerHeight = Math.floor(
-          document.querySelector("#home-banner").clientHeight
-        );
+        state.containerHeight = Math.floor(honeBanner.value!.clientHeight);
       },
       {
         deep: true,
@@ -61,14 +60,15 @@ export default defineComponent({
 
     // methods
     const init = () => {
+      honeBanner.value = document.getElementById("home-banner")!;
+      honeHeader.value = document.getElementById("home-header")!;
+
       // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
       window.addEventListener("scroll", onScroll);
     };
-    const onScroll = () => {
-      state.containerHeight = document.querySelector("#home-banner")
-        ? Math.floor(document.querySelector("#home-banner").clientHeight)
-        : 0;
 
+    const onScroll = () => {
+      state.containerHeight = honeBanner.value ? Math.floor(honeBanner.value.clientHeight) : 0;
       // 控制 header 组件显示与透明度
       let scrollTop =
         window.pageYOffset ||
@@ -77,18 +77,13 @@ export default defineComponent({
 
       store.dispatch("setWindowScrollTop", scrollTop);
       // nav-fixed
-      console.log(
-        document.querySelector("#home-header").getBoundingClientRect(),
-        "1111"
-      );
-      let navTop = document
-        .querySelector("#home-header")
-        .getBoundingClientRect().top;
+      let navTop = honeHeader.value ? honeHeader.value?.getBoundingClientRect().top : 0;
+
       if (navTop <= 0)
-        document.querySelector("#home-header").classList.add("nav-fixed");
+        honeHeader.value?.classList.add("nav-fixed");
 
       if (state.containerHeight - scrollTop > 0) {
-        document.querySelector("#home-header").classList.remove("nav-fixed");
+        honeHeader.value?.classList.remove("nav-fixed");
       }
 
       // 控制返回顶部是否显示
@@ -97,16 +92,11 @@ export default defineComponent({
       } else state.showBackTop = false;
     };
 
-    const backTop = (type) => {
-      let scrollNumber =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      let count = 0;
-      count = type === "bottom" ? 15 : 20;
-      let offset = Math.abs(
-        Math.floor((scrollNumber - state.containerHeight) / count)
-      );
+    const backTop = (type: string) => {
+      let scrollNumber = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      let count = type === "bottom" ? 15 : 20;
+
+      let offset = Math.abs(Math.floor((scrollNumber - state.containerHeight) / count));
       state.scrollTime = setInterval(() => {
         console.log(state.containerHeight);
         if (type === "bottom") {
@@ -119,11 +109,11 @@ export default defineComponent({
           );
           if (scrollNumber >= state.containerHeight) {
             window.scrollTo(0, state.containerHeight + 1);
-            clearInterval(state.scrollTime);
+            state.scrollTime ? clearInterval(state.scrollTime) : false;
           }
         } else {
           if (scrollNumber <= offset + state.containerHeight) {
-            clearInterval(state.scrollTime);
+            state.scrollTime ? clearInterval(state.scrollTime) : false;
             window.scrollTo(0, state.containerHeight + 1);
           } else {
             scrollNumber -= offset;
@@ -137,7 +127,7 @@ export default defineComponent({
     init();
 
     return {
-      ...state.state,
+      ...toRefs(state),
       onScroll,
       backTop,
       showBanner,

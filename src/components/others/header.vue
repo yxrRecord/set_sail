@@ -7,7 +7,6 @@
       </div>
       <div class="header-right">
         <ul class="header-right-con">
-          {{$t('home')}}
           <li class="menu-item pointer" v-for="(item, index) in menuList" :key="item.name" @click="jumpPage(item)" :class="[`menu-item-${index + 1}`, routeName === item.url ? 'currentPage' : '']">
             <span :class="['menu-icon', 'iconfont']" v-if="item.iconfont"></span>
             <span >
@@ -20,32 +19,34 @@
     </div>
   </header>
 </template>
-<script>
+<script lang="ts">
   import { computed, defineComponent, onMounted, toRefs, reactive, getCurrentInstance, nextTick } from 'vue';
-  import { useRoute, useRouter } from "vue-router";
-  import vuex from 'vuex';
+  import { useRoute, useRouter, RouteLocationNormalized } from "vue-router";
+  import { useStore } from 'vuex';
   import { useI18n } from 'vue-i18n';
+  import { Menu } from '@types'
   export default defineComponent({
     name: "Header",
     setup() {
-      const { proxy } = getCurrentInstance();
+      // const { proxy } = getCurrentInstance();
       const { t } = useI18n();
-      const route = useRoute();
+      const route: any = useRoute();
       const router = useRouter();
-      const store = vuex.useStore();
+      const store = useStore();
       const state = reactive({
         routeNameList: ['skill', 'work', 'project', 'about'],
-        routeName: 'home'
+        routeName: 'home',
       })
-
-      nextTick(() => {
-        // console.log(t('a'), proxy, proxy.$rt('home'), t('home'), "2222");
-      })
-      // debugger
 
       // computed
-      const menuList = computed(() => {
-        return t('home.menuList')
+      const menuList = computed<Menu[]>((): Menu[] => {
+        let list: Menu[] = [{ icon: '1', name: 'Home', hover: false, url: 'home'},
+          { icon: '1', name: 'Tags', hover: false, url: 'skill'},
+          { icon: '1', name: 'Work', hover: false, url: 'work'},
+          { icon: '1', name: 'Project', hover: false, url: 'project'},
+          { icon: '1', name: 'About', hover: false, url: 'about'}];
+        list.forEach((item, index) => item.name = t('menuList', index))
+        return list
       })
 
       const showNavBar = computed(() => {
@@ -53,7 +54,7 @@
       })
 
       // mounted
-      const jumpPage = (item) => {
+      const jumpPage = (item: Menu) => {
         if (route.name !== item.name) {
           sessionStorage.setItem('currentRoute', item.url)
           state.routeName = item.url
@@ -76,6 +77,7 @@
         jumpPage,
         menuList,
         showNavBar,
+        t
       }
     }
   })

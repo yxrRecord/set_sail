@@ -24,8 +24,8 @@
       </div>
     </header>  
 </template>
-<script>
-  import { computed, defineComponent, onMounted, toRefs, reactive, nextTick, getCurrentInstance } from 'vue';
+<script lang="ts">
+  import { ref, defineComponent, onMounted, toRefs, reactive, nextTick } from 'vue';
   import { useRoute, useRouter } from "vue-router";
   import vuex from 'vuex';
   import Banner from '@components/others/Banner.vue'
@@ -46,7 +46,7 @@
         showMessage: '',
         currentIndex: 0,
         type: 1,
-        timer: null,
+        timer: null as number | null,
         currentImg: banner1,
         bannerList: [
           // require('@/assets/images/banner1.jpg'),
@@ -57,24 +57,27 @@
           // require('@/assets/images/banner1.jpg'),
           // '../../assets/images/banner1.jpg',
         ],
-        bannerTime: null,
+        bannerTime: null as number | null,
         currentBannerIndex: 0
       })
-      
+      const messageHtml = ref<HTMLElement>();
       onMounted(() => {
        nextTick(() => {
-          Tools.setTextAnimate(document.querySelectorAll('.hello-text')[0], 0.1)
+          const dom: HTMLCollectionOf<Element>  = document.getElementsByClassName('hello-text');
+          Tools.setTextAnimate(dom['0'] as HTMLElement, 0.1)
           beginTextAnimate();
         })
       })
 
       // methods
       const init = () => {
-        let dom = document.querySelectorAll('.banner-box')[0],
-            width = document.querySelectorAll('.banner')[0].getClientRects()[0].width.toFixed(0)
+        const dom: HTMLElement = document.getElementsByClassName('banner-box')[0] as HTMLElement;
+        const width: string = document.querySelectorAll('.banner')[0].getClientRects()[0].width?.toFixed(0);
+
         if (state.bannerTime) clearInterval(state.bannerTime)
-        state.bannerTime = setInterval(item => {
-          dom.style.transform = `translateX(-${state.currentBannerIndex * width}px)`
+
+        state.bannerTime = setInterval((item: any) => {
+          dom.style.transform = `translateX(-${state.currentBannerIndex * Number(width)}px)`
           if (state.currentBannerIndex > state.bannerList.length - 1) {
             setTimeout(() => {
               dom.classList.remove('transition-box')
@@ -104,7 +107,7 @@
       const addText = (time = 200) => {
         let text = state.text[state.currentIndex].split('');
         let textLen = text.length,
-            tempText = []
+            tempText: string[] = []
         let index = 0
         state.timer = setInterval(() => {
           tempText.push(text[index])
@@ -120,15 +123,16 @@
       }
 
       const removeText = (time = 100) => {
-        let text = state.text[state.currentIndex].split('');
-        let msgLen = state.showMessage.length,
-            tempText = text
-        let index = msgLen
+        let tempText: string[] = state.text[state.currentIndex].split(''),
+            index: number = state.showMessage.length;
 
         if (state.timer) clearInterval(state.timer)
+        
         state.timer = setInterval(() => {
-          tempText.pop(text[index])
-          state.showMessage = tempText.join('')
+          if (tempText.length && index >= 0) {
+            tempText.pop();
+          }
+          state.showMessage = tempText.join('');
           index--
           if (index <= 0) {
             state.currentIndex++

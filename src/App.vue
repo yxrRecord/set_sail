@@ -8,7 +8,7 @@
 
 <script>
 import {defineComponent, nextTick, onMounted, reactive, toRefs} from 'vue';
-import vuex from 'vuex';
+import { useStore } from 'vuex';
 export default defineComponent({
   name: 'App',
   /* watch: {
@@ -23,7 +23,7 @@ export default defineComponent({
     }
   }, */
   setup() {
-    const store = vuex.useStore();
+    const store = useStore();
     const state = reactive({
       model: 'haru_1',
     })
