@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <!-- <keep-alive> -->
-      <router-view></router-view>
+    <router-view></router-view>
     <!-- </keep-alive> -->
   </div>
 </template>
 
 <script>
-import {defineComponent, nextTick, onMounted, reactive, toRefs} from 'vue';
-import { useStore } from 'vuex';
+import { defineComponent, nextTick, onMounted, reactive, toRefs } from "vue";
+import { useStore } from "vuex";
 export default defineComponent({
-  name: 'App',
+  name: "App",
   /* watch: {
     $route(to, from) {
       this.$nextTick(() => {
@@ -25,11 +25,11 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const state = reactive({
-      model: 'haru_1',
-    })
+      model: "haru_1",
+    });
     /* meyhods */
     const live2dInit = () => {
-      console.log(window.L2Dwidget, 'this.L2Dwidget')
+      console.log(window.L2Dwidget, "this.L2Dwidget");
       /* this.L2Dwidget.init({
         pluginRootPath: 'static/live2dw/',
         pluginJsPath: 'lib/',
@@ -43,25 +43,26 @@ export default defineComponent({
         mobile: { show: true },
         log: false,
       }) */
-    }
+    };
 
     onMounted(() => {
-      document.querySelectorAll('title')[0].innerHTML = store.getters.appInfo.appName
+      document.querySelectorAll("title")[0].innerHTML =
+        store.getters.appInfo.appName;
       nextTick(() => {
-        live2dInit()
-      })
-    })
+        live2dInit();
+      });
+    });
     return {
-      ...toRefs(state)
-    }
-  }
-})
+      ...toRefs(state),
+    };
+  },
+});
 </script>
 
 <style type="text/scss" lang="scss">
-    @import '@assets/style/reset.scss';
-    @import '@assets/style/access.scss';
-    @import '@assets/style/common.scss';
-    // ui 库样式
-    @import '@assets/style/plugin.scss';
+@import "@assets/style/reset.scss";
+@import "@assets/style/access.scss";
+@import "@assets/style/common.scss";
+// ui 库样式
+@import "@assets/style/plugin.scss";
 </style>
