@@ -5,7 +5,7 @@ export default {
     username: 'YXR',
     workYear: 'Two Years +',
     phone: '15638331203',
-    email: '913457727@qq.com',
+    email: '913457727\@qq.com',
     address: 'Shang Hai'
   },
   menuList: 'Home | Tags | Work | Project | About',

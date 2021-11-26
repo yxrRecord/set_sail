@@ -37,7 +37,7 @@
           data-wow-delay="1s"
         >
           <img class="cover" :src="headPortrait" alt="头像" />
-          <p class="username">{{ $t("home").info.username }}</p>
+          <p class="username">{{ $t("info.username")}}</p>
           <div class="essential-info">
             <!-- <p class="info-title">
               <span class="iconfont"></span>
@@ -45,19 +45,19 @@
             </p> -->
             <p class="info-item">
               <span class="label iconfont yxrgongzuotai"></span>
-              <span class="value">{{ $t("home").info.workYear }}</span>
+              <span class="value">{{ $t("info.workYear") }}</span>
             </p>
             <p class="info-item">
               <span class="label iconfont yxrdianhua"></span>
-              <span class="value">{{ $t("home").info.phone }}</span>
+              <span class="value">{{ $t("info.phone") }}</span>
             </p>
             <p class="info-item">
               <span class="label iconfont yxryouxiang"></span>
-              <span class="value">{{ $t("home").info.email }}</span>
+              <span class="value">{{ $t("info.email") }}</span>
             </p>
             <p class="info-item">
               <span class="label iconfont yxrdizhi"></span>
-              <span class="value">{{ $t("home").info.address }}</span>
+              <span class="value">{{ $t("info.address") }}</span>
             </p>
           </div>
         </div>

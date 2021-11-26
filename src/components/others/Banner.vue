@@ -1,9 +1,9 @@
 <template>
-  <canvas :id="id"></canvas>
+  {{id}}
+  <!-- <canvas :id="id"></canvas> -->
 </template>
 <script lang="ts">
-import { ref, defineComponent, toRefs, reactive, onMounted } from 'vue';
-import moment from 'moment';
+import { ref, defineComponent, toRefs, reactive, onMounted, nextTick } from 'vue';
 interface Data {
   x: number
   y: number
@@ -14,7 +14,7 @@ interface Data {
 export default defineComponent({
   setup() {
     const state = reactive({
-      id: 'canvas' + moment().format("x"),
+      id: 'canvas' + new Date().getTime(),
       ctx: null,
       af: 0 as number,
     })
@@ -23,13 +23,14 @@ export default defineComponent({
     // methods
     const init = () => {
       // canvas.value = null;
-      const numLasers = 400;
-      canvas.value = document.getElementById(`${state.id}`)! as HTMLCanvasElement;
-      ctx.value = canvas.value.getContext("2d")!;
-      canvas.value.width = window.innerWidth;
-      canvas.value.height = window.innerHeight;
-      cancelAnimationFrame(state.af);
-      render(createLasers(numLasers));
+      // const numLasers = 400;
+      // canvas.value = document.getElementById(`${state.id}`)! as HTMLCanvasElement;
+      // console.log(canvas.value, document.getElementById(`${state.id}`), "canvas.value");
+      // ctx.value = canvas.value.getContext("2d")!;
+      // canvas.value.width = window.innerWidth;
+      // canvas.value.height = window.innerHeight;
+      // cancelAnimationFrame(state.af);
+      // render(createLasers(numLasers));
     }
 
     const createLasers = (n: number) => {
