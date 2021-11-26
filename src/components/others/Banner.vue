@@ -1,6 +1,5 @@
 <template>
-  {{id}}
-  <!-- <canvas :id="id"></canvas> -->
+  <canvas :id="id"></canvas>
 </template>
 <script lang="ts">
 import { ref, defineComponent, toRefs, reactive, onMounted, nextTick } from 'vue';
@@ -23,14 +22,13 @@ export default defineComponent({
     // methods
     const init = () => {
       // canvas.value = null;
-      // const numLasers = 400;
-      // canvas.value = document.getElementById(`${state.id}`)! as HTMLCanvasElement;
-      // console.log(canvas.value, document.getElementById(`${state.id}`), "canvas.value");
-      // ctx.value = canvas.value.getContext("2d")!;
-      // canvas.value.width = window.innerWidth;
-      // canvas.value.height = window.innerHeight;
-      // cancelAnimationFrame(state.af);
-      // render(createLasers(numLasers));
+      const numLasers = 400;
+      canvas.value = document.getElementById(`${state.id}`)! as HTMLCanvasElement;
+      ctx.value = canvas.value.getContext("2d")!;
+      canvas.value.width = window.innerWidth;
+      canvas.value.height = window.innerHeight;
+      cancelAnimationFrame(state.af);
+      render(createLasers(numLasers));
     }
 
     const createLasers = (n: number) => {
