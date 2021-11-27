@@ -1,0 +1,111 @@
+#home {
+  width: 65%;
+  margin: 0 auto;
+  padding: 20px;
+  .back-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url("../../assets/images/homebg.svg") 50% / cover no-repeat;
+    z-index: -1;
+  }
+  .home-contariner {
+    display: flex;
+    justify-content: space-between;
+  }
+  .contariner-box {
+    position: relative;
+    border-radius: 10px;
+    padding: 20px;
+    // background: $color-bgf;
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      filter: blur(20px);
+    }
+  }
+
+  .contariner-left {
+    width: 70%;
+    .article-item {
+      margin-bottom: 15px;
+      // display: inline-block;
+    }
+  }
+
+  .contariner-right {
+    width: 25%;
+    .info-my {
+      min-height: 400px;
+      padding-top: 30px;
+      img {
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        display: block;
+
+        &:hover {
+          transform: rotate(666turn);
+          transition-delay: 1s;
+          transition-property: all;
+          transition-duration: 59s;
+          transition-timing-function: cubic-bezier(0.34, 0, 0.84, 1);
+        }
+      }
+      .username {
+        text-align: center;
+        font-size: 18px;
+        letter-spacing: 2px;
+        margin-top: 15px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid $color-border;
+      }
+
+      .essential-info {
+        padding: 10px;
+        .info-title {
+          font-size: 16px;
+          letter-spacing: 1px;
+          line-height: 1.3em;
+          margin: 10px 0 10px;
+        }
+
+        .info-item {
+          line-height: 1.7em;
+          &:hover {
+            .label {
+              color: $color-primary;
+            }
+          }
+          .label {
+            font-size: 16px;
+            color: $color-gray6;
+            margin-right: 15px;
+            display: inline-block;
+          }
+          .value {
+            font-size: 16px;
+            color: $color-gray6;
+            margin-right: 10px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .hover-shadow {
+    box-shadow: 0 0 10px $color-shadow;
+    transition: all 0.3s;
+    &:hover {
+      box-shadow: 0 0 15px $color-hover-shadow;
+    }
+  }
+}

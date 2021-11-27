@@ -2,8 +2,7 @@
   <canvas :id="id"></canvas>
 </template>
 <script lang="ts">
-import { ref, defineComponent, toRefs, reactive, onMounted } from 'vue';
-import moment from 'moment';
+import { ref, defineComponent, toRefs, reactive, onMounted, nextTick } from 'vue';
 interface Data {
   x: number
   y: number
@@ -14,7 +13,7 @@ interface Data {
 export default defineComponent({
   setup() {
     const state = reactive({
-      id: 'canvas' + moment().format("x"),
+      id: 'canvas' + new Date().getTime(),
       ctx: null,
       af: 0 as number,
     })

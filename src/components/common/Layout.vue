@@ -12,7 +12,7 @@
       ></div>
     </transition>
     <div style="margin-top: 80px">
-      <router-view></router-view>
+      <router-view :key="route.fullPath" />
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@
 import Header from "@components/others/Header.vue";
 import HomeBanner from "@components/others/HomeBanner.vue";
 import { defineComponent, reactive, computed, watch, ref, toRefs } from "vue";
-import { useRouter, Router } from "vue-router";
+import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
 export default defineComponent({
   name: "Layout",
@@ -31,6 +31,7 @@ export default defineComponent({
   setup() {
     const router: Router = useRouter();
     const store = useStore();
+    const route = useRoute();
     const state = reactive({
       containerHeight: 0 as number,
       showBackTop: false as boolean,
@@ -131,6 +132,7 @@ export default defineComponent({
       onScroll,
       backTop,
       showBanner,
+      route,
     };
   },
 

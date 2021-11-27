@@ -1,7 +1,7 @@
 const state = {
   prefix: 'set_sail_',
   appInfo: {
-    appName: "尹旭冉-扬帆起航-未来可期",
+    appName: "XXX-扬帆起航-未来可期",
     appIcon: "icon-oabangong-copy"
   },
   windowScrollTop: 0,

@@ -68,7 +68,7 @@ export default {
         { label: '家乡', value: '河南-驻马店'},
         { label: '现居住地', value: '上海静安'},
         { label: '联系电话', value: '15638331203'},
-        { label: '邮箱', value: '913457727@qq.com'},
+        { label: '邮箱', value: '913457727\@qq.com'},
       ],
       skillList: [
         {
