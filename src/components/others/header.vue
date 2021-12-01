@@ -82,20 +82,18 @@
     }
   })
 </script>
+
 <style lang="scss" type="text/scss" scoped>
 $offsetW: 120px;
-.nav-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
 #home-header {
   height: 50px;
   width: 100%;
   background-color: $color-gray;
   background-size: 50%;
-  box-shadow: 0 0 10px $color-hover-shadow;
+  box-shadow: 0 5px 10px $color-hover-shadow;
   z-index: 999;
+  position: sticky;
+  top: 0;
   .header-main {
     width: 800px;
     height: 100%;

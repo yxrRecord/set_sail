@@ -41,9 +41,11 @@
 
   .contariner-right {
     width: 25%;
+    min-width: 250px;
     .info-my {
       min-height: 400px;
       padding-top: 30px;
+      overflow: hidden;
       img {
         border-radius: 50%;
         width: 80px;

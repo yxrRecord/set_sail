@@ -18,8 +18,8 @@
   </div>
 </template>
 <script lang="ts">
-import Header from "@components/others/Header.vue";
-import HomeBanner from "@components/others/HomeBanner.vue";
+import Header from "../others/Header.vue";
+import HomeBanner from "../others/HomeBanner.vue";
 import { defineComponent, reactive, computed, watch, ref, toRefs } from "vue";
 import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
@@ -40,7 +40,7 @@ export default defineComponent({
       scrollTime: null as number | null
     });
     let honeBanner = ref<HTMLElement>();
-    let honeHeader = ref<HTMLElement>();
+    // let honeHeader = ref<HTMLElement>();
 
     // cpmputed
     const showBanner = computed(() => {
@@ -64,7 +64,7 @@ export default defineComponent({
     // methods
     const init = () => {
       honeBanner.value = document.getElementById("home-banner")!;
-      honeHeader.value = document.getElementById("home-header")!;
+      // honeHeader.value = document.getElementById("home-header")!;
 
       // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
       window.addEventListener("scroll", onScroll);
@@ -79,15 +79,16 @@ export default defineComponent({
         document.body.scrollTop;
 
       store.dispatch("setWindowScrollTop", scrollTop);
-      // nav-fixed
-      let navTop = honeHeader.value ? honeHeader.value?.getBoundingClientRect().top : 0;
 
-      if (navTop <= 0)
+      // nav-fixed
+      // let navTop = honeHeader.value ? honeHeader.value?.getBoundingClientRect().top : 0;
+
+      /* if (navTop <= 0)
         honeHeader.value?.classList.add("nav-fixed");
 
       if (state.containerHeight - scrollTop > 0) {
         honeHeader.value?.classList.remove("nav-fixed");
-      }
+      } */
 
       // 控制返回顶部是否显示
       if (scrollTop > state.containerHeight + 300) {
@@ -101,7 +102,7 @@ export default defineComponent({
 
       let offset = Math.abs(Math.floor((scrollNumber - state.containerHeight) / count));
       state.scrollTime = setInterval(() => {
-        console.log(state.containerHeight);
+        // console.log(state.containerHeight);
         if (type === "bottom") {
           scrollNumber += offset;
           window.scrollTo(0, scrollNumber);

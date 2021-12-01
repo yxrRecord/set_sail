@@ -2,7 +2,7 @@
   "name": "set_sail",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host --mode development",
+    "start": "vite --host --mode development",
     "build": "vue-tsc --noEmit --skipLibCheck && vite build --mode production",
     "serve": "vite preview"
   },
