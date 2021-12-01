@@ -1,19 +1,19 @@
 <template>
   <div id="home">
     <div class="back-img"></div>
+    2222
   </div>
 </template>
 
 <script lang="ts">
-import { defineCustomElement, reactive, ref, toRefs } from 'vue';
-import { useI18n } from 'vue-i18n'
-export default defineCustomElement({
+import { defineComponent, reactive, ref, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n';
+import headPortrait from "@assets/images/headPortrait.jpg";
+export default defineComponent({
   name: "home",
   setup() {
     const { t } = useI18n();
-    const state = reactive({
-      headPortrait: "@assets/images/headPortrait.jpg",
-    })
+    const state = reactive({})
 
     // methods 
     const homeScroll = () => {

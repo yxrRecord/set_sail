@@ -1,13 +1,13 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
+  
   {
     path: '/',
     name: 'layout',
-    redirect: {
-      name: "home"
-    },
+    redirect: "home",
     component: () => import('@components/common/Layout.vue'),
+    // component: () => import('@pages/home/index.vue'),
     children: [
       {
         path: '/home',
@@ -18,7 +18,7 @@ const routes = [
         },
         component: () => import('@pages/home/index.vue')
       },
-     /*  {
+      /* {
         path: '/transition',
         name: 'transition',
         meta: {
@@ -66,7 +66,7 @@ const routes = [
     ]
   },
   /* {
-    path: '/',
+    path: '*',
     name: '404',
     component: () => import('@pages/404/index.vue')
   } */

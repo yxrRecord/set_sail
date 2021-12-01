@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <!-- <keep-alive> -->
-      <router-view></router-view>
-    <!-- </keep-alive> -->
+      <!-- v-slot="{ Component }" -->
+    <!-- <transition name="router-fade" mode="out-in"> -->
+    <router-view></router-view>
+    <!-- </transition> -->
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent, nextTick, onMounted, reactive, toRefs} from 'vue';
 import { useStore } from 'vuex';
 export default defineComponent({
@@ -29,7 +30,7 @@ export default defineComponent({
     })
     /* meyhods */
     const live2dInit = () => {
-      console.log(window.L2Dwidget, 'this.L2Dwidget')
+      // console.log(window.L2Dwidget, 'this.L2Dwidget')
       /* this.L2Dwidget.init({
         pluginRootPath: 'static/live2dw/',
         pluginJsPath: 'lib/',

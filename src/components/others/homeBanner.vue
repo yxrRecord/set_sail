@@ -5,7 +5,6 @@
         <!-- <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
           <img :src="item" alt="">
         </div> -->
-
       </section>
       <Banner class="canvas-banner" />
       <div class="copywriting">

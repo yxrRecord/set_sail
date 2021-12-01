@@ -11,8 +11,9 @@
         @click="backTop('top')"
       ></div>
     </transition>
+    
     <div style="margin-top: 80px">
-      <router-view :key="route.fullPath" />
+      <router-view :key="route.fullPath"></router-view>
     </div>
   </div>
 </template>
@@ -40,6 +41,7 @@ export default defineComponent({
     });
     let honeBanner = ref<HTMLElement>();
     let honeHeader = ref<HTMLElement>();
+
     // cpmputed
     const showBanner = computed(() => {
       return store.getters.showBanner;
