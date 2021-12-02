@@ -1,0 +1,149 @@
+#about {
+  width: 65%;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+  background-color: #fff;
+  .contariner-box {
+    position: relative;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .hover-shadow {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 20px $color-hover-shadow;
+    transition: all 0.3s;
+    &:hover {
+      box-shadow: 21px 21px 42px #bfbfbf, -21px -21px 42px #ffffff;
+    }
+  }
+
+  .info-me {
+    display: flex;
+    justify-content: space-between;
+  }
+  .basic-info {
+    // width: 35%;
+    img {
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto;
+      display: block;
+      margin-top: 20px;
+    }
+    h2 {
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 2px;
+      margin-top: 15px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid $color-border;
+      margin-bottom: 20px;
+    }
+    .info-item {
+      line-height: 1.6em;
+      margin: 3px;
+    }
+    .label {
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: 10px;
+      letter-spacing: 1px;
+      font-family: "方正小标宋简体";
+    }
+    .value {
+      font-size: 16px;
+      letter-spacing: 1px;
+      color: #444;
+    }
+
+    .QQ {
+      color: #1adcfb;
+    }
+    .weChat {
+      color: #07c160;
+    }
+    .github {
+      color: #24292e;
+    }
+    .jianshu {
+      color: #ea6f5a;
+      font-weight: 600;
+      font-family: "方正小标宋简体";
+    }
+    .juejin {
+      color: #007fff;
+      font-weight: 600;
+      font-family: "方正小标宋简体";
+    }
+
+    /* 图标 */
+    .website {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      .item-website {
+        margin: 15px 10px;
+        span {
+          display: inline-block;
+          font-size: 20px;
+          width: 50px;
+          height: 50px;
+          text-align: center;
+          line-height: 50px;
+          border-radius: 13px;
+          background: linear-gradient(145deg, #e6e6e6, #ffffff);
+          box-shadow: 8px 8px 16px #cccccc, -8px -8px 16px #ffffff;
+          transition: all 0.5s;
+          &:hover {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            box-shadow: 7px 7px 23px #b8b8b8, -7px -7px 23px #ffffff;
+          }
+        }
+      }
+    }
+  }
+
+  .tags {
+    // width: 60%;
+    flex: 1;
+    margin-left: 40px;
+    .progress-all {
+      .progress-item {
+        margin: 10px 0;
+        /* 进度条底色 */
+        .progress-bar {
+          margin: 10px 0;
+          height: 20px;
+          width: 100%;
+          background-color: #eee;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 7px 7px 23px #f0f0f0, -7px -7px 23px #ffffff;
+        }
+        .color-progress-bar {
+          width: 0;
+          height: 20px;
+          border-radius: 8px;
+          transition: all 1s;
+        }
+      }
+    }
+  }
+  .tags > h2,
+  .interest > h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .interest {
+    margin-top: 30px;
+    h2 {}
+  }
+}

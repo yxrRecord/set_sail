@@ -49,34 +49,26 @@
         return list
       })
 
-      const showNavBar = computed(() => {
-        return store.getters.appInfo.showNavBar
-      })
-
       // mounted
       const jumpPage = (item: Menu) => {
         if (route.name !== item.name) {
-          sessionStorage.setItem('currentRoute', item.url)
-          state.routeName = item.url
+          state.routeName = item.url;
           store.dispatch('setShowBanner', !state.routeNameList.includes(item.url))
-          store.dispatch('setShowNavBar', false)
           router.push({
             name: item.url
           })
         }
+
       }
 
       onMounted(() => {
-        sessionStorage.setItem('currentRoute', route.name);
         state.routeName = route.name;
         store.dispatch('setShowBanner', !state.routeNameList.includes(route.name));
-        store.dispatch('setShowNavBar', state.routeNameList.includes(route.name));
       })
       return {
         ...toRefs(state),
         jumpPage,
         menuList,
-        showNavBar,
         t
       }
     }

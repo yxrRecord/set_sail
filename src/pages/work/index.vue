@@ -26,51 +26,56 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref} from 'vue';
+import headPortrait from "@/assets/images/headPortrait.jpg"
+export default defineComponent({
   name: 'work',
-  data() {
+  setup() {
+    const workList = ref([
+      {
+        title: '123456',
+        companyProfile: '123456成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
+        content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含 Web,App，桌面端应用。',
+        startTime: '2019-09-09',
+        endTime: '至今',
+        post: '前端开发'
+      },
+      {
+        title: '上海道行网络科技有限公司',
+        companyProfile: 'XXXX成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
+        content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含',
+        startTime: '2019-04-10',
+        endTime: '2019-08-31',
+        post: 'web前端'
+      },
+      {
+        title: '上海萌果游戏有限公司',
+        companyProfile: 'XXXX成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
+        content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含',
+        startTime: '2018-08-10',
+        endTime: '2018-08-10',
+        post: 'web前端'
+      }
+    ])
+
     return {
-      workList: [
-        {
-          title: '中科软科技股份有限公司',
-          companyProfile: '中科软科技股份有限公司成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
-          content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含 Web,App，桌面端应用。',
-          startTime: '2019-09-09',
-          endTime: '至今',
-          post: '前端开发'
-        },
-        {
-          title: '上海道行网络科技有限公司',
-          companyProfile: '中科软科技股份有限公司成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
-          content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含',
-          startTime: '2019-04-10',
-          endTime: '2019-08-31',
-          post: 'web前端'
-        },
-        {
-          title: '上海萌果游戏有限公司',
-          companyProfile: '中科软科技股份有限公司成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
-          content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含',
-          startTime: '2018-08-10',
-          endTime: '2018-08-10',
-          post: 'web前端'
-        },
-        
-      ],
-      headPortrait: require('../../assets/images/headPortrait.jpg')
+      workList,
+      headPortrait
     }
-  },
-  mounted() {
-    
-  },
-  methods: {
-    
   }
-}
+})
 </script>
 
-<style lang="scss" scoped>
+<style type="text/scss" lang="scss" scoped>
+/* @keyframes timeLine {
+  form {
+    height: 0px;
+  }
+  to {
+    height: 100vh;
+  }
+} */
 .time-line {
   position: fixed;
   background-color: #000;
@@ -81,14 +86,7 @@ export default {
   z-index: 10;
   animation: timeLine 1.5s ease-in forwards;
 }
-/* @keyframes timeLine {
-    form {
-      height: 0px;
-    }
-    to {
-      height: 100vh;
-    }
-} */
+
 #work {
   width: 65%;
   margin: 0 auto;

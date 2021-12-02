@@ -1,10 +1,5 @@
 <template>
-  <div id="app">
-      <!-- v-slot="{ Component }" -->
-    <!-- <transition name="router-fade" mode="out-in"> -->
-    <router-view></router-view>
-    <!-- </transition> -->
-  </div>
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
@@ -14,17 +9,6 @@ import { useRoute } from 'vue-router';
 import 'wowjs';
 export default defineComponent({
   name: 'App',
-  /* watch: {
-    $route(to, from) {
-      this.$nextTick(() => {
-        new this.$wow.WOW({
-          // mobile: true,
-          live: true,
-          // scrollContainer: '.common-layout-wrapper'
-        }).init()
-      })
-    }
-  }, */
   setup() {
     const store = useStore();
     const route = useRoute();

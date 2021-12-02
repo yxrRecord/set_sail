@@ -18,7 +18,7 @@ const routes = [
         },
         component: () => import('@pages/home/index.vue')
       },
-      /* {
+      {
         path: '/transition',
         name: 'transition',
         meta: {
@@ -62,7 +62,7 @@ const routes = [
           showBanner: false
         },
         component: () => import('@pages/about/index.vue')
-      }, */
+      },
     ]
   },
   /* {
@@ -75,7 +75,7 @@ const routes = [
 // 在 Vue-router新版本中，需要使用createRouter来创建路由
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
 })
 
 export default router;

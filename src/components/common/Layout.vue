@@ -1,17 +1,18 @@
 <template>
   <div class="common-layout-wrapper">
-    <HomeBanner @backTop="backTop" v-if="showBanner" />
+    <!-- @scrollToTop="scrollToTop" -->
+    <HomeBanner v-if="showBanner" ref="homeBanner" />
     <Header />
+
     <transition name="fade">
       <div
         v-show="showBackTop"
         class="back-top pointer iconfont yxricon-test"
         :class="{ 'an-back-top': showBackTop }"
         key="back-top"
-        @click="backTop('top')"
+        @click="scrollToTop(0)"
       ></div>
     </transition>
-    
     <div style="margin-top: 80px">
       <router-view :key="route.fullPath"></router-view>
     </div>
@@ -20,7 +21,7 @@
 <script lang="ts">
 import Header from "../others/Header.vue";
 import HomeBanner from "../others/HomeBanner.vue";
-import { defineComponent, reactive, computed, watch, ref, toRefs } from "vue";
+import { defineComponent, reactive, computed, watch, ref, toRefs, onMounted } from "vue";
 import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
 export default defineComponent({
@@ -40,21 +41,28 @@ export default defineComponent({
       scrollTime: null as number | null
     });
     let honeBanner = ref<HTMLElement>();
+    let bannerHeight = ref(0);
     // let honeHeader = ref<HTMLElement>();
 
     // cpmputed
     const showBanner = computed(() => {
+      console.log(store.getters.showBanner, "123");
+      
       return store.getters.showBanner;
     });
 
+    // ref
+    const homeBanner = ref();
+
     // watch
     watch(() => router,
+      // 还原高度 
       (to: any, from: any) => {
-        if (state.routeNameList.includes(to.name)) {
+        /* if (state.routeNameList.includes(to.name)) {
           state.containerHeight = 0;
           return;
         }
-        state.containerHeight = Math.floor(honeBanner.value!.clientHeight);
+        state.containerHeight = Math.floor(honeBanner.value!.clientHeight); */
       },
       {
         deep: true,
@@ -63,32 +71,21 @@ export default defineComponent({
 
     // methods
     const init = () => {
-      honeBanner.value = document.getElementById("home-banner")!;
+      if (homeBanner.value) {
+        state.containerHeight = homeBanner.value.$el.clientHeight
+      }
       // honeHeader.value = document.getElementById("home-header")!;
-
       // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
       window.addEventListener("scroll", onScroll);
     };
 
     const onScroll = () => {
-      state.containerHeight = honeBanner.value ? Math.floor(honeBanner.value.clientHeight) : 0;
+      // state.containerHeight = honeBanner.value ? Math.floor(honeBanner.value.clientHeight) : 0;
       // 控制 header 组件显示与透明度
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-
-      store.dispatch("setWindowScrollTop", scrollTop);
-
-      // nav-fixed
-      // let navTop = honeHeader.value ? honeHeader.value?.getBoundingClientRect().top : 0;
-
-      /* if (navTop <= 0)
-        honeHeader.value?.classList.add("nav-fixed");
-
-      if (state.containerHeight - scrollTop > 0) {
-        honeHeader.value?.classList.remove("nav-fixed");
-      } */
 
       // 控制返回顶部是否显示
       if (scrollTop > state.containerHeight + 300) {
@@ -96,46 +93,44 @@ export default defineComponent({
       } else state.showBackTop = false;
     };
 
-    const backTop = (type: string) => {
-      let scrollNumber = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-      let count = type === "bottom" ? 15 : 20;
-
-      let offset = Math.abs(Math.floor((scrollNumber - state.containerHeight) / count));
-      state.scrollTime = setInterval(() => {
-        // console.log(state.containerHeight);
-        if (type === "bottom") {
-          scrollNumber += offset;
-          window.scrollTo(0, scrollNumber);
-          console.log(
-            scrollNumber,
-            state.containerHeight,
-            scrollNumber >= state.containerHeight
-          );
-          if (scrollNumber >= state.containerHeight) {
-            window.scrollTo(0, state.containerHeight + 1);
-            state.scrollTime ? clearInterval(state.scrollTime) : false;
-          }
-        } else {
-          if (scrollNumber <= offset + state.containerHeight) {
-            state.scrollTime ? clearInterval(state.scrollTime) : false;
-            window.scrollTo(0, state.containerHeight + 1);
-          } else {
-            scrollNumber -= offset;
-            console.log(scrollNumber, "scrollNumberscrollNumber");
-            window.scrollTo(0, scrollNumber);
-          }
+    const scrollToTop = (position: number) => {
+      // 使用requestAnimationFrame，如果没有则使用setTimeOut
+      if(!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback) {
+          return setTimeout(callback, 20)
         }
-      }, 10);
-    };
+      }
 
-    init();
+      // 获取当前元素滚动的距离
+      let scrollTopDistance = document.documentElement.scrollTop || document.body.scrollTop;
+
+      const smoothScroll = () => {
+        // 如果你要滚到顶部，那么position传过来的就是0，下面这个distance肯定就是负值。
+        let distance = position - scrollTopDistance;
+        // 每次滚动的距离要不一样，制造一个缓冲效果
+        scrollTopDistance = scrollTopDistance + distance / 5;
+        // 判断条件
+        if (Math.abs(distance) < 1) {
+          window.scrollTo(0, position);
+        } else {
+          window.scrollTo(0, scrollTopDistance);
+          requestAnimationFrame(smoothScroll);
+        }
+      }
+      smoothScroll();
+    }
+
+    onMounted(() => {
+      init()
+    })
 
     return {
       ...toRefs(state),
       onScroll,
-      backTop,
+      scrollToTop,
       showBanner,
       route,
+      homeBanner,
     };
   },
 
