@@ -35,14 +35,18 @@
     width: 70%;
     .article-item {
       margin-bottom: 15px;
-      // display: inline-block;
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    .animate__slideInLeft {
+      opacity: 1;
     }
   }
 
   .contariner-right {
     width: 25%;
     min-width: 250px;
-    .info-my {
+    .my-info {
       min-height: 400px;
       padding-top: 30px;
       overflow: hidden;
@@ -100,6 +104,11 @@
           }
         }
       }
+    }
+    .info-fixed {
+      position: sticky;
+      position: fixed;
+      top: 130px;
     }
   }
 

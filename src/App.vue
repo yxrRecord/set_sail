@@ -35,7 +35,7 @@ export default defineComponent({
 
     /* watch */
     watch(() => route.path, () => {
-      if (window && window?.WOW) {
+      /* if (window && window?.WOW) {
         const wow = new window.WOW({
           // mobile: true,
           animateClass: 'animated', // 默认值 animated
@@ -44,7 +44,7 @@ export default defineComponent({
           // scrollContainer: '.common-layout-wrapper'
         })
         wow.init()
-      }
+      } */
     })
     onMounted(() => {
       document.querySelectorAll('title')[0].innerHTML = store.getters.appInfo.appName;

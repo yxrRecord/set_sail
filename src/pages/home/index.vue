@@ -4,11 +4,9 @@
     <div class="home-contariner">
       <div class="contariner-left">
         <div
-          class="article-item hover-shadow contariner-box wow animate__slideInLeft animate__animated"
+          class="article-item hover-shadow contariner-box animate__animated"
           v-for="item in 30"
           :key="item"
-          data-wow-duration="1s"
-          data-wow-delay="0.1s"
         >
           <div class="noveltext">
             对林椿来说，一切都是那么的新鲜。<br /><br />
@@ -19,9 +17,8 @@
       </div>
       <div class="contariner-right">
         <div
-          class="info-my hover-shadow contariner-box wow animate__bounceInRight animate__animated"
-          data-wow-duration="1s"
-          data-wow-delay="1s"
+          ref="myInfo"
+          class="my-info hover-shadow contariner-box animate__animated"
         >
           <img class="cover" :src="headPortrait" alt="头像" />
           <p class="username">{{ t("info.username") }}</p>
@@ -50,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onDeactivated, onMounted, reactive, ref, toRefs } from 'vue';
+import { defineComponent, nextTick, onDeactivated, onMounted, reactive, ref, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import headPortrait from "@assets/images/headPortrait.jpg";
 export default defineComponent({
@@ -59,29 +56,37 @@ export default defineComponent({
     const { t } = useI18n();
     const state = reactive({});
     const io = ref<IntersectionObserver>();
+    const myInfo = ref();
 
     // methods 
     const homeScroll = () => {
-      // console.log(
-      //   document.querySelector(".info-my").clientHeight,
-      //   "document.querySelector('.info-my')"
-      // );
+      // console.log(document.getElementById('home')!.scrollTop, 222);
+      console.log(myInfo.value.getClientRects()[0]);
+      if (myInfo.value.getClientRects()[0].top <= 130) {
+        myInfo.value.classList.add('info-fixed');
+      } else {
+        myInfo.value.classList.remove('info-fixed');
+      }
     }
 
-    onMounted(() => {
+    const init = () => {
       io.value = new IntersectionObserver((entries: IntersectionObserverEntryInit[]) => {
-          entries.forEach((item: any) => {
-            if (item.intersectionRatio < 0) {
+          entries.forEach((item: IntersectionObserverEntryInit) => {
+            if (item.intersectionRatio > 0) {
               // 添加类名
-              item.target.classList.add('test');
+              item.target.classList.add('animate__slideInLeft');
               io.value?.unobserve(item.target);
             }
           })
-          console.log(entries, "entries");
         }
       );
       const doms = document.querySelectorAll('.article-item');
       doms.forEach((dom: any) => io.value?.observe(dom));
+    }
+
+    onMounted(() => {
+      init();
+      window.addEventListener('scroll', homeScroll)
     })
 
     onDeactivated(() => {
@@ -92,6 +97,7 @@ export default defineComponent({
       ...toRefs(state),
       homeScroll,
       headPortrait,
+      myInfo,
       t,
     }
   }
