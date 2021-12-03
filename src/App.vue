@@ -6,7 +6,6 @@
 import {defineComponent, nextTick, onMounted, reactive, toRefs, watch} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import 'wowjs';
 export default defineComponent({
   name: 'App',
   setup() {
