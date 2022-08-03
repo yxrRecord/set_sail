@@ -21,7 +21,7 @@
           class="my-info hover-shadow contariner-box animate__animated"
         >
           <img class="cover" :src="headPortrait" alt="头像" />
-          <p class="username">{{ t("info.username") }}</p>
+          <!-- <p class="username">{{ t("info.username") }}</p>
           <div class="essential-info">
             <p class="info-item">
               <span class="label iconfont yxrgongzuotai"></span>
@@ -39,7 +39,7 @@
               <span class="label iconfont yxrdizhi"></span>
               <span class="value">{{ t("info.address") }}</span>
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -48,12 +48,12 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, onDeactivated, onMounted, reactive, ref, toRefs } from 'vue';
-import { useI18n } from 'vue-i18n';
+// import { useI18n } from 'vue-i18n';
 import headPortrait from "@assets/images/headPortrait.jpg";
 export default defineComponent({
   name: "home",
   setup() {
-    const { t } = useI18n();
+    // const { t } = useI18n();
     const state = reactive({});
     const io = ref<IntersectionObserver>();
     const myInfo = ref();
@@ -98,7 +98,7 @@ export default defineComponent({
       homeScroll,
       headPortrait,
       myInfo,
-      t,
+      // t,
     }
   }
 })

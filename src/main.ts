@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router'; // 引入路由
 import config from "./config"; // 通用配置文件
 import store from './store';
-import i18n from './lang'; // 引入 语言
+// import i18n from './language'; // 引入 语言
 import { done, start } from "nprogress";
 import "nprogress/nprogress.css";
 
@@ -23,6 +23,6 @@ const app = createApp(App);
 // 配置全局属性
 app.config.globalProperties.$config = config;
 
-app.use(router).use(i18n).use(store).mount('#app');
+app.use(router).use(store).mount('#app');
 
 

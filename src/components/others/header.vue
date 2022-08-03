@@ -23,13 +23,13 @@
   import { computed, defineComponent, onMounted, toRefs, reactive, getCurrentInstance, nextTick } from 'vue';
   import { useRoute, useRouter, RouteLocationNormalized } from "vue-router";
   import { useStore } from 'vuex';
-  import { useI18n } from 'vue-i18n';
+  // import { useI18n } from 'vue-i18n';
   import { Menu } from '@types'
   export default defineComponent({
     name: "Header",
     setup() {
       // const { proxy } = getCurrentInstance();
-      const { t } = useI18n();
+      // const { t } = useI18n();
       const route: any = useRoute();
       const router = useRouter();
       const store = useStore();
@@ -45,7 +45,7 @@
           { icon: '1', name: 'Work', hover: false, url: 'work'},
           { icon: '1', name: 'Project', hover: false, url: 'project'},
           { icon: '1', name: 'About', hover: false, url: 'about'}];
-        list.forEach((item, index) => item.name = t('menuList', index))
+        // list.forEach((item, index) => item.name = t('menuList', index))
         return list
       })
 
@@ -69,7 +69,7 @@
         ...toRefs(state),
         jumpPage,
         menuList,
-        t
+        // t
       }
     }
   })
