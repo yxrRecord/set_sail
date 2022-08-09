@@ -14,7 +14,7 @@
             @click="jumpPage(item)"
             :class="[
               `menu-item-${index + 1}`,
-              routeName === item.url ? 'currentPage' : '',
+              state.routeName === item.url ? 'currentPage' : '',
             ]"
           >
             <span

@@ -19,8 +19,8 @@
   </div>
 </template>
 <script lang="ts">
-import Header from "../others/Header.vue";
-import HomeBanner from "../others/HomeBanner.vue";
+import Header from "../others/Header";
+import HomeBanner from "../others/HomeBanner";
 import { defineComponent, reactive, computed, watch, ref, toRefs, onMounted } from "vue";
 import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
@@ -46,8 +46,6 @@ export default defineComponent({
 
     // cpmputed
     const showBanner = computed(() => {
-      console.log(store.getters.showBanner, "123");
-      
       return store.getters.showBanner;
     });
 

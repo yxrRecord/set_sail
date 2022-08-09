@@ -1,5 +1,5 @@
 <template>
-  <canvas :id="id"></canvas>
+  <canvas :id="state.id"></canvas>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";

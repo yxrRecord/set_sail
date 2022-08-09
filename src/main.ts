@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import App from './App.vue';
+import App from './App';
 import router from './router'; // 引入路由
 import config from "./config"; // 通用配置文件
 import store from './store';

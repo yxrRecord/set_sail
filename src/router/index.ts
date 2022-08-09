@@ -1,12 +1,11 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  
   {
     path: '/',
     name: 'layout',
     redirect: "home",
-    component: () => import('@components/common/Layout.vue'),
+    component: () => import('@components/common/Layout'),
     children: [
       {
         path: '/home',
@@ -15,7 +14,7 @@ const routes = [
           title: '首页',
           showBanner: true
         },
-        component: () => import('@pages/home/index.vue')
+        component: () => import('@pages/home/index')
       },
       {
         path: '/test',
@@ -24,7 +23,7 @@ const routes = [
           title: 'test',
           showBanner: true
         },
-        component: () => import('@pages/test/index.vue')
+        component: () => import('@pages/test/index')
       },
       {
         path: '/transition',
@@ -33,7 +32,7 @@ const routes = [
           title: '过渡',
           showBanner: true
         },
-        component: () => import('@pages/home/transition.vue')
+        component: () => import('@pages/home/transition')
       },
       {
         path: '/skill',
@@ -42,7 +41,7 @@ const routes = [
           title: '技能',
           showBanner: false
         },
-        component: () => import('@pages/skill/index.vue')
+        component: () => import('@pages/skill/index')
       },
       {
         path: '/work',
@@ -51,7 +50,7 @@ const routes = [
           title: '工作',
           showBanner: false
         },
-        component: () => import('@pages/work/index.vue')
+        component: () => import('@pages/work/index')
       },
       {
         path: '/project',
@@ -60,7 +59,7 @@ const routes = [
           title: '项目',
           showBanner: false
         },
-        component: () => import('@pages/project/index.vue')
+        component: () => import('@pages/project/index')
       },
       {
         path: '/about',
@@ -69,15 +68,15 @@ const routes = [
           title: '关于我',
           showBanner: false
         },
-        component: () => import('@pages/about/index.vue')
-      },
+        component: () => import('@pages/about/index')
+      }
     ]
   }
 ];
 
 // 在 Vue-router新版本中，需要使用createRouter来创建路由
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 })
 

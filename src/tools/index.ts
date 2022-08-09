@@ -9,21 +9,6 @@ let localObj = {};  //保存localstorage对象
 
 import { validateMessage, validateMethods } from "./validateData";
 import moment from "moment";
-/* import jpeg from "../assets/img/file/jpeg.png";
-import jpg from "../assets/img/file/jpg.png";
-import gif from "../assets/img/file/gif.png";
-import png from "../assets/img/file/png.png";
-import xls from "../assets/img/file/xls.png";
-import xlsx from "../assets/img/file/xlsx.png";
-import docx from "../assets/img/file/docx.png";
-import doc from "../assets/img/file/doc.png";
-import pdf from "../assets/img/file/pdf.png";
-import txt from "../assets/img/file/txt.png";
-import zip from "../assets/img/file/zip.png";
-import rar from "../assets/img/file/rar.png";
-import mp3 from "../assets/img/file/mp3.png";
-import mp4 from "../assets/img/file/mp4.png";
-import file from "../assets/img/file/file.png"; */
 
 export interface ToolsInterface {
   validRules(rules: any, form: any): void
@@ -305,61 +290,6 @@ class Tools implements ToolsInterface {
   formatDate = <T>(date: T, formatter: string = "YYYY-MM-DD"): string => {
     return moment(date).format(formatter)
   }
-  /**
-   * 根据文件名后缀获取文件图标
-   * @param fileName 文件名
-   */
-  getFileIcon = (fileName: string): string => {
-    let fileType = fileName && fileName.substr(fileName.lastIndexOf(".") + 1).toLowerCase();
-    /* switch (fileType) {
-      case "jpeg":
-        return jpeg;
-        break;
-      case "jpg":
-        return jpg;
-        break;
-      case "gif":
-        return gif;
-        break;
-      case "png":
-        return png;
-        break;
-      case "xls":
-        return xls;
-        break;
-      case "xlsx":
-        return xlsx;
-        break;
-      case "docx":
-        return docx;
-        break;
-      case "doc":
-        return doc;
-        break;
-      case "pdf":
-        return pdf;
-        break;
-      case "txt":
-        return txt;
-        break;
-      case "zip":
-        return zip;
-        break;
-      case "rar":
-        return rar;
-        break;
-      case "mp3":
-        return mp3;
-        break;
-      case "mp4":
-        return mp4;
-        break;
-      default:
-        return file;
-        break;
-    } */
-    return ''
-  }
 
   /**
    * 生成uid
@@ -462,38 +392,36 @@ class Tools implements ToolsInterface {
   }
 
   setTextAnimate = (dom: HTMLElement, time: number = 0.5) => {
-    if (dom) {
-      let content = dom.textContent?.split('')
-      dom.textContent = ""
-      content?.forEach((item, index) => {
-          let span = document.createElement('span')
-          span.textContent = item
-          span.classList.add('animation-text')
-          span.style.display = 'inline-block'
-          span.style.opacity = '0'
-          span.style.animation = `landIn .5s ease-out ${index * time}s both`
-          // span.style.animationDelay = `${index * time}s`
-          dom.append(span)
-      })
-    }
+    if (!dom) return
+    let content = dom.textContent?.split('')
+    dom.textContent = ""
+    content?.forEach((item, index) => {
+      let span = document.createElement('span')
+      span.textContent = item
+      span.classList.add('animation-text')
+      span.style.display = 'inline-block'
+      span.style.opacity = '0'
+      span.style.animation = `landIn .5s ease-out ${index * time}s both`
+      // span.style.animationDelay = `${index * time}s`
+      dom.append(span)
+    })
   }
   // 从中间开始
   setTextAnimateTwo = (dom: HTMLElement, time: number = 0.5) => {
-    if (dom) {
-      let content = dom.textContent?.split('')
-      dom.textContent = ""
-      let middle: number = 1
-      if (content) {
-        middle = content.filter(e => e != " ").length / 2
-      }
-      content?.forEach((item, index) => {
-          let span = document.createElement('span')
-          span.textContent = item
-          span.classList.add('animation-text-two')
-          span.style.animationDelay = `${time + Math.abs(index - middle) * 0.1}s`
-          dom.append(span)
-      })
+    if (!dom) return
+    let content = dom.textContent?.split('')
+    dom.textContent = ""
+    let middle: number = 1
+    if (content) {
+      middle = content.filter(e => e != " ").length / 2
     }
+    content?.forEach((item, index) => {
+      let span = document.createElement('span')
+      span.textContent = item
+      span.classList.add('animation-text-two')
+      span.style.animationDelay = `${time + Math.abs(index - middle) * 0.1}s`
+      dom.append(span)
+    })
   }
 }
 export default new Tools()

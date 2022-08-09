@@ -2,6 +2,7 @@ import {ConfigEnv, defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
+// import eslintPlugin from 'vite-plugin-eslint'
 import viteImagemin from 'vite-plugin-imagemin'
 import compressPlugin from 'vite-plugin-compression'
 import {resolve} from 'path'
@@ -20,6 +21,10 @@ export default ({command, mode}: ConfigEnv) => {
         plugins: [
             vue(),
             vueJsx(),
+            // // 添加下面这块
+            // eslintPlugin({
+            //     include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
+            // }),
             legacy({
                 targets: ['ie >= 11'],
                 additionalLegacyPolyfills: ['regenerator-runtime/runtime']
@@ -73,13 +78,13 @@ export default ({command, mode}: ConfigEnv) => {
                         }
                     }
                 }
-            },
-            terserOptions: {
-                compress: {
-                    drop_console: false,
-                    drop_debugger: false
-                }
             }
+            // terserOptions: {
+            //     compress: {
+            //         drop_console: false,
+            //         drop_debugger: false
+            //     }
+            // }
         },
         resolve: {
             alias: {  //添加别名
@@ -94,7 +99,8 @@ export default ({command, mode}: ConfigEnv) => {
                 '@pages': resolve(__dirname, 'src/pages'),
                 '@types': resolve(__dirname, 'src/types')
                 // ...alias
-            }
+            },
+            extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
         },
         css: {
             // css预处理器
@@ -109,7 +115,10 @@ export default ({command, mode}: ConfigEnv) => {
             include: ["jquery"]
         },
         server: {
-            hmr: {overlay: false},
+            host: 'localhost',
+            hmr: true,
+            force: true,
+            port: 9527,
             proxy: {
                 '/api': {
                     target: env.VITE_APP_BASE_API,

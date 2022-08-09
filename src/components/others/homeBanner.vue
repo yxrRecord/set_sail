@@ -6,12 +6,12 @@
           <img :src="item" alt="">
         </div> -->
     </section>
-    <Banner class="canvas-banner" />
+    <Banner class="canvas-banner"/>
     <div class="copywriting">
       <h2 class="hello-text">你 若 成 风 YXR</h2>
       <p class="edit-text-box word-wrap">
         <span class="text-before">/* </span>
-        <span class="edit-text">{{ showMessage }}</span>
+        <span class="edit-text">{{ state.showMessage }}</span>
         <span class="fade-away line-beat">|</span>
         <span class="text-after"> */</span>
       </p>
@@ -26,17 +26,15 @@
 <script lang="ts" setup>
 import {
   ref,
-  defineComponent,
   onMounted,
-  toRefs,
   reactive,
   nextTick,
 } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import vuex from "vuex";
-import Banner from "@components/others/Banner.vue";
+import {useRoute, useRouter} from "vue-router";
+import Banner from "@components/others/Banner";
 import currentImg from '@assets/images/banner1.jpg'
 import Tools from "@tools";
+
 const state = reactive({
   text: [
     "你活着的每一天都是之后日子里最年轻的时候。",
@@ -55,7 +53,7 @@ const messageHtml = ref<HTMLElement>();
 onMounted(() => {
   nextTick(() => {
     const dom: HTMLCollectionOf<Element> =
-      document.getElementsByClassName("hello-text");
+        document.getElementsByClassName("hello-text");
     Tools.setTextAnimate(dom["0"] as HTMLElement, 0.1);
     beginTextAnimate();
   });
@@ -64,18 +62,18 @@ onMounted(() => {
 // methods
 const init = () => {
   const dom: HTMLElement = document.getElementsByClassName(
-    "banner-box"
+      "banner-box"
   )[0] as HTMLElement;
   const width: string = document
-    .querySelectorAll(".banner")[0]
-    .getClientRects()[0]
-    .width?.toFixed(0);
+      .querySelectorAll(".banner")[0]
+      .getClientRects()[0]
+      .width?.toFixed(0);
 
   if (state.bannerTime) clearInterval(state.bannerTime);
 
   state.bannerTime = setInterval((item: any) => {
     dom.style.transform = `translateX(-${
-      state.currentBannerIndex * Number(width)
+        state.currentBannerIndex * Number(width)
     }px)`;
     if (state.currentBannerIndex > state.bannerList.length - 1) {
       setTimeout(() => {
@@ -102,11 +100,10 @@ const beginTextAnimate = () => {
     removeText();
   }
 };
-
 const addText = (time = 200) => {
   let text = state.text[state.currentIndex].split("");
   let textLen = text.length,
-    tempText: string[] = [];
+      tempText: string[] = [];
   let index = 0;
   state.timer = setInterval(() => {
     tempText.push(text[index]);
@@ -114,6 +111,7 @@ const addText = (time = 200) => {
     index++;
     if (index >= textLen) {
       if (state.timer) clearInterval(state.timer);
+
       setTimeout(() => {
         removeText();
       }, 600);
@@ -123,7 +121,7 @@ const addText = (time = 200) => {
 
 const removeText = (time = 100) => {
   let tempText: string[] = state.text[state.currentIndex].split(""),
-    index: number = state.showMessage.length;
+      index: number = state.showMessage.length;
 
   if (state.timer) clearInterval(state.timer);
 
@@ -160,6 +158,7 @@ const removeText = (time = 100) => {
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 1;
   }
+
   .banner-box {
     position: absolute;
     height: 100%;
@@ -172,14 +171,17 @@ const removeText = (time = 100) => {
     background-attachment: fixed;
     background-repeat: no-repeat;
   }
+
   /* canvas */
   .canvas-banner {
     position: absolute;
     z-index: 2;
   }
+
   .transition-box {
     transition: all 1s;
   }
+
   /* 背景图部分 文字 */
   .copywriting {
     position: absolute;
@@ -188,15 +190,18 @@ const removeText = (time = 100) => {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
+
     h2 {
       font-size: 40px;
       color: $color-grayf;
       text-align: center;
     }
+
     .hello-text {
       font-family: "qianduKaiTI";
       letter-spacing: 2px;
     }
+
     .edit-text-box {
       display: flex;
       justify-content: center;
@@ -208,21 +213,26 @@ const removeText = (time = 100) => {
       line-height: 30px;
       color: $color-grayf;
       white-space: nowrap;
+
       .text-before {
         margin-right: 10px;
       }
+
       .text-after {
         margin-left: 10px;
       }
+
       .line-beat {
         margin-left: 10px;
         font-size: 16px;
       }
+
       .edit-text {
         white-space: nowrap;
       }
     }
   }
+
   /* 按钮 链接 */
   .home-bottom-link {
     position: absolute;
@@ -232,10 +242,12 @@ const removeText = (time = 100) => {
     transform: translateX(-50%);
     text-align: center;
     z-index: 10;
+
     p {
       line-height: 40px;
       animation: topBottom 2s linear infinite;
     }
+
     .iconfont {
       display: inline-block;
       color: $color-grayf;
@@ -245,6 +257,7 @@ const removeText = (time = 100) => {
     }
   }
 }
+
 @keyframes topBottom {
   0% {
     margin-bottom: 20px;
