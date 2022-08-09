@@ -1,154 +1,148 @@
 <template>
-   <header id="home-banner" class="banner">
-      <section class="banner-box" :style="`background-image: url(${currentImg})`">
-        <!-- <img :src="bannerList[0]" alt=""> -->
-        <!-- <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
+  <header id="home-banner" class="banner">
+    <section class="banner-box" :style="`background-image: url(${currentImg})`">
+      <!-- <img :src="bannerList[0]" alt=""> -->
+      <!-- <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
           <img :src="item" alt="">
         </div> -->
-      </section>
-      <Banner class="canvas-banner" />
-      <div class="copywriting">
-        <h2 class="hello-text">  你 若 成 风 YXR  </h2>
-        <p class="edit-text-box word-wrap">  
-          <span class="text-before">/* </span>
-          <span class="edit-text">{{showMessage}}</span>
-          <span class="fade-away line-beat">|</span>
-          <span class="text-after"> */</span>
-        </p>
-      </div>
-      <div class="home-bottom-link pointer" @click="$emit('backTop', 'bottom')">
-        <p >
-          <span class="iconfont yxrfanhui1"></span>
-        </p>
-      </div>
-    </header>  
+    </section>
+    <Banner class="canvas-banner" />
+    <div class="copywriting">
+      <h2 class="hello-text">你 若 成 风 YXR</h2>
+      <p class="edit-text-box word-wrap">
+        <span class="text-before">/* </span>
+        <span class="edit-text">{{ showMessage }}</span>
+        <span class="fade-away line-beat">|</span>
+        <span class="text-after"> */</span>
+      </p>
+    </div>
+    <div class="home-bottom-link pointer" @click="$emit('backTop', 'bottom')">
+      <p>
+        <span class="iconfont yxrfanhui1"></span>
+      </p>
+    </div>
+  </header>
 </template>
-<script lang="ts">
-  import { ref, defineComponent, onMounted, toRefs, reactive, nextTick } from 'vue';
-  import { useRoute, useRouter } from "vue-router";
-  import vuex from 'vuex';
-  import Banner from '@components/others/Banner.vue'
-  import Tools from '@tools';
-  import banner1 from "@assets/images/banner1.jpg"
-  export default defineComponent({
-    name: "homeBanner",
-    components: {
-      Banner
-    },
-    setup() {
-      const state = reactive({
-        text: [
-          '你活着的每一天都是之后日子里最年轻的时候。',
-          '即使道路坎坷不平，车轮也要前进；即使江河波涛汹涌，船只也航行。',
-          '问候不必须要慎重其事，但必须要真诚感人。'
-        ],
-        showMessage: '',
-        currentIndex: 0,
-        type: 1,
-        timer: null as number | null,
-        currentImg: banner1,
-        bannerList: [
-          // require('@/assets/images/banner1.jpg'),
-          // require('@/assets/images/banner2.jpg'),
-          // require('@/assets/images/banner3.jpg'),
-          // require('@/assets/images/banner4.jpg'),
-          // require('@/assets/images/banner5.jpg'),
-          // require('@/assets/images/banner1.jpg'),
-          // '../../assets/images/banner1.jpg',
-        ],
-        bannerTime: null as number | null,
-        currentBannerIndex: 0
-      })
-      const messageHtml = ref<HTMLElement>();
-      onMounted(() => {
-       nextTick(() => {
-          const dom: HTMLCollectionOf<Element>  = document.getElementsByClassName('hello-text');
-          Tools.setTextAnimate(dom['0'] as HTMLElement, 0.1)
-          beginTextAnimate();
-        })
-      })
+<script lang="ts" setup>
+import {
+  ref,
+  defineComponent,
+  onMounted,
+  toRefs,
+  reactive,
+  nextTick,
+} from "vue";
+import { useRoute, useRouter } from "vue-router";
+import vuex from "vuex";
+import Banner from "@components/others/Banner.vue";
+import currentImg from '@assets/images/banner1.jpg'
+import Tools from "@tools";
+const state = reactive({
+  text: [
+    "你活着的每一天都是之后日子里最年轻的时候。",
+    "即使道路坎坷不平，车轮也要前进；即使江河波涛汹涌，船只也航行。",
+    "问候不必须要慎重其事，但必须要真诚感人。",
+  ],
+  showMessage: "",
+  currentIndex: 0,
+  type: 1,
+  timer: null as number | null,
+  bannerList: [],
+  bannerTime: null as number | null,
+  currentBannerIndex: 0,
+});
+const messageHtml = ref<HTMLElement>();
+onMounted(() => {
+  nextTick(() => {
+    const dom: HTMLCollectionOf<Element> =
+      document.getElementsByClassName("hello-text");
+    Tools.setTextAnimate(dom["0"] as HTMLElement, 0.1);
+    beginTextAnimate();
+  });
+});
 
-      // methods
-      const init = () => {
-        const dom: HTMLElement = document.getElementsByClassName('banner-box')[0] as HTMLElement;
-        const width: string = document.querySelectorAll('.banner')[0].getClientRects()[0].width?.toFixed(0);
+// methods
+const init = () => {
+  const dom: HTMLElement = document.getElementsByClassName(
+    "banner-box"
+  )[0] as HTMLElement;
+  const width: string = document
+    .querySelectorAll(".banner")[0]
+    .getClientRects()[0]
+    .width?.toFixed(0);
 
-        if (state.bannerTime) clearInterval(state.bannerTime)
+  if (state.bannerTime) clearInterval(state.bannerTime);
 
-        state.bannerTime = setInterval((item: any) => {
-          dom.style.transform = `translateX(-${state.currentBannerIndex * Number(width)}px)`
-          if (state.currentBannerIndex > state.bannerList.length - 1) {
-            setTimeout(() => {
-              dom.classList.remove('transition-box')
-            }, 1000)
-          } else {
-            dom.classList.add('transition-box')
-          }
-          state.currentBannerIndex++
-          if (state.currentBannerIndex > state.bannerList.length - 1) {
-            // setTimeout(() => {
-            //   dom.classList.remove('transition-box')
-            // }, 1000)
-            dom.classList.remove('transition-box')
-            state.currentBannerIndex = 0
-          }
-        }, 3000)
+  state.bannerTime = setInterval((item: any) => {
+    dom.style.transform = `translateX(-${
+      state.currentBannerIndex * Number(width)
+    }px)`;
+    if (state.currentBannerIndex > state.bannerList.length - 1) {
+      setTimeout(() => {
+        dom.classList.remove("transition-box");
+      }, 1000);
+    } else {
+      dom.classList.add("transition-box");
+    }
+    state.currentBannerIndex++;
+    if (state.currentBannerIndex > state.bannerList.length - 1) {
+      // setTimeout(() => {
+      //   dom.classList.remove('transition-box')
+      // }, 1000)
+      dom.classList.remove("transition-box");
+      state.currentBannerIndex = 0;
+    }
+  }, 3000);
+};
+
+const beginTextAnimate = () => {
+  if (state.type === 1) {
+    addText();
+  } else {
+    removeText();
+  }
+};
+
+const addText = (time = 200) => {
+  let text = state.text[state.currentIndex].split("");
+  let textLen = text.length,
+    tempText: string[] = [];
+  let index = 0;
+  state.timer = setInterval(() => {
+    tempText.push(text[index]);
+    state.showMessage = tempText.join("");
+    index++;
+    if (index >= textLen) {
+      if (state.timer) clearInterval(state.timer);
+      setTimeout(() => {
+        removeText();
+      }, 600);
+    }
+  }, time);
+};
+
+const removeText = (time = 100) => {
+  let tempText: string[] = state.text[state.currentIndex].split(""),
+    index: number = state.showMessage.length;
+
+  if (state.timer) clearInterval(state.timer);
+
+  state.timer = setInterval(() => {
+    if (tempText.length && index >= 0) {
+      tempText.pop();
+    }
+    state.showMessage = tempText.join("");
+    index--;
+    if (index <= 0) {
+      state.currentIndex++;
+      if (state.currentIndex >= state.text.length) {
+        state.currentIndex = 0;
       }
-
-      const beginTextAnimate = () => {
-        if (state.type === 1) {
-          addText()
-        } else {
-          removeText()
-        }
-      }
-
-      const addText = (time = 200) => {
-        let text = state.text[state.currentIndex].split('');
-        let textLen = text.length,
-            tempText: string[] = []
-        let index = 0
-        state.timer = setInterval(() => {
-          tempText.push(text[index])
-          state.showMessage = tempText.join('')
-          index++
-          if (index >= textLen) {
-            if (state.timer) clearInterval(state.timer)
-            setTimeout(() => {
-              removeText()
-            }, 600);
-          }
-        }, time)
-      }
-
-      const removeText = (time = 100) => {
-        let tempText: string[] = state.text[state.currentIndex].split(''),
-            index: number = state.showMessage.length;
-
-        if (state.timer) clearInterval(state.timer)
-        
-        state.timer = setInterval(() => {
-          if (tempText.length && index >= 0) {
-            tempText.pop();
-          }
-          state.showMessage = tempText.join('');
-          index--
-          if (index <= 0) {
-            state.currentIndex++
-            if (state.currentIndex >= state.text.length) {
-              state.currentIndex = 0
-            }
-            if (state.timer) clearInterval(state.timer)
-            addText()
-          }
-        }, time)
-      }
-
-      return {
-        ...toRefs(state),
-      }
-    },
-})
+      if (state.timer) clearInterval(state.timer);
+      addText();
+    }
+  }, time);
+};
 </script>
 <style lang="scss" type="text/scss" scoped>
 .banner {
@@ -156,17 +150,17 @@
   height: 100vh;
   width: 100%;
   z-index: 99;
- 
+
   /* 背景图片 */
   &::after {
     position: absolute;
     content: "";
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: 1;
   }
-  .banner-box { 
+  .banner-box {
     position: absolute;
     height: 100%;
     top: 0;
@@ -200,7 +194,7 @@
       text-align: center;
     }
     .hello-text {
-      font-family: 'qianduKaiTI';
+      font-family: "qianduKaiTI";
       letter-spacing: 2px;
     }
     .edit-text-box {
@@ -210,12 +204,12 @@
       font-size: 20px;
       margin-top: 30px;
       letter-spacing: 4px;
-      font-family: '方正小标宋简体';
+      font-family: "方正小标宋简体";
       line-height: 30px;
       color: $color-grayf;
       white-space: nowrap;
       .text-before {
-          margin-right: 10px;
+        margin-right: 10px;
       }
       .text-after {
         margin-left: 10px;

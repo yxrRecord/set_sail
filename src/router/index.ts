@@ -7,7 +7,6 @@ const routes = [
     name: 'layout',
     redirect: "home",
     component: () => import('@components/common/Layout.vue'),
-    // component: () => import('@pages/home/index.vue'),
     children: [
       {
         path: '/home',
@@ -17,6 +16,15 @@ const routes = [
           showBanner: true
         },
         component: () => import('@pages/home/index.vue')
+      },
+      {
+        path: '/test',
+        name: 'test',
+        meta: {
+          title: 'test',
+          showBanner: true
+        },
+        component: () => import('@pages/test/index.vue')
       },
       {
         path: '/transition',
@@ -64,12 +72,7 @@ const routes = [
         component: () => import('@pages/about/index.vue')
       },
     ]
-  },
-  /* {
-    path: '*',
-    name: '404',
-    component: () => import('@pages/404/index.vue')
-  } */
+  }
 ];
 
 // 在 Vue-router新版本中，需要使用createRouter来创建路由

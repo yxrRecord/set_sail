@@ -7,10 +7,22 @@
       </div>
       <div class="header-right">
         <ul class="header-right-con">
-          <li class="menu-item pointer" v-for="(item, index) in menuList" :key="item.name" @click="jumpPage(item)" :class="[`menu-item-${index + 1}`, routeName === item.url ? 'currentPage' : '']">
-            <span :class="['menu-icon', 'iconfont']" v-if="item.iconfont"></span>
-            <span >
-              {{item.name}}
+          <li
+            class="menu-item pointer"
+            v-for="(item, index) in menuList"
+            :key="item.name"
+            @click="jumpPage(item)"
+            :class="[
+              `menu-item-${index + 1}`,
+              routeName === item.url ? 'currentPage' : '',
+            ]"
+          >
+            <span
+              :class="['menu-icon', 'iconfont']"
+              v-if="item.iconfont"
+            ></span>
+            <span>
+              {{ item.name }}
             </span>
           </li>
           <li class="dot"></li>
@@ -19,60 +31,48 @@
     </div>
   </header>
 </template>
-<script lang="ts">
-  import { computed, defineComponent, onMounted, toRefs, reactive, getCurrentInstance, nextTick } from 'vue';
-  import { useRoute, useRouter, RouteLocationNormalized } from "vue-router";
-  import { useStore } from 'vuex';
-  // import { useI18n } from 'vue-i18n';
-  import { Menu } from '@types'
-  export default defineComponent({
-    name: "Header",
-    setup() {
-      // const { proxy } = getCurrentInstance();
-      // const { t } = useI18n();
-      const route: any = useRoute();
-      const router = useRouter();
-      const store = useStore();
-      const state = reactive({
-        routeNameList: ['skill', 'work', 'project', 'about'],
-        routeName: 'home',
-      })
+<script lang="ts" setup>
+import { computed, onMounted, reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
+// import { useI18n } from 'vue-i18n';
+import { Menu } from "@types";
+const route: any = useRoute();
+const router = useRouter();
+const store = useStore();
+const state = reactive({
+  routeNameList: ["skill", "work", "project", "about"],
+  routeName: "home",
+});
 
-      // computed
-      const menuList = computed<Menu[]>((): Menu[] => {
-        let list: Menu[] = [{ icon: '1', name: 'Home', hover: false, url: 'home'},
-          { icon: '1', name: 'Tags', hover: false, url: 'skill'},
-          { icon: '1', name: 'Work', hover: false, url: 'work'},
-          { icon: '1', name: 'Project', hover: false, url: 'project'},
-          { icon: '1', name: 'About', hover: false, url: 'about'}];
-        // list.forEach((item, index) => item.name = t('menuList', index))
-        return list
-      })
+// computed
+const menuList = computed<Menu[]>((): Menu[] => {
+  let list: Menu[] = [
+    { icon: "1", name: "Home", hover: false, url: "home" },
+    { icon: "1", name: "Tags", hover: false, url: "skill" },
+    { icon: "1", name: "Work", hover: false, url: "work" },
+    { icon: "1", name: "Project", hover: false, url: "project" },
+    { icon: "1", name: "About", hover: false, url: "about" },
+  ];
+  // list.forEach((item, index) => item.name = t('menuList', index))
+  return list;
+});
 
-      // mounted
-      const jumpPage = (item: Menu) => {
-        if (route.name !== item.name) {
-          state.routeName = item.url;
-          store.dispatch('setShowBanner', !state.routeNameList.includes(item.url))
-          router.push({
-            name: item.url
-          })
-        }
+// mounted
+const jumpPage = (item: Menu) => {
+  if (route.name !== item.name) {
+    state.routeName = item.url;
+    store.dispatch("setShowBanner", !state.routeNameList.includes(item.url));
+    router.push({
+      name: item.url,
+    });
+  }
+};
 
-      }
-
-      onMounted(() => {
-        state.routeName = route.name;
-        store.dispatch('setShowBanner', !state.routeNameList.includes(route.name));
-      })
-      return {
-        ...toRefs(state),
-        jumpPage,
-        menuList,
-        // t
-      }
-    }
-  })
+onMounted(() => {
+  state.routeName = route.name;
+  store.dispatch("setShowBanner", !state.routeNameList.includes(route.name));
+});
 </script>
 
 <style lang="scss" type="text/scss" scoped>
@@ -92,7 +92,7 @@ $offsetW: 120px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-  } 
+  }
   .header-left {
     margin-right: 120px;
     height: 100%;
@@ -114,7 +114,7 @@ $offsetW: 120px;
       position: relative;
       overflow: hidden;
     }
-    
+
     .dot {
       position: absolute;
       border-bottom: 3px solid $color-primary;
@@ -122,14 +122,14 @@ $offsetW: 120px;
       left: -120px;
       bottom: 0;
     }
-    
+
     .menu-item {
       padding: 10px;
       min-width: 120px;
       line-height: 30px;
       text-align: center;
       font-size: 16px;
-      transition: all .3s;
+      transition: all 0.3s;
       &:hover {
         color: $color-primary;
       }
@@ -149,29 +149,29 @@ $offsetW: 120px;
       }
     }
 
-    .menu-item:nth-child(1):hover~.dot {
+    .menu-item:nth-child(1):hover ~ .dot {
       left: 0;
-      transition: all .3s;
+      transition: all 0.3s;
     }
-    .menu-item:nth-child(2):hover~.dot {
+    .menu-item:nth-child(2):hover ~ .dot {
       left: $offsetW * 1;
-      transition: all .3s;
+      transition: all 0.3s;
     }
-    .menu-item:nth-child(3):hover~.dot {
+    .menu-item:nth-child(3):hover ~ .dot {
       left: $offsetW * 2;
-      transition: all .3s;
+      transition: all 0.3s;
     }
-    .menu-item:nth-child(4):hover~.dot {
+    .menu-item:nth-child(4):hover ~ .dot {
       left: $offsetW * 3;
-      transition: all .3s;
+      transition: all 0.3s;
     }
-    .menu-item:nth-child(5):hover~.dot {
+    .menu-item:nth-child(5):hover ~ .dot {
       left: $offsetW * 4;
-      transition: all .3s;
+      transition: all 0.3s;
     }
-    .menu-item:nth-child(6):hover~.dot {
+    .menu-item:nth-child(6):hover ~ .dot {
       left: $offsetW * 5;
-      transition: all .3s;
+      transition: all 0.3s;
     }
   }
 }
