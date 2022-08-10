@@ -30,8 +30,7 @@ import {
   reactive,
   nextTick,
 } from "vue";
-import {useRoute, useRouter} from "vue-router";
-import Banner from "@components/others/Banner";
+import Banner from "@components/others/Banner.vue";
 import currentImg from '@assets/images/banner1.jpg'
 import Tools from "@tools";
 
@@ -49,7 +48,6 @@ const state = reactive({
   bannerTime: null as number | null,
   currentBannerIndex: 0,
 });
-const messageHtml = ref<HTMLElement>();
 onMounted(() => {
   nextTick(() => {
     const dom: HTMLCollectionOf<Element> =

@@ -55,191 +55,163 @@
   </div>
 </template>
 
-<script lang="ts">
-// import Swiper from 'swiper';
+<script lang="ts" setup>
 import { defineComponent, toRefs, ref, reactive, onMounted } from "vue";
 import musicimg1 from '@assets/images/headPortrait.jpg';
-export default defineComponent({
-  name: "about",
-  setup() {
-    const state = reactive({
-      menu: [
-        { name: "微信", icon: "yxrweixin1", class: "weChat" },
-        { name: "QQ", icon: "yxrqq1", class: "QQ" },
-        {
-          name: "github",
-          icon: "yxrgithub",
-          class: "github",
-          url: "https://github.com/chengfeng12",
-        },
-        {
-          name: "简书",
-          text: "简",
-          url: "https://www.jianshu.com/u/2393f89ea090",
-          class: "jianshu",
-        },
-        {
-          name: "掘金",
-          text: "掘",
-          url: "https://juejin.cn/user/3825956195413806",
-          class: "juejin",
-        },
-      ],
-      infoList: [
-        { label: "性别", value: "男" },
-        { label: "年龄", value: "24岁" },
-        { label: "工作经验", value: "X年+" },
-        { label: "家乡", value: "河南-驻马店" },
-        { label: "现居住地", value: "上海静安" },
-        { label: "联系电话", value: "XXXXXX" },
-        { label: "邮箱", value: "XXXXXX@qq.com" },
-      ],
-      skillList: [
-        {
-          name: "HTML",
-          number: 0,
-          color: "#FE4365",
-          class: "",
-        },
-        {
-          name: "CSS",
-          number: 0,
-          color: "#FC9D9A",
-          class: "",
-        },
-        {
-          name: "JavaScript",
-          number: 0,
-          color: "#F9CDAD",
-          class: "",
-        },
-        {
-          name: "Vue",
-          number: 0,
-          color: "#4F953B",
-          class: "",
-        },
-        {
-          name: "NodeJs",
-          number: 0,
-          color: "#CFF09E",
-          class: "",
-        },
-        {
-          name: "MySQL",
-          number: 0,
-          color: "#A3DAFF",
-          class: "",
-        },
-      ] as {
-        name: string
-        number: number
-        color: string
-        class: string
-      }[],
-      musicList: [
-        {
-          image: musicimg1,
-          name: "名字1",
-          src: musicimg1,
-          author: "",
-        },
-        {
-          image: musicimg1,
-          name: "名字2",
-          src: musicimg1,
-          author: "",
-        },
-        {
-          image: musicimg1,
-          name: "名字3",
-          src: musicimg1,
-          author: "",
-        },
-      ],
-    });
-
-    const getData = () => {
-      /* this.$ajaxPost(
-        {
-          url: "get/GetMsg?",
-          data: {
-            page: 0,
-          },
-          method: "get",
-        },
-        false,
-        (res) => {
-          console.log("返回了", res.data);
-        }
-      ); */
-    };
-    
-    const linkTo = ({ url }: { url: string}) => {
-      url && window.open(url);
-    }
-
-    onMounted(() => {
-      state.skillList = [
-        {
-          name: "HTML",
-          number: 90,
-          color: "#FE4365",
-          class: "",
-        },
-        {
-          name: "CSS",
-          number: 90,
-          color: "#FC9D9A",
-          class: "",
-        },
-        {
-          name: "JavaScript",
-          number: 80,
-          color: "#F9CDAD",
-          class: "",
-        },
-        {
-          name: "Vue",
-          number: 80,
-          color: "#4F953B",
-          class: "",
-        },
-        {
-          name: "NodeJs",
-          number: 55,
-          color: "#CFF09E",
-          class: "",
-        },
-        {
-          name: "MySQL",
-          number: 33,
-          color: "#A3DAFF",
-          class: "",
-        }
-      ];
-
-      // new Swiper('.aihao-swiper-box', {
-      //   slidesPerView: "auto",//每页显示数量，auto为自动填充，3为每页显示3块
-      //   centeredSlides: true,//轮播图自动居中
-      //   spaceBetween: 20,//轮播图左右之间的间距，配合css样式中的width实现效果
-      //   initialSlide: 1, //轮播图初始下标位置
-      //   //方法事件
-      //   on: {
-      //    //回调函数，swiper从当前slide开始过渡到另一个slide时执行
-      //     slideChangeTransitionStart: function() {
-      //        console.log('点击了')
-      //     }
-      //   }
-      // })
-    })
-
-    return {
-      ...toRefs(state),
-      linkTo
-    };
-  },
+const state = reactive({
+  menu: [
+    { name: "微信", icon: "yxrweixin1", class: "weChat" },
+    { name: "QQ", icon: "yxrqq1", class: "QQ" },
+    {
+      name: "github",
+      icon: "yxrgithub",
+      class: "github",
+      url: "https://github.com/chengfeng12",
+    },
+    {
+      name: "简书",
+      text: "简",
+      url: "https://www.jianshu.com/u/2393f89ea090",
+      class: "jianshu",
+    },
+    {
+      name: "掘金",
+      text: "掘",
+      url: "https://juejin.cn/user/3825956195413806",
+      class: "juejin",
+    },
+  ],
+  infoList: [
+    { label: "性别", value: "男" },
+    { label: "年龄", value: "24岁" },
+    { label: "工作经验", value: "X年+" },
+    { label: "家乡", value: "河南-驻马店" },
+    { label: "现居住地", value: "上海静安" },
+    { label: "联系电话", value: "XXXXXX" },
+    { label: "邮箱", value: "XXXXXX@qq.com" },
+  ],
+  skillList: [
+    {
+      name: "HTML",
+      number: 0,
+      color: "#FE4365",
+      class: "",
+    },
+    {
+      name: "CSS",
+      number: 0,
+      color: "#FC9D9A",
+      class: "",
+    },
+    {
+      name: "JavaScript",
+      number: 0,
+      color: "#F9CDAD",
+      class: "",
+    },
+    {
+      name: "Vue",
+      number: 0,
+      color: "#4F953B",
+      class: "",
+    },
+    {
+      name: "NodeJs",
+      number: 0,
+      color: "#CFF09E",
+      class: "",
+    },
+    {
+      name: "MySQL",
+      number: 0,
+      color: "#A3DAFF",
+      class: "",
+    },
+  ] as {
+    name: string
+    number: number
+    color: string
+    class: string
+  }[],
+  musicList: [
+    {
+      image: musicimg1,
+      name: "名字1",
+      src: musicimg1,
+      author: "",
+    },
+    {
+      image: musicimg1,
+      name: "名字2",
+      src: musicimg1,
+      author: "",
+    },
+    {
+      image: musicimg1,
+      name: "名字3",
+      src: musicimg1,
+      author: "",
+    },
+  ],
 });
+
+const linkTo = ({ url }: { url: string}) => {
+  url && window.open(url);
+}
+onMounted(() => {
+  state.skillList = [
+    {
+      name: "HTML",
+      number: 90,
+      color: "#FE4365",
+      class: "",
+    },
+    {
+      name: "CSS",
+      number: 90,
+      color: "#FC9D9A",
+      class: "",
+    },
+    {
+      name: "JavaScript",
+      number: 80,
+      color: "#F9CDAD",
+      class: "",
+    },
+    {
+      name: "Vue",
+      number: 80,
+      color: "#4F953B",
+      class: "",
+    },
+    {
+      name: "NodeJs",
+      number: 55,
+      color: "#CFF09E",
+      class: "",
+    },
+    {
+      name: "MySQL",
+      number: 33,
+      color: "#A3DAFF",
+      class: "",
+    }
+  ];
+
+  // new Swiper('.aihao-swiper-box', {
+  //   slidesPerView: "auto",//每页显示数量，auto为自动填充，3为每页显示3块
+  //   centeredSlides: true,//轮播图自动居中
+  //   spaceBetween: 20,//轮播图左右之间的间距，配合css样式中的width实现效果
+  //   initialSlide: 1, //轮播图初始下标位置
+  //   //方法事件
+  //   on: {
+  //    //回调函数，swiper从当前slide开始过渡到另一个slide时执行
+  //     slideChangeTransitionStart: function() {
+  //        console.log('点击了')
+  //     }
+  //   }
+  // })
+})
 </script>
 
 <style lang="scss" type="text/scss" scoped>

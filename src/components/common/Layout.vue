@@ -6,9 +6,9 @@
 
     <transition name="fade">
       <div
-        v-show="showBackTop"
+        v-show="state.showBackTop"
         class="back-top pointer iconfont yxricon-test"
-        :class="{ 'an-back-top': showBackTop }"
+        :class="{ 'an-back-top': state.showBackTop }"
         key="back-top"
         @click="scrollToTop(0)"
       ></div>
@@ -18,149 +18,87 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import Header from "../others/Header";
-import HomeBanner from "../others/HomeBanner";
+<script lang="ts" setup>
 import { defineComponent, reactive, computed, watch, ref, toRefs, onMounted } from "vue";
+import Header from "../others/Header.vue";
+import HomeBanner from "../others/HomeBanner.vue";
 import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
-export default defineComponent({
-  name: "Layout",
-  components: {
-    Header,
-    HomeBanner,
-  },
-  setup() {
-    const router: Router = useRouter();
-    const store = useStore();
-    const route = useRoute();
-    const state = reactive({
-      containerHeight: 0 as number,
-      showBackTop: false as boolean,
-      routeNameList: ["skill", "work", "project", "about"] as string[],
-      scrollTime: null as number | null
-    });
-    let honeBanner = ref<HTMLElement>();
-    let bannerHeight = ref(0);
-    // let honeHeader = ref<HTMLElement>();
-
-    // cpmputed
-    const showBanner = computed(() => {
-      return store.getters.showBanner;
-    });
-
-    // ref
-    const homeBanner = ref();
-
-    // watch
-    watch(() => router,
-      // 还原高度 
-      (to: any, from: any) => {
-        /* if (state.routeNameList.includes(to.name)) {
-          state.containerHeight = 0;
-          return;
-        }
-        state.containerHeight = Math.floor(honeBanner.value!.clientHeight); */
-      },
-      {
-        deep: true,
-      }
-    );
-
-    // methods
-    const init = () => {
-      if (homeBanner.value) {
-        state.containerHeight = homeBanner.value.$el.clientHeight
-      }
-      // honeHeader.value = document.getElementById("home-header")!;
-      // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
-      window.addEventListener("scroll", onScroll);
-    };
-
-    const onScroll = () => {
-      // state.containerHeight = honeBanner.value ? Math.floor(honeBanner.value.clientHeight) : 0;
-      // 控制 header 组件显示与透明度
-      let scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-
-      // 控制返回顶部是否显示
-      if (scrollTop > state.containerHeight + 300) {
-        state.showBackTop = true;
-      } else state.showBackTop = false;
-    };
-
-    const scrollToTop = (position: number) => {
-      // 使用requestAnimationFrame，如果没有则使用setTimeOut
-      if(!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback) {
-          return setTimeout(callback, 20)
-        }
-      }
-
-      // 获取当前元素滚动的距离
-      let scrollTopDistance = document.documentElement.scrollTop || document.body.scrollTop;
-
-      const smoothScroll = () => {
-        // 如果你要滚到顶部，那么position传过来的就是0，下面这个distance肯定就是负值。
-        let distance = position - scrollTopDistance;
-        // 每次滚动的距离要不一样，制造一个缓冲效果
-        scrollTopDistance = scrollTopDistance + distance / 5;
-        // 判断条件
-        if (Math.abs(distance) < 1) {
-          window.scrollTo(0, position);
-        } else {
-          window.scrollTo(0, scrollTopDistance);
-          requestAnimationFrame(smoothScroll);
-        }
-      }
-      smoothScroll();
-    }
-
-    onMounted(() => {
-      init()
-    })
-
-    return {
-      ...toRefs(state),
-      onScroll,
-      scrollToTop,
-      showBanner,
-      route,
-      homeBanner,
-    };
-  },
-
-  // watch: {
-  //   $route: {
-  //     handler: function(to, from){
-  //       if (state.routeNameList.includes(to.name)) {
-  //         state.containerHeight = 0
-  //         return
-  //       }
-  //       state.containerHeight = Math.floor(document.querySelector('#home-banner').clientHeight)
-  //     },
-  //     // 深度观察监听
-  //     deep: true
-  //   }
-  // },
-  //  beforeRouteUpdate (to, from, next) {
-  //   // 在当前路由改变，但是该组件被复用时调用
-  //   // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-  //   // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-  //   // 可以访问组件实例 `this`
-  //   console.log(to, from, '路由信息1111')
-  // },
-  /* watch: {
-    $route() {
-      window.scrollTo(0, 0);
-      if (!state.routeNameList.includes(route.name)) {
-        document.querySelector("#home-header").classList.remove("nav-fixed");
-      }
-    },
-  }, */
+const router: Router = useRouter();
+const store = useStore();
+const route = useRoute();
+const state = reactive({
+  containerHeight: 0 as number,
+  showBackTop: false as boolean,
+  routeNameList: ["skill", "work", "project", "about"] as string[],
+  scrollTime: null as number | null
 });
+let honeBanner = ref<HTMLElement>();
+let bannerHeight = ref(0);
+// let honeHeader = ref<HTMLElement>();
+
+// cpmputed
+const showBanner = computed(() => {
+  return store.getters.showBanner;
+});
+
+// ref
+const homeBanner = ref();
+
+// methods
+const init = () => {
+  if (homeBanner.value) {
+    state.containerHeight = homeBanner.value.$el.clientHeight
+  }
+  // honeHeader.value = document.getElementById("home-header")!;
+  // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
+  window.addEventListener("scroll", onScroll);
+};
+
+const onScroll = () => {
+  // state.containerHeight = honeBanner.value ? Math.floor(honeBanner.value.clientHeight) : 0;
+  // 控制 header 组件显示与透明度
+  let scrollTop =
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop;
+
+  // 控制返回顶部是否显示
+  if (scrollTop > state.containerHeight + 300) {
+    state.showBackTop = true;
+  } else state.showBackTop = false;
+};
+
+const scrollToTop = (position: number) => {
+  // 使用requestAnimationFrame，如果没有则使用setTimeOut
+  if(!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(callback) {
+      return setTimeout(callback, 20)
+    }
+  }
+
+  // 获取当前元素滚动的距离
+  let scrollTopDistance = document.documentElement.scrollTop || document.body.scrollTop;
+
+  const smoothScroll = () => {
+    // 如果你要滚到顶部，那么position传过来的就是0，下面这个distance肯定就是负值。
+    let distance = position - scrollTopDistance;
+    // 每次滚动的距离要不一样，制造一个缓冲效果
+    scrollTopDistance = scrollTopDistance + distance / 5;
+    // 判断条件
+    if (Math.abs(distance) < 1) {
+      window.scrollTo(0, position);
+    } else {
+      window.scrollTo(0, scrollTopDistance);
+      requestAnimationFrame(smoothScroll);
+    }
+  }
+  smoothScroll();
+}
+
+onMounted(() => {
+  init()
+})
 </script>
 <style lang="scss" type="text/scss" scoped>
 /* 可以设置不同的进入和离开动画 */
