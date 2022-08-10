@@ -9,13 +9,6 @@ import {resolve} from 'path'
 
 export default ({command, mode}: ConfigEnv) => {
     const env = loadEnv(mode, process.cwd());
-    /* const alias: Record<string, string> = {
-        '@/': `${resolve(__dirname, 'src')}/`,
-    }
-    if (env) {
-        // 解决警告You are running the esm-bundler build of vue-i18n.
-        alias['vue-i18n'] = 'vue-i18n/dist/vue-i18n.cjs.js'
-    } */
     return defineConfig({
         base: env.VITE_BASE_NAME,
         plugins: [

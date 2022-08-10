@@ -82,7 +82,7 @@ $offsetW: 120px;
   width: 100%;
   background-color: $color-gray;
   background-size: 50%;
-  box-shadow: 0 5px 10px $color-hover-shadow;
+  box-shadow: 0 5px 5px $color-hover-shadow;
   z-index: 999;
   position: sticky;
   top: 0;

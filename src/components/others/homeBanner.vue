@@ -1,10 +1,6 @@
 <template>
   <header id="home-banner" class="banner">
     <section class="banner-box" :style="`background-image: url(${currentImg})`">
-      <!-- <img :src="bannerList[0]" alt=""> -->
-      <!-- <div class="binner-item" :class="{'current-binner-item': currentBannerIndex === index}" v-for="(item, index) in bannerList" :key="index">
-          <img :src="item" alt="">
-        </div> -->
     </section>
     <Banner class="canvas-banner"/>
     <div class="copywriting">
@@ -25,7 +21,6 @@
 </template>
 <script lang="ts" setup>
 import {
-  ref,
   onMounted,
   reactive,
   nextTick,
@@ -82,9 +77,6 @@ const init = () => {
     }
     state.currentBannerIndex++;
     if (state.currentBannerIndex > state.bannerList.length - 1) {
-      // setTimeout(() => {
-      //   dom.classList.remove('transition-box')
-      // }, 1000)
       dom.classList.remove("transition-box");
       state.currentBannerIndex = 0;
     }

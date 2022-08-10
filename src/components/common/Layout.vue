@@ -50,13 +50,10 @@ const init = () => {
   if (homeBanner.value) {
     state.containerHeight = homeBanner.value.$el.clientHeight
   }
-  // honeHeader.value = document.getElementById("home-header")!;
-  // this.containerHeight = document.querySelector('#home-banner') ? Math.floor(document.querySelector('#home-banner').clientHeight) : 0
   window.addEventListener("scroll", onScroll);
 };
 
 const onScroll = () => {
-  // state.containerHeight = honeBanner.value ? Math.floor(honeBanner.value.clientHeight) : 0;
   // 控制 header 组件显示与透明度
   let scrollTop =
     window.pageYOffset ||
