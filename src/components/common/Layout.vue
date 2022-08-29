@@ -2,7 +2,7 @@
   <div class="common-layout-wrapper">
     <!-- @scrollToTop="scrollToTop" -->
     <HomeBanner v-if="showBanner" ref="homeBanner" />
-    <Header />
+    <Header></Header>
 
     <transition name="fade">
       <div
@@ -20,7 +20,7 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent, reactive, computed, watch, ref, toRefs, onMounted } from "vue";
-import Header from "../others/Header.vue";
+import Header from "@components/others/Header.vue";
 import HomeBanner from "../others/HomeBanner.vue";
 import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
@@ -33,16 +33,13 @@ const state = reactive({
   routeNameList: ["skill", "work", "project", "about"] as string[],
   scrollTime: null as number | null
 });
-let honeBanner = ref<HTMLElement>();
-let bannerHeight = ref(0);
-// let honeHeader = ref<HTMLElement>();
 
 // cpmputed
 const showBanner = computed(() => {
   return store.getters.showBanner;
 });
 
-// ref
+ref
 const homeBanner = ref();
 
 // methods
@@ -100,13 +97,13 @@ onMounted(() => {
 <style lang="scss" type="text/scss" scoped>
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s ease;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active, 2.1.8 版本以下 */ {
-  transform: translateY(60px);
-}
+// .fade-enter-active,
+// .fade-leave-active {
+//   transition: all 0.5s ease;
+// }
+// .fade-enter, .fade-leave-to /* .fade-leave-active, 2.1.8 版本以下 */ {
+//   transform: translateY(60px);
+// }
 
 .common-layout-wrapper {
   user-select: none;

@@ -2,10 +2,9 @@ import {ConfigEnv, defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
-// import eslintPlugin from 'vite-plugin-eslint'
 import viteImagemin from 'vite-plugin-imagemin'
 import compressPlugin from 'vite-plugin-compression'
-import {resolve} from 'path'
+import { resolve } from 'path'
 
 export default ({command, mode}: ConfigEnv) => {
     const env = loadEnv(mode, process.cwd());
@@ -14,10 +13,6 @@ export default ({command, mode}: ConfigEnv) => {
         plugins: [
             vue(),
             vueJsx(),
-            // // 添加下面这块
-            // eslintPlugin({
-            //     include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
-            // }),
             legacy({
                 targets: ['ie >= 11'],
                 additionalLegacyPolyfills: ['regenerator-runtime/runtime']
@@ -93,7 +88,7 @@ export default ({command, mode}: ConfigEnv) => {
                 '@types': resolve(__dirname, 'src/types')
                 // ...alias
             },
-            extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
+            extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'] // 忽略扩展名
         },
         css: {
             // css预处理器

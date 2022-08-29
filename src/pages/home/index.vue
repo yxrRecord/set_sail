@@ -47,10 +47,8 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, nextTick, onDeactivated, onMounted, reactive, ref, toRefs} from 'vue';
-// import { useI18n } from 'vue-i18n';
+import { defineComponent, nextTick, onDeactivated, onMounted, reactive, ref, toRefs } from 'vue';
 import headPortrait from "@assets/images/headPortrait.jpg";
-// const { t } = useI18n();
 const state = reactive({});
 const io = ref<IntersectionObserver>();
 const myInfo = ref();
@@ -87,7 +85,6 @@ onMounted(() => {
 onDeactivated(() => {
   io.value?.disconnect();
 })
-
 </script>
 
 <style lang="scss" type="text/scss" scoped>

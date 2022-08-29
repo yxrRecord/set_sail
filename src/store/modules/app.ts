@@ -1,4 +1,17 @@
-const state = {
+import { GetterTree, MutationTree, ActionTree } from 'vuex'
+import { RootState } from "../index.d"
+interface AppInfoType {
+  appName: string
+  appIcon: string
+}
+interface StateType {
+  prefix: string
+  appInfo: AppInfoType 
+  windowScrollTop: number
+  showBanner: Boolean
+}
+
+const state: StateType = {
   prefix: 'set_sail_',
   appInfo: {
     appName: "XXX-扬帆起航-未来可期",
@@ -7,15 +20,24 @@ const state = {
   windowScrollTop: 0,
   showBanner: true,
 }
-const mutations = {
-  SET_APP_INFO(state, data) {
+
+// getters
+// const getters: GetterTree<StateType, RootState> = {
+//   accountId(state) {
+//     return state.userInfo.id
+//   }
+// }
+
+const mutations:  MutationTree<StateType> = {
+  SET_APP_INFO(state: StateType, data: AppInfoType) {
     state.appInfo = data
   },
-  SET_SHOW_BANNER(state, value) {
+  SET_SHOW_BANNER(state: StateType, value: Boolean) {
     state.showBanner = value
   },
 }
-const actions = {
+
+const actions: ActionTree<StateType, RootState> = {
   // 设置 app 信息
   setUserName({ commit }, data) {
     commit('SET_APP_INFO', data)

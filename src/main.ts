@@ -1,11 +1,11 @@
 import { createApp } from 'vue';
-import App from './App';
+import App from './App.vue';
 import router from './router'; // 引入路由
 import config from "./config"; // 通用配置文件
 import store from './store';
 // import i18n from './language'; // 引入 语言
-import { done, start } from "nprogress";
-import "nprogress/nprogress.css";
+// import { done, start } from "nprogress";
+// import "nprogress/nprogress.css";
 
 //在页面跳转使用
 /* router.beforeEach((to, from, next) => {
