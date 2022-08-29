@@ -1,9 +1,7 @@
 <template>
   <div class="common-layout-wrapper">
-    <!-- @scrollToTop="scrollToTop" -->
     <HomeBanner v-if="showBanner" ref="homeBanner" />
     <Header></Header>
-
     <transition name="fade">
       <div
         v-show="state.showBackTop"

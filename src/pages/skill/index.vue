@@ -7,15 +7,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent} from 'vue'
-export default defineComponent({
-  name: 'skill',
-  setup() {
-
-  }
-})
-</script>
+<script lang="ts" setup></script>
 
 <style lang="scss" type="text/scss" scoped>
 #skill {

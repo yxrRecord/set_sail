@@ -17,15 +17,6 @@ const routes = [
         component: () => import('@pages/home/index.vue')
       },
       {
-        path: '/test',
-        name: 'test',
-        meta: {
-          title: 'test',
-          showBanner: true
-        },
-        component: () => import('@pages/test/index.vue')
-      },
-      {
         path: '/transition',
         name: 'transition',
         meta: {

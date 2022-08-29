@@ -2,7 +2,7 @@
   <div id="work">
     <div class="back-img"></div>
     <div class="work-contariner">
-      <div class="work-experience hover-shadow contariner-box wow" v-for="(item, index) in workList" :key="item.name" data-wow-duration="1s" :data-wow-delay="`${index * 0.2}s`" :class="[index % 2 === 0 ? 'line-left bounceInLeft' : 'line-right bounceInRight']">
+      <div class="work-experience hover-shadow contariner-box wow" v-for="(item, index) in workList.value" :key="item.name" data-wow-duration="1s" :data-wow-delay="`${index * 0.2}s`" :class="[index % 2 === 0 ? 'line-left bounceInLeft' : 'line-right bounceInRight']">
         <h2>
           <span class="title">{{item.title}}</span>
           <span class="time">({{item.startTime}}-{{item.endTime}})</span>
@@ -26,45 +26,35 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, ref} from 'vue';
 import headPortrait from "@/assets/images/headPortrait.jpg"
-export default defineComponent({
-  name: 'work',
-  setup() {
-    const workList = ref([
-      {
-        title: '123456',
-        companyProfile: '123456成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
-        content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含 Web,App，桌面端应用。',
-        startTime: '2019-09-09',
-        endTime: '至今',
-        post: '前端开发'
-      },
-      {
-        title: '上海道行网络科技有限公司',
-        companyProfile: 'XXXX成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
-        content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含',
-        startTime: '2019-04-10',
-        endTime: '2019-08-31',
-        post: 'web前端'
-      },
-      {
-        title: '上海萌果游戏有限公司',
-        companyProfile: 'XXXX成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
-        content: '在职期间从0到1开发过三个系统，维护过三个系统（包括新功能开发），主要以后台系统为主，包含',
-        startTime: '2018-08-10',
-        endTime: '2018-08-10',
-        post: 'web前端'
-      }
-    ])
-
-    return {
-      workList,
-      headPortrait
-    }
+const workList = ref([
+  {
+    title: '123456',
+    companyProfile: '123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委',
+    content: '123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委',
+    startTime: '2019-09-09',
+    endTime: '至今',
+    post: '前端开发'
+  },
+  {
+    title: '上海道行网络科技有限公司',
+    companyProfile: '123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委',
+    content: '123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委',
+    startTime: '2019-04-10',
+    endTime: '2019-08-31',
+    post: 'web前端'
+  },
+  {
+    title: 'XXXXxxxxx',
+    companyProfile: 'XXXX成立于1996年，2000年10月经国家经贸委、财政部和中国科学院批复改制成为股份有限公司。大型互联网外包公司，所在部门行推本部，对接业务政府业务。',
+    content: '123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委123456成立于1996年，2000年10月经国家经贸委',
+    startTime: '2018-08-10',
+    endTime: '2018-08-10',
+    post: 'web前端'
   }
-})
+])
 </script>
 
 <style type="text/scss" lang="scss" scoped>
