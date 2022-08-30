@@ -8,7 +8,7 @@ interface StateType {
   prefix: string
   appInfo: AppInfoType 
   windowScrollTop: number
-  showBanner: Boolean
+  showBanner: boolean
 }
 
 const state: StateType = {
@@ -32,7 +32,7 @@ const mutations:  MutationTree<StateType> = {
   SET_APP_INFO(state: StateType, data: AppInfoType) {
     state.appInfo = data
   },
-  SET_SHOW_BANNER(state: StateType, value: Boolean) {
+  SET_SHOW_BANNER(state: StateType, value: boolean) {
     state.showBanner = value
   },
 }

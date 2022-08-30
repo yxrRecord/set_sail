@@ -48,7 +48,9 @@
 
 <script lang="ts" setup>
 import { defineComponent, nextTick, onDeactivated, onMounted, reactive, ref, toRefs } from 'vue';
-import headPortrait from "@assets/images/headPortrait.jpg";
+import headPortrait from '@assets/images/headPortrait.jpg';
+import { getUserList } from '@api/modules/user'
+
 const state = reactive({});
 const io = ref<IntersectionObserver>();
 const myInfo = ref();
@@ -77,9 +79,16 @@ const init = () => {
   doms.forEach((dom: any) => io.value?.observe(dom));
 }
 
+const getData = () => {
+  getUserList().then((res: any) => {
+    console.log(res);
+  })
+};
+
 onMounted(() => {
   init();
   window.addEventListener('scroll', homeScroll)
+  getData();
 })
 
 onDeactivated(() => {

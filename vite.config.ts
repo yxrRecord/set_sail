@@ -85,7 +85,8 @@ export default ({command, mode}: ConfigEnv) => {
                 '@tools': resolve(__dirname, 'src/tools'),
                 '@utils': resolve(__dirname, 'src/utils'),
                 '@pages': resolve(__dirname, 'src/pages'),
-                '@types': resolve(__dirname, 'src/types')
+                '@types': resolve(__dirname, 'src/types'),
+                '@api': resolve(__dirname, 'src/api')
                 // ...alias
             },
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'] // 忽略扩展名

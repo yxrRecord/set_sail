@@ -24,9 +24,9 @@ export default {
   },
   mounted() {
     let _this = this;
-    _this.items = document.querySelectorAll(".block");
+    _this.items = document.querySelectorAll('.block');
     _this.handleScroll();
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
     // m~n之间的随机整数
@@ -36,19 +36,19 @@ export default {
     //定义特殊的样式(此处只是方便实现效果，具体可自己定义)
     getClassName(num) {
       if (num == 1) {
-        return "toScaleBig";
+        return 'toScaleBig';
       } else if (num == 2) {
-        return "toTop";
+        return 'toTop';
       } else if (num == 3) {
-        return "toBottom";
+        return 'toBottom';
       } else if (num == 4) {
-        return "toLeft";
+        return 'toLeft';
       } else if (num == 5) {
-        return "toRight";
+        return 'toRight';
       } else if (num == 6) {
-        return "toRoate";
+        return 'toRoate';
       } else if (num == 7) {
-        return "toScaleSmall";
+        return 'toScaleSmall';
       }
     },
     //判断 模块 是否达到可视范围
@@ -76,10 +76,10 @@ export default {
       for (let i = 0; i < _this.items.length; i++) {
         //如果 模块 达到可视范围，那么添加样式
         if (_this.isElementInViewport(_this.items[i])) {
-          _this.items[i].classList.add("in-view");
+          _this.items[i].classList.add('in-view');
         } else {
           //每次滚动时都会出现过度效果
-          //   _this.items[i].classList.remove("in-view");
+          //   _this.items[i].classList.remove('in-view');
         }
       }
     }

@@ -1,4 +1,9 @@
+export const language = 'en';
+export const localPrefix = 'set_sail';
+export const baseURL = '/api';
+
 export default {
-  language: "en",
-  localPrefix: "set_sail"
+  language,
+  localPrefix,
+  baseURL
 }
