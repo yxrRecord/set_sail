@@ -14,12 +14,16 @@
     <div style="margin-top: 80px">
       <router-view :key="route.fullPath"></router-view>
     </div>
+
+    <Login v-model="showLogin"></Login>
   </div>
 </template>
 <script lang="ts" setup>
 import { defineComponent, reactive, computed, watch, ref, toRefs, onMounted } from "vue";
 import Header from "@components/others/Header.vue";
 import HomeBanner from "../others/HomeBanner.vue";
+import Login from "../others/Login.vue";
+
 import { useRouter, useRoute, Router } from "vue-router";
 import { useStore } from "vuex";
 const router: Router = useRouter();
@@ -31,6 +35,7 @@ const state = reactive({
   routeNameList: ["skill", "work", "project", "about"] as string[],
   scrollTime: null as number | null
 });
+const showLogin = ref(true);
 
 // cpmputed
 const showBanner = computed(() => {

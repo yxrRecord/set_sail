@@ -25,7 +25,7 @@ instance.interceptors.response.use(response => {
   return response.data;
 })
 
-export const request = (params: IAxios): Promise => {
+export const request = (params: IAxios) => {
   let data = params.data;
   let methods = params.methods || 'post';
   let url = params.url || '';

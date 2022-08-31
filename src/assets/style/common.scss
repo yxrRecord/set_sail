@@ -19,8 +19,13 @@ html {
 }
 
 body {
-    width: 100vw;
+    min-width: 100vw;
     padding: 0 !important;
+}
+.app-overflow-hidden {
+    overflow: hidden !important;
+    height: 100vh !important;
+    width: 100vw !important;
 }
 
 ::-webkit-scrollbar {

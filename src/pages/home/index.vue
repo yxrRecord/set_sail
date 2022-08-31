@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import { defineComponent, nextTick, onDeactivated, onMounted, reactive, ref, toRefs } from 'vue';
 import headPortrait from '@assets/images/headPortrait.jpg';
-import { getUserList } from '@api/modules/user'
+import { getUserListApi } from '@api/modules/user'
 
 const state = reactive({});
 const io = ref<IntersectionObserver>();
@@ -80,7 +80,7 @@ const init = () => {
 }
 
 const getData = () => {
-  getUserList().then((res: any) => {
+  getUserListApi().then((res: any) => {
     console.log(res);
   })
 };
