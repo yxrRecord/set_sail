@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { baseURL } from '@config';
 import { IAxios } from "./axios.type"
+import { useRouter } from "vue-router"
+const router = useRouter();
 // 创建实例
 const instance = axios.create({
   baseURL: baseURL,
@@ -17,11 +19,31 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 // 请求拦截器
 instance.interceptors.request.use(config => {
+  console.log(config, "config")
   return config;
 })
 
+// 错误提示
+const handleErrorCode = ({ code, message = "请求错误，请联系管理员" }) => {
+  if (code && message) {
+    switch(code) {
+      case 401:
+        console.log("没有登录");
+        break;
+      case 403:
+        console.log(message);
+        break;
+    }
+  }
+}
+
 // 响应拦截器
 instance.interceptors.response.use(response => {
+  if (response.status === 200) {
+    if (response.data.code !== 200) {
+      handleErrorCode(response.data || {});
+    }
+  }
   return response.data;
 })
 
@@ -36,7 +58,6 @@ export const request = (params: IAxios) => {
       params: data
     })
   }
-  
 }
 
 export default instance;

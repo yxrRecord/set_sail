@@ -5,17 +5,15 @@ const url = {
   loginUrl: "/user/login"
 };
 
-
-
-
 export const getUserListApi = () => {
   return request({
     url: url.userListUrl
   })
 }
 
-export const loginApi = () => {
+export const loginApi = (data) => {
   return request({
-    url: url.loginUrl
+    url: url.loginUrl,
+    data
   })
 }

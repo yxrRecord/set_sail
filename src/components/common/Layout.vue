@@ -35,14 +35,14 @@ const state = reactive({
   routeNameList: ["skill", "work", "project", "about"] as string[],
   scrollTime: null as number | null
 });
-const showLogin = ref(true);
+const showLogin = ref(false);
 
 // cpmputed
 const showBanner = computed(() => {
   return store.getters.showBanner;
 });
 
-ref
+// ref
 const homeBanner = ref();
 
 // methods
