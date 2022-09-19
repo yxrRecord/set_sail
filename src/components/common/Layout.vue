@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout-wrapper">
-    <HomeBanner v-if="showBanner" ref="homeBanner" />
+    <HomeBanner v-if="showBanner" ref="homeBanner" @scrollHome="scrollHome" />
     <Header></Header>
     <transition name="fade">
       <div

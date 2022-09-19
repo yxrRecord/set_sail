@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import {createApp} from 'vue';
 import App from './App.vue';
 import router from './router'; // 引入路由
 import config from "./config"; // 通用配置文件
@@ -20,6 +20,27 @@ router.afterEach(transition => {
 }); */
 
 const app = createApp(App);
+
+// 全局指令
+app.directive('loadAni', {
+    mounted(el, binding) {
+        let elClass = el.getAttribute('class')
+        const per = 0.95;
+        const scrollClassName = function () {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            if (scrollTop + document.documentElement.clientHeight * per >= el.offsetTop || scrollTop +
+                    document.documentElement.clientHeight >= el.offsetTop + el.offsetHeight) {
+                el.setAttribute('class', `${elClass} animate__animated ${binding.value || 'ls-animationed'}`)
+                window.removeEventListener('scroll', scrollClassName)
+            }
+        }
+        window.addEventListener('scroll', scrollClassName)
+        let scrollTops = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTops === 0) {
+            scrollClassName()
+        }
+    }
+})
 // 配置全局属性
 app.config.globalProperties.$config = config;
 

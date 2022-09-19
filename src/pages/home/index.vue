@@ -15,9 +15,9 @@
           </div>
         </div>
       </div>
-      <div class="contariner-right">
+      <div class="contariner-right" v-loadAni="'animate__slideInRight'">
         <div
-            ref="myInfo"
+            ref="myInfomyInfo"
             class="my-info hover-shadow contariner-box animate__animated"
         >
           <img class="cover" :src="headPortrait" alt="头像"/>
@@ -87,7 +87,7 @@ const getData = () => {
 
 onMounted(() => {
   init();
-  window.addEventListener('scroll', homeScroll)
+  // window.addEventListener('scroll', homeScroll)
   getData();
 })
 

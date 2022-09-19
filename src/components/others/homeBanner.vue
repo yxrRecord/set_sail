@@ -12,7 +12,7 @@
         <span class="text-after"> */</span>
       </p>
     </div>
-    <div class="home-bottom-link pointer" @click="$emit('backTop', 'bottom')">
+    <div class="home-bottom-link pointer" @click="scrollHome">
       <p>
         <span class="iconfont yxrfanhui1"></span>
       </p>
@@ -24,10 +24,13 @@ import {
   onMounted,
   reactive,
   nextTick,
+  defineEmits
 } from "vue";
 import Banner from "@components/others/Banner.vue";
 import currentImg from '@assets/images/banner1.jpg'
 import Tools from "@tools";
+
+const  emits = defineEmits([""])
 
 const state = reactive({
   text: [
@@ -131,6 +134,10 @@ const removeText = (time = 100) => {
     }
   }, time);
 };
+
+const scrollHome = () => {
+  emits('scrollHome', 'bottom')
+}
 </script>
 <style lang="scss" type="text/scss" scoped>
 .banner {
