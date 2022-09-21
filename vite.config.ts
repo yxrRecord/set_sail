@@ -9,7 +9,8 @@ import { resolve } from 'path'
 export default ({command, mode}: ConfigEnv) => {
     const env = loadEnv(mode, process.cwd());
     return defineConfig({
-        base: env.VITE_BASE_NAME,
+        // env.VITE_BASE_NAME,
+        base: "./",
         plugins: [
             vue(),
             vueJsx(),
@@ -55,7 +56,7 @@ export default ({command, mode}: ConfigEnv) => {
             })
         ],
         build: {
-            outDir: env.VITE_BASE_NAME,
+            outDir: "dist",
             assetsDir: "static",
             chunkSizeWarningLimit: 1500,
             rollupOptions: {
