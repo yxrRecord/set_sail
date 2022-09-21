@@ -23,8 +23,12 @@ instance.interceptors.request.use(config => {
   return config;
 })
 
+interface errorMenu {
+  code: number
+  message: string
+}
 // 错误提示
-const handleErrorCode = ({ code, message = "请求错误，请联系管理员" }) => {
+const handleErrorCode = ({ code, message = "请求错误，请联系管理员" }: errorMenu ) => {
   if (code && message) {
     switch(code) {
       case 401:

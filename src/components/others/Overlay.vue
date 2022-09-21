@@ -44,7 +44,7 @@ const visible = computed({
     emits("update:modelValue", value)
   }
 })
-const rootDom = document.querySelector("#app")
+const rootDom = document.querySelector("#app") as HTMLElement
 const setScroll = () => {
   rootDom.classList.add("app-overflow-hidden")
 }

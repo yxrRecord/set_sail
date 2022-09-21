@@ -4,14 +4,14 @@
       <div class="basic-info contariner-box hover-shadow">
         <img class="cover" src="../../assets/images/headPortrait.jpg" alt="头像" />
         <h2>你若成风</h2>
-        <p class="info-item" v-for="item in infoList" :key="item.label">
+        <p class="info-item" v-for="item in state.infoList" :key="item.label">
           <span class="label">{{ item.label }}：</span>
           <span class="value">{{ item.value }}</span>
         </p>
         <div class="website">
           <div
             class="item-website"
-            v-for="item in menu"
+            v-for="item in state.menu"
             :key="item.name"
             :class="[item.class]"
             @click="linkTo(item)"
@@ -29,7 +29,7 @@
       <div class="tags contariner-box hover-shadow">
         <h2>标题</h2>
         <div class="progress-all">
-          <div v-for="item in skillList" :key="item.name" class="progress-item">
+          <div v-for="item in state.skillList" :key="item.name" class="progress-item">
             <p class="progress-text">
               <span>{{ item.name }}</span>
               <span></span>
@@ -58,6 +58,13 @@
 <script lang="ts" setup>
 import { defineComponent, toRefs, ref, reactive, onMounted } from "vue";
 import musicimg1 from '@assets/images/headPortrait.jpg';
+interface MenuType {
+  name: string
+  icon: string
+  text?: string
+  url?: string
+  class?: string
+}
 const state = reactive({
   menu: [
     { name: "微信", icon: "yxrweixin1", class: "weChat" },
@@ -79,8 +86,8 @@ const state = reactive({
       text: "掘",
       url: "https://juejin.cn/user/3825956195413806",
       class: "juejin",
-    },
-  ],
+    }
+  ] as MenuType[],
   infoList: [
     { label: "性别", value: "男" },
     { label: "年龄", value: "24岁" },
@@ -151,11 +158,11 @@ const state = reactive({
       name: "名字3",
       src: musicimg1,
       author: "",
-    },
+    }
   ],
 });
 
-const linkTo = ({ url }: { url: string}) => {
+const linkTo = ({ url }: MenuType) => {
   url && window.open(url);
 }
 onMounted(() => {

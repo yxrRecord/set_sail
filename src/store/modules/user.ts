@@ -1,14 +1,18 @@
 import { MutationTree, ActionTree } from 'vuex'
 
+interface stateMenu {
+    userInfo: object
+}
+
 const state = {
     userInfo: {}
 }
 
 const mutations = {
-    SET_USER_INFO(state, value) {
+    SET_USER_INFO(state: stateMenu, value: object) {
         state.userInfo = value;
     },
-    GET_USER_INFO(state) {
+    GET_USER_INFO(state: stateMenu) {
         return state.userInfo
     }
 }

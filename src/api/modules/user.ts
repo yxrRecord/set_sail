@@ -11,7 +11,7 @@ export const getUserListApi = () => {
   })
 }
 
-export const loginApi = (data) => {
+export const loginApi = (data: any) => {
   return request({
     url: url.loginUrl,
     data

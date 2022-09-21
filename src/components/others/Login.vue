@@ -54,7 +54,7 @@ const info = reactive({
  */
 const login = () => {
   console.log("login", info);
-  loginApi(info).then(res => {
+  loginApi(info).then((res: any) => {
     if (res.code === 200) {
       console.log(res.data, "登录成功");
       showOverlay.value = false;

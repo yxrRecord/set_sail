@@ -30,7 +30,7 @@ import Banner from "@components/others/Banner.vue";
 import currentImg from '@assets/images/banner1.jpg'
 import Tools from "@tools";
 
-const  emits = defineEmits([""])
+const  emits = defineEmits(["scrollHome"])
 
 const state = reactive({
   text: [

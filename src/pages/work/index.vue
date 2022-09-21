@@ -2,7 +2,11 @@
   <div id="work">
     <div class="back-img"></div>
     <div class="work-contariner">
-      <div class="work-experience hover-shadow contariner-box wow" v-for="(item, index) in workList.value" :key="item.name" data-wow-duration="1s" :data-wow-delay="`${index * 0.2}s`" :class="[index % 2 === 0 ? 'line-left bounceInLeft' : 'line-right bounceInRight']">
+      <div class="work-experience hover-shadow contariner-box wow"
+        v-for="(item, index) in workList" :key="index" data-wow-duration="1s"
+        :data-wow-delay="`${index * 0.2}s`"
+        :class="[index % 2 === 0 ? 'line-left bounceInLeft' : 'line-right bounceInRight']"
+      >
         <h2>
           <span class="title">{{item.title}}</span>
           <span class="time">({{item.startTime}}-{{item.endTime}})</span>

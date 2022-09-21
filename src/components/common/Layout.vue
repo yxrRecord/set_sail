@@ -66,6 +66,8 @@ const onScroll = () => {
   } else state.showBackTop = false;
 };
 
+const scrollHome = () => {}
+
 const scrollToTop = (position: number) => {
   // 使用requestAnimationFrame，如果没有则使用setTimeOut
   if(!window.requestAnimationFrame) {
