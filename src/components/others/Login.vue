@@ -1,5 +1,5 @@
 <template>
-  <Overlay id="login-dialog" v-model="showOverlay" :showModal="true">
+  <Overlay id="login-dialog" v-model="showOverlay" :showModal="true" closeOnClickModal>
     <div class="login-container">
       <div class="login-left">
         <img :src="loginBg" alt="login-bg">

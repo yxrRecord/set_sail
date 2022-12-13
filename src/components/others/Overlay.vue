@@ -21,7 +21,7 @@ const props = defineProps({
   modelValue: Boolean, // 显示 overlay
   closeOnClickModal: { // 是否可以通过点击 modal 关闭 overlay
     type: Boolean,
-    default: true
+    default: false
   }
 })
 

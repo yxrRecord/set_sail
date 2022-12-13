@@ -79,8 +79,8 @@ const render = (lasers: Data[]) => {
 };
 
 onMounted(() => {
-  // init();
-  // window.onresize = init;
+  init();
+  window.onresize = init;
 });
 </script>
 <style lang="scss" type="text/scss" scoped>

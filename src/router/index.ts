@@ -67,7 +67,7 @@ const routes = [
 
 // 在 Vue-router新版本中，需要使用createRouter来创建路由
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/blog/'), // 需配置跟服务器地址一致
   routes,
 })
 

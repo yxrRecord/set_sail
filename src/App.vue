@@ -65,7 +65,7 @@ watch(() => route.path, () => {
 onMounted(() => {
   document.querySelectorAll('title')[0].innerHTML = store.getters.appInfo.appName;
   nextTick(() => {
-    live2dInit()
+    // live2dInit()
   })
 })
 </script>
