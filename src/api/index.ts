@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { baseURL } from '@config';
-import { IAxios } from "./axios.type"
-import { useRouter } from "vue-router"
+import axios from "axios";
+import { baseURL } from "@config";
+import { IAxios } from "./axios.type";
+import { useRouter } from "vue-router";
 const router = useRouter();
 // 创建实例
 const instance = axios.create({
   baseURL: baseURL,
   timeout: 100000,
-  headers: {'X-Custom-Header': 'foobar'}
+  headers: { "X-Custom-Header": "foobar" },
 });
 
 // 设置请求超时
@@ -15,22 +15,26 @@ const instance = axios.create({
 axios.defaults.timeout = 10000;
 // post请求头的设置
 // post请求的时候，我们需要加上一个请求头，所以可以在这里进行一个默认的设置，即设置post的请求头为application/x-www-form-urlencoded;charset=UTF-8
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded;charset=UTF-8";
 
 // 请求拦截器
-instance.interceptors.request.use(config => {
-  console.log(config, "config")
+instance.interceptors.request.use((config) => {
+  console.log(config, "config");
   return config;
-})
+});
 
 interface errorMenu {
-  code: number
-  message: string
+  code: number;
+  message: string;
 }
 // 错误提示
-const handleErrorCode = ({ code, message = "请求错误，请联系管理员" }: errorMenu ) => {
+const handleErrorCode = ({
+  code,
+  message = "请求错误，请联系管理员",
+}: errorMenu) => {
   if (code && message) {
-    switch(code) {
+    switch (code) {
       case 401:
         console.log("没有登录");
         break;
@@ -39,29 +43,29 @@ const handleErrorCode = ({ code, message = "请求错误，请联系管理员" }
         break;
     }
   }
-}
+};
 
 // 响应拦截器
-instance.interceptors.response.use(response => {
+instance.interceptors.response.use((response) => {
   if (response.status === 200) {
     if (response.data.code !== 200) {
       handleErrorCode(response.data || {});
     }
   }
   return response.data;
-})
+});
 
 export const request = (params: IAxios) => {
-  let data = params.data;
-  let methods = params.methods || 'post';
-  let url = params.url || '';
-  if (methods === 'post') {
-    return instance[methods](url, data)
+  const data = params.data;
+  const methods = params.methods || "post";
+  const url = params.url || "";
+  if (methods === "post") {
+    return instance[methods](url, data);
   } else {
     return instance[methods](url, {
-      params: data
-    })
+      params: data,
+    });
   }
-}
+};
 
 export default instance;

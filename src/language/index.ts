@@ -1,5 +1,5 @@
-import messages from './language';
-import { createI18n } from 'vue-i18n';
+import messages from "./language";
+import { createI18n } from "vue-i18n";
 import config from "../config"; // 通用配置文件
 
 const i18n = createI18n({
@@ -7,5 +7,5 @@ const i18n = createI18n({
   locale: config.language, //默认显示语言
   // fallbackLocale: 'zh', // set fallback locale
   messages,
-})
-export default i18n
+});
+export default i18n;

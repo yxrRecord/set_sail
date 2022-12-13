@@ -3,5 +3,5 @@ const getters = {
   windowScrollTop: (state: any) => state.app.windowScrollTop,
   showBanner: (state: any) => state.app.showBanner,
   userInfo: (state: any) => state.user.userInfo,
-}
-export default getters
+};
+export default getters;

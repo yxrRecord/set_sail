@@ -19,7 +19,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineComponent, reactive, computed, watch, ref, toRefs, onMounted } from "vue";
+import {
+  defineComponent,
+  reactive,
+  computed,
+  watch,
+  ref,
+  toRefs,
+  onMounted,
+} from "vue";
 import Header from "@components/others/Header.vue";
 import HomeBanner from "../others/HomeBanner.vue";
 import Login from "../others/Login.vue";
@@ -33,7 +41,7 @@ const state = reactive({
   containerHeight: 0 as number,
   showBackTop: false as boolean,
   routeNameList: ["skill", "work", "project", "about"] as string[],
-  scrollTime: null as number | null
+  scrollTime: null as number | null,
 });
 const showLogin = ref(true);
 
@@ -46,13 +54,13 @@ const showBanner = computed(() => {
 const homeBanner = ref();
 
 onMounted(() => {
-  init()
-})
+  init();
+});
 
 // methods
 const init = () => {
   if (homeBanner.value) {
-    state.containerHeight = homeBanner.value.$el.clientHeight
+    state.containerHeight = homeBanner.value.$el.clientHeight;
   }
   window.addEventListener("scroll", onScroll);
 };
@@ -70,18 +78,19 @@ const onScroll = () => {
   } else state.showBackTop = false;
 };
 
-const scrollHome = () => {}
+const scrollHome = () => {};
 
 const scrollToTop = (position: number) => {
   // 使用requestAnimationFrame，如果没有则使用setTimeOut
-  if(!window.requestAnimationFrame) {
-    window.requestAnimationFrame = function(callback) {
-      return setTimeout(callback, 20)
-    }
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+      return setTimeout(callback, 20);
+    };
   }
 
   // 获取当前元素滚动的距离
-  let scrollTopDistance = document.documentElement.scrollTop || document.body.scrollTop;
+  let scrollTopDistance =
+    document.documentElement.scrollTop || document.body.scrollTop;
 
   const smoothScroll = () => {
     // 如果你要滚到顶部，那么position传过来的就是0，下面这个distance肯定就是负值。
@@ -95,9 +104,9 @@ const scrollToTop = (position: number) => {
       window.scrollTo(0, scrollTopDistance);
       requestAnimationFrame(smoothScroll);
     }
-  }
+  };
   smoothScroll();
-}
+};
 </script>
 <style lang="scss" type="text/scss" scoped>
 /* 可以设置不同的进入和离开动画 */

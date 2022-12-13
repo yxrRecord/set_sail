@@ -2,7 +2,11 @@
   <div id="about">
     <section class="info-me">
       <div class="basic-info contariner-box hover-shadow">
-        <img class="cover" src="../../assets/images/headPortrait.jpg" alt="头像" />
+        <img
+          class="cover"
+          src="../../assets/images/headPortrait.jpg"
+          alt="头像"
+        />
         <h2>你若成风</h2>
         <p class="info-item" v-for="item in state.infoList" :key="item.label">
           <span class="label">{{ item.label }}：</span>
@@ -29,7 +33,11 @@
       <div class="tags contariner-box hover-shadow">
         <h2>标题</h2>
         <div class="progress-all">
-          <div v-for="item in state.skillList" :key="item.name" class="progress-item">
+          <div
+            v-for="item in state.skillList"
+            :key="item.name"
+            class="progress-item"
+          >
             <p class="progress-text">
               <span>{{ item.name }}</span>
               <span></span>
@@ -57,13 +65,13 @@
 
 <script lang="ts" setup>
 import { defineComponent, toRefs, ref, reactive, onMounted } from "vue";
-import musicimg1 from '@assets/images/headPortrait.jpg';
+import musicimg1 from "@assets/images/headPortrait.jpg";
 interface MenuType {
-  name: string
-  icon: string
-  text?: string
-  url?: string
-  class?: string
+  name: string;
+  icon: string;
+  text?: string;
+  url?: string;
+  class?: string;
 }
 const state = reactive({
   menu: [
@@ -86,7 +94,7 @@ const state = reactive({
       text: "掘",
       url: "https://juejin.cn/user/3825956195413806",
       class: "juejin",
-    }
+    },
   ] as MenuType[],
   infoList: [
     { label: "性别", value: "男" },
@@ -135,10 +143,10 @@ const state = reactive({
       class: "",
     },
   ] as {
-    name: string
-    number: number
-    color: string
-    class: string
+    name: string;
+    number: number;
+    color: string;
+    class: string;
   }[],
   musicList: [
     {
@@ -158,13 +166,13 @@ const state = reactive({
       name: "名字3",
       src: musicimg1,
       author: "",
-    }
+    },
   ],
 });
 
 const linkTo = ({ url }: MenuType) => {
   url && window.open(url);
-}
+};
 onMounted(() => {
   state.skillList = [
     {
@@ -202,9 +210,9 @@ onMounted(() => {
       number: 33,
       color: "#A3DAFF",
       class: "",
-    }
+    },
   ];
-})
+});
 </script>
 
 <style lang="scss" type="text/scss" scoped>

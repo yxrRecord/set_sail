@@ -33,7 +33,7 @@
 </template>
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from "vue";
-import { useRoute,  useRouter, Router } from "vue-router";
+import { useRoute, useRouter, Router } from "vue-router";
 import { useStore } from "vuex";
 import { Menu } from "@types";
 const route: any = useRoute();
@@ -50,8 +50,8 @@ const menuList: Menu[] = reactive([
   { icon: "1", name: "Tags", hover: false, url: "skill" },
   { icon: "1", name: "Work", hover: false, url: "work" },
   { icon: "1", name: "Project", hover: false, url: "project" },
-  { icon: "1", name: "About", hover: false, url: "about" }
-])
+  { icon: "1", name: "About", hover: false, url: "about" },
+]);
 
 // mounted
 const jumpPage = (item: Menu) => {
@@ -59,7 +59,7 @@ const jumpPage = (item: Menu) => {
     state.routeName = item.url;
     store.dispatch("setShowBanner", !state.routeNameList.includes(item.url));
     router.push({
-      name: item.url
+      name: item.url,
     });
   }
 };

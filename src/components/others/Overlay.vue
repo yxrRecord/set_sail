@@ -1,8 +1,10 @@
 <template>
-  <div :class="{
-    overlay: true,
-    'overlay-bg': showModal
-    }" v-show="visible"
+  <div
+    :class="{
+      overlay: true,
+      'overlay-bg': showModal,
+    }"
+    v-show="visible"
     @click="close"
   >
     <div class="overlay-content" @click.stop>
@@ -14,18 +16,20 @@
 <script setup lang="ts">
 import { defineProps, toRefs, computed, defineEmits } from "vue";
 const props = defineProps({
-  showModal: { // 是否显示 modal
+  showModal: {
+    // 是否显示 modal
     type: Boolean,
-    default: true
+    default: true,
   },
   modelValue: Boolean, // 显示 overlay
-  closeOnClickModal: { // 是否可以通过点击 modal 关闭 overlay
+  closeOnClickModal: {
+    // 是否可以通过点击 modal 关闭 overlay
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-const  emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(["update:modelValue"]);
 
 const visible = computed({
   get() {
@@ -35,28 +39,27 @@ const visible = computed({
     if (props.modelValue === false && props.showModal) {
       removeScroll();
     }
-    return props.modelValue
+    return props.modelValue;
   },
   set(value) {
     if (!value && props.showModal) {
       removeScroll();
     }
-    emits("update:modelValue", value)
-  }
-})
-const rootDom = document.querySelector("#app") as HTMLElement
+    emits("update:modelValue", value);
+  },
+});
+const rootDom = document.querySelector("#app") as HTMLElement;
 const setScroll = () => {
-  rootDom.classList.add("app-overflow-hidden")
-}
+  rootDom.classList.add("app-overflow-hidden");
+};
 const removeScroll = () => {
-  rootDom.classList.remove("app-overflow-hidden")
-}
+  rootDom.classList.remove("app-overflow-hidden");
+};
 const close = () => {
   if (props.closeOnClickModal) {
     visible.value = false;
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
@@ -75,6 +78,6 @@ const close = () => {
   }
 }
 .overlay-bg {
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 </style>

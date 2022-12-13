@@ -1,17 +1,22 @@
 <template>
-  <Overlay id="login-dialog" v-model="showOverlay" :showModal="true" closeOnClickModal>
+  <Overlay
+    id="login-dialog"
+    v-model="showOverlay"
+    :showModal="true"
+    closeOnClickModal
+  >
     <div class="login-container">
       <div class="login-left">
-        <img :src="loginBg" alt="login-bg">
+        <img :src="loginBg" alt="login-bg" />
       </div>
       <div class="login-right">
         <div class="login-form-item username">
           <label for="name">账号：</label>
-          <input type="text" v-model="info.name" placeholder="请输入账号"/>
+          <input type="text" v-model="info.name" placeholder="请输入账号" />
         </div>
         <div class="login-form-item password">
           <label for="password">密码：</label>
-          <input type="text" v-model="info.password" placeholder="请输入密码"/>
+          <input type="text" v-model="info.password" placeholder="请输入密码" />
         </div>
         <div class="login-btn-box">
           <button class="regest button">注册</button>
@@ -23,32 +28,32 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, reactive, defineProps, computed, defineEmits} from "vue";
+import { onMounted, reactive, defineProps, computed, defineEmits } from "vue";
 import Overlay from "./Overlay.vue";
 import loginBg from "@assets/images/banner1.jpg";
-import {loginApi} from "@api/modules/user";
+import { loginApi } from "@api/modules/user";
 
 const props = defineProps({
   modelValue: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-const emits = defineEmits(["update:modelValue"])
+const emits = defineEmits(["update:modelValue"]);
 const showOverlay = computed({
   get() {
     return props.modelValue;
   },
   set(value) {
-    emits("update:modelValue", value)
-  }
-})
+    emits("update:modelValue", value);
+  },
+});
 
 const info = reactive({
   name: "admin",
-  password: ""
-})
+  password: "",
+});
 /**
  * 登录
  */
@@ -59,8 +64,8 @@ const login = () => {
       console.log(res.data, "登录成功");
       showOverlay.value = false;
     }
-  })
-}
+  });
+};
 </script>
 
 <style lang="scss" type="text/scss" scoped>

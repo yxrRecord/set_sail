@@ -1,8 +1,10 @@
 <template>
   <header id="home-banner" class="banner">
-    <section class="banner-box" :style="`background-image: url(${currentImg})`">
-    </section>
-    <Banner class="canvas-banner"/>
+    <section
+      class="banner-box"
+      :style="`background-image: url(${currentImg})`"
+    ></section>
+    <Banner class="canvas-banner" />
     <div class="copywriting">
       <h2 class="hello-text">你 若 成 风 YXR</h2>
       <p class="edit-text-box word-wrap">
@@ -20,17 +22,12 @@
   </header>
 </template>
 <script lang="ts" setup>
-import {
-  onMounted,
-  reactive,
-  nextTick,
-  defineEmits
-} from "vue";
+import { onMounted, reactive, nextTick, defineEmits } from "vue";
 import Banner from "@components/others/Banner.vue";
-import currentImg from '@assets/images/banner1.jpg'
+import currentImg from "@assets/images/banner1.jpg";
 import Tools from "@tools";
 
-const  emits = defineEmits(["scrollHome"])
+const emits = defineEmits(["scrollHome"]);
 
 const state = reactive({
   text: [
@@ -49,7 +46,7 @@ const state = reactive({
 onMounted(() => {
   nextTick(() => {
     const dom: HTMLCollectionOf<Element> =
-        document.getElementsByClassName("hello-text");
+      document.getElementsByClassName("hello-text");
     Tools.setTextAnimate(dom["0"] as HTMLElement, 0.1);
     beginTextAnimate();
   });
@@ -58,18 +55,18 @@ onMounted(() => {
 // methods
 const init = () => {
   const dom: HTMLElement = document.getElementsByClassName(
-      "banner-box"
+    "banner-box"
   )[0] as HTMLElement;
   const width: string = document
-      .querySelectorAll(".banner")[0]
-      .getClientRects()[0]
-      .width?.toFixed(0);
+    .querySelectorAll(".banner")[0]
+    .getClientRects()[0]
+    .width?.toFixed(0);
 
   if (state.bannerTime) clearInterval(state.bannerTime);
 
   state.bannerTime = setInterval((item: any) => {
     dom.style.transform = `translateX(-${
-        state.currentBannerIndex * Number(width)
+      state.currentBannerIndex * Number(width)
     }px)`;
     if (state.currentBannerIndex > state.bannerList.length - 1) {
       setTimeout(() => {
@@ -96,7 +93,7 @@ const beginTextAnimate = () => {
 const addText = (time = 200) => {
   let text = state.text[state.currentIndex].split("");
   let textLen = text.length,
-      tempText: string[] = [];
+    tempText: string[] = [];
   let index = 0;
   state.timer = setInterval(() => {
     tempText.push(text[index]);
@@ -114,7 +111,7 @@ const addText = (time = 200) => {
 
 const removeText = (time = 100) => {
   let tempText: string[] = state.text[state.currentIndex].split(""),
-      index: number = state.showMessage.length;
+    index: number = state.showMessage.length;
 
   if (state.timer) clearInterval(state.timer);
 
@@ -136,8 +133,8 @@ const removeText = (time = 100) => {
 };
 
 const scrollHome = () => {
-  emits('scrollHome', 'bottom')
-}
+  emits("scrollHome", "bottom");
+};
 </script>
 <style lang="scss" type="text/scss" scoped>
 .banner {
