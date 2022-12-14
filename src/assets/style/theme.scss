@@ -1,12 +1,10 @@
-
-$color-border: #EBEEF5;
-$color-background: #f6f6f6;
-$color-primary:#4dbd8b;
-$color-danger:#F56C6C;
-$color-success:#67C23A;
-$color-warning:#E6A23C;
-$color-info:#909399;
-$color-purple:#947BF7;
+$primary-color: #4dbd8b;
+$border-color: #ebeef5;
+$danger-color: #f56c6c;
+$success-color: #67c23a;
+$warning-color: #e6a23c;
+$info-color: #909399;
+$purple-color: #947bf7;
 
 $color-gray: #000;
 $color-gray3: #333;
@@ -14,9 +12,10 @@ $color-gray6: #666;
 $color-gray9: #999;
 $color-grayb: #bbb;
 $color-grayf: #fff;
-$color-primary-active:#3a8ee6;
+$primary-color-active: #3a8ee6;
 
-$color-shadow: #e5e5e5;
-$color-hover-shadow: #c5c5c5;
-$color-bgf: #fff;
+$shadow-color: #e5e5e5;
+$shadow-hover-color: #c5c5c5;
+$bgf-color: #fff;
 
+@import "./mixin.scss";

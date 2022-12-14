@@ -1,6 +1,6 @@
 @font-face {
   font-family: "qianduKaiTI";
-  src: url('../font/qianduKaiTi.ttf');
+  src: url("../font/qianduKaiTi.ttf");
 }
 
 * {
@@ -42,7 +42,7 @@ body {
   /* 滑块 */
   width: 0px;
   border-radius: 5px;
-  background: #CBCBCB;
+  background: #cbcbcb;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -76,7 +76,7 @@ body {
 }
 
 input:focus {
-  outline: none
+  outline: none;
 }
 
 .underline {
@@ -89,53 +89,58 @@ input:focus {
 }
 
 .backgroundLight {
-  background-color: #BFBFBF !important;
+  background-color: #bfbfbf !important;
 
-  &:hover, &:focus {
-    background-color: #BFBFBF;
+  &:hover,
+  &:focus {
+    background-color: #bfbfbf;
   }
 }
 
 .backgroundOrange {
-  background-color: #FFB03F;
+  background-color: #ffb03f;
 
-  &:hover, &:focus {
-    background-color: #FFB03F;
+  &:hover,
+  &:focus {
+    background-color: #ffb03f;
   }
 }
 
 .backgroundRed {
-  background-color: #FF4C4C;
+  background-color: #ff4c4c;
 
-  &:hover, &:focus {
-    background-color: #FF4C4C;
+  &:hover,
+  &:focus {
+    background-color: #ff4c4c;
   }
 }
 
 .backgroundBlue {
-  background-color: #15A7E6;
+  background-color: #15a7e6;
 
-  &:hover, &:focus {
-    background-color: #15A7E6;
+  &:hover,
+  &:focus {
+    background-color: #15a7e6;
   }
 }
 
 .backgroundGreen {
-  background-color: #63B632;
+  background-color: #63b632;
 
-  &:hover, &:focus {
-    background-color: #63B632;
+  &:hover,
+  &:focus {
+    background-color: #63b632;
   }
 }
 
 .backgroundPurple {
-  background-color: #9D96F6;
+  background-color: #9d96f6;
 
-  &:hover, &:focus {
-    background-color: #9D96F6;
+  &:hover,
+  &:focus {
+    background-color: #9d96f6;
   }
 }
-
 
 //全局序列号样式
 .serialNum {
@@ -148,7 +153,7 @@ input:focus {
   text-align: center;
   border-radius: 60%;
   color: #fff;
-  background-color: $color-primary;
+  background-color: $primary-color;
 }
 
 //全局局部圆按钮->form
@@ -209,16 +214,15 @@ input:focus {
 }
 
 .pointer {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .hover-blue {
   &:hover {
-    color: $color-primary !important;
+    color: $primary-color !important;
     text-decoration: underline;
     cursor: pointer;
   }
-
 }
 
 // 中划线
@@ -283,7 +287,6 @@ input:focus {
   opacity: 0;
   animation: landIn .5s ease-out both; */
 }
-
 
 @keyframes landIn2 {
   to {
@@ -455,6 +458,3 @@ input:focus {
     opacity: 1;
   }
 }
-
-
-

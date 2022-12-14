@@ -19,7 +19,7 @@
     position: relative;
     border-radius: 10px;
     padding: 20px;
-    // background: $color-bgf;
+    // background: $bgf-color;
     &::after {
       content: "";
       width: 100%;
@@ -73,7 +73,7 @@
         letter-spacing: 2px;
         margin-top: 15px;
         padding-bottom: 30px;
-        border-bottom: 1px solid $color-border;
+        border-bottom: 1px solid $border-color;
       }
 
       .essential-info {
@@ -89,7 +89,7 @@
           line-height: 1.7em;
           &:hover {
             .label {
-              color: $color-primary;
+              color: $primary-color;
             }
           }
           .label {
@@ -115,10 +115,10 @@
   }
 
   .hover-shadow {
-    box-shadow: 0 0 10px $color-shadow;
+    box-shadow: 0 0 10px $shadow-color;
     transition: all 0.3s;
     &:hover {
-      box-shadow: 0 0 15px $color-hover-shadow;
+      box-shadow: 0 0 15px $shadow-hover-color;
     }
   }
 }

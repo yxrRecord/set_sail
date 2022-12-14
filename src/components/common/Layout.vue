@@ -131,7 +131,7 @@ const scrollToTop = (position: number) => {
     font-size: 30px;
     text-align: center;
     background: #fff;
-    color: $color-primary;
+    color: $primary-color;
     box-shadow: 0 0 10px #ccc;
   }
 }

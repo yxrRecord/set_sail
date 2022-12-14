@@ -14,7 +14,19 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@*": ["src/*"]
+      "@*": ["src/*"],
+      // 解决项目中使用@作为路径别名，导致vscode无法跳转文件的问题
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@config": ["./src/config"],
+      "@router/*": ["./src/router/*"],
+      "@store/*": ["./src/store/*"],
+      "@utils": ["./src/utils"],
+      "@views/*": ["./src/views/*"],
+      "@types/*": ["./src/types/*"],
+      "@api/*": ["./src/api/modules/*"],
+      "@routes/*": ["./src/routes/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

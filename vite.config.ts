@@ -95,7 +95,7 @@ export default ({ command, mode }: ConfigEnv) => {
         "@api": resolve(__dirname, "src/api"),
         // ...alias
       },
-      extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"], // 忽略扩展名
+      extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], // 忽略扩展名
     },
     css: {
       // css预处理器

@@ -77,7 +77,7 @@ $offsetW: 120px;
   width: 100%;
   background-color: $color-gray;
   background-size: 50%;
-  box-shadow: 0 5px 5px $color-hover-shadow;
+  box-shadow: 0 5px 5px $shadow-hover-color;
   z-index: 999;
   position: sticky;
   top: 0;
@@ -97,7 +97,7 @@ $offsetW: 120px;
       line-height: 30px;
       padding: 10px 0;
       text-align: center;
-      color: $color-primary;
+      color: $primary-color;
       // background-color: $color-gray;
     }
   }
@@ -112,7 +112,7 @@ $offsetW: 120px;
 
     .dot {
       position: absolute;
-      border-bottom: 3px solid $color-primary;
+      border-bottom: 3px solid $primary-color;
       min-width: 120px;
       left: -120px;
       bottom: 0;
@@ -126,13 +126,13 @@ $offsetW: 120px;
       font-size: 16px;
       transition: all 0.3s;
       &:hover {
-        color: $color-primary;
+        color: $primary-color;
       }
     }
 
     .currentPage {
       position: relative;
-      color: $color-primary;
+      color: $primary-color;
       &::after {
         content: "";
         position: absolute;
@@ -140,7 +140,7 @@ $offsetW: 120px;
         left: 0;
         width: 100%;
         height: 3px;
-        background-color: $color-primary;
+        background-color: $primary-color;
       }
     }
 

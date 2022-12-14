@@ -128,10 +128,10 @@ const workList = ref([
   }
 
   .hover-shadow {
-    box-shadow: 0 0 10px $color-shadow;
+    box-shadow: 0 0 10px $shadow-color;
     transition: all 0.3s;
     &:hover {
-      box-shadow: 0 0 15px $color-hover-shadow;
+      box-shadow: 0 0 15px $shadow-hover-color;
     }
   }
 
@@ -147,7 +147,7 @@ const workList = ref([
       .title {
         transition: all 0.3s;
         &:hover {
-          color: $color-primary;
+          color: $primary-color;
           cursor: pointer;
         }
       }
