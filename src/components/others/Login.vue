@@ -10,10 +10,10 @@
       <div class="login-right">
         <h1 class="login-title">{{ loginTitle[loginModel] }}</h1>
         <div class="login-form-item username">
-          <input type="text" v-model="info.name" required />
+          <input type="text" v-model="info.username" required />
           <label for="name">请输入账号</label>
-          <div class="user-list">
-            <div class="user-item" v-for="item in 5" :key="item">
+          <div class="user-list" v-show="localUserList.length">
+            <div class="user-item" v-for="item in localUserList" :key="item">
               {{ item }}
             </div>
           </div>
@@ -70,6 +70,9 @@ import {
 } from "vue";
 import Overlay from "./Overlay.vue";
 import { loginApi } from "@api/modules/user";
+import { useUserStore } from "@store/modules/user";
+const userStore = useUserStore();
+const localUserList = reactive([]);
 
 const props = defineProps({
   modelValue: {
@@ -98,7 +101,7 @@ const loginTitle = reactive({
 });
 
 const info = reactive({
-  name: "admin",
+  username: "admin",
   password: "",
   passwordTwo: "",
 });
@@ -108,10 +111,20 @@ const info = reactive({
  */
 const login = () => {
   loginModel.value = "login";
-  loginApi(info).then((res: any) => {
+  let { username, password } = info;
+  loginApi({
+    username,
+    password,
+  }).then((res: any) => {
     if (res.code === 200) {
-      console.log(res.data, "登录成功");
-      showOverlay.value = false;
+      if (res.code === 200) {
+        console.log(res.data, "登录成功");
+        // Utils.onMessage('登录成功')
+        // 存用户信息
+        userStore.localUserList = [{ username, password }];
+        userStore.setUserInfo(res.data);
+        showOverlay.value = false;
+      }
     }
   });
 };
@@ -206,6 +219,10 @@ const transFormModel = (model: loginModelType) => {
     display: none;
     padding: 0 10px;
     transition: all 0.3s;
+    height: 100px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    overflow-y: scroll;
     .user-item {
       padding: 10px 0;
       border-bottom: 1px solid #e5e5e5;
@@ -217,9 +234,6 @@ const transFormModel = (model: loginModelType) => {
   .username input:focus {
     & ~ .user-list {
       display: block;
-      height: 200px;
-      background: #fff;
-      border: 1px solid #e5e5e5;
     }
   }
 

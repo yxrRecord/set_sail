@@ -34,11 +34,12 @@
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter, Router } from "vue-router";
-import { useStore } from "vuex";
+import { useAppStore } from "@store/modules/app";
+const appStore = useAppStore();
+
 import { Menu } from "@types";
 const route: any = useRoute();
 const router: Router = useRouter();
-const store = useStore();
 const state = reactive({
   routeNameList: ["skill", "work", "project", "about"],
   routeName: "home",
@@ -57,7 +58,7 @@ const menuList: Menu[] = reactive([
 const jumpPage = (item: Menu) => {
   if (route.name !== item.name) {
     state.routeName = item.url;
-    store.dispatch("setShowBanner", !state.routeNameList.includes(item.url));
+    appStore.setShowBanner(!state.routeNameList.includes(item.url));
     router.push({
       name: item.url,
     });
@@ -66,7 +67,7 @@ const jumpPage = (item: Menu) => {
 
 onMounted(() => {
   state.routeName = route.name;
-  store.dispatch("setShowBanner", !state.routeNameList.includes(route.name));
+  appStore.setShowBanner(!state.routeNameList.includes(state.routeName));
 });
 </script>
 

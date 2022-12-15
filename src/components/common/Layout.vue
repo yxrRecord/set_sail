@@ -33,9 +33,9 @@ import HomeBanner from "../others/HomeBanner.vue";
 import Login from "../others/Login.vue";
 
 import { useRouter, useRoute, Router } from "vue-router";
-import { useStore } from "vuex";
 const router: Router = useRouter();
-const store = useStore();
+import { useAppStore } from "@store/modules/app";
+const appStore = useAppStore();
 const route = useRoute();
 const state = reactive({
   containerHeight: 0 as number,
@@ -47,7 +47,7 @@ const showLogin = ref(true);
 
 // cpmputed
 const showBanner = computed(() => {
-  return store.getters.showBanner;
+  return appStore.showBanner;
 });
 
 // ref

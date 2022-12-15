@@ -1,23 +1,33 @@
-import { MutationTree, ActionTree } from "vuex";
+import { defineStore } from 'pinia'
+import { localPrefix } from '@config'
 
-interface stateMenu {
-  userInfo: object;
+interface UserInfoType {
+  token?: string
+  [key: string]: unknown
+}
+interface localUserType {
+  username: string
+  password: string
+}
+interface UserType {
+  userInfo: UserInfoType,
+  localUserList: localUserType[]
 }
 
-const state = {
-  userInfo: {},
-};
-
-const mutations = {
-  SET_USER_INFO(state: stateMenu, value: object) {
-    state.userInfo = value;
+export const useUserStore = defineStore(`${localPrefix}user`, {
+  persist: true,
+  state(): UserType {
+    return {
+      userInfo: {},
+      localUserList: []
+    }
   },
-  GET_USER_INFO(state: stateMenu) {
-    return state.userInfo;
-  },
-};
-
-export default {
-  namespace: true, // 用于在全局引用此文件里的方法时标识这一个的文件名，解决命名冲突
-  state,
-};
+  actions: {
+    setUserInfo(data: UserInfoType) {
+      this.userInfo = data
+    },
+    updateLocalUserList(data: localUserType[]) {
+      this.localUserList = data
+    }
+  }
+})

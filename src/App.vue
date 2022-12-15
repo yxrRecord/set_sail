@@ -4,9 +4,12 @@
 
 <script setup>
 import { nextTick, onMounted, reactive, toRefs, watch } from "vue";
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
+
+import { useAppStore } from "@store/modules/app";
+const appStore = useAppStore();
+
 import { useRoute } from "vue-router";
-const store = useStore();
 const route = useRoute();
 const state = reactive({
   model: "haru_1",
@@ -66,8 +69,7 @@ watch(
   }
 );
 onMounted(() => {
-  document.querySelectorAll("title")[0].innerHTML =
-    store.getters.appInfo.appName;
+  document.querySelectorAll("title")[0].innerHTML = appStore.appInfo.appName;
   nextTick(() => {
     // live2dInit()
   });

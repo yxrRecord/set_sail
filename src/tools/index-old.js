@@ -100,27 +100,6 @@ util.install = function (Vue) {
     });
   };
 
-  Vue.prototype.$getUserMenu = async (current) => {
-    // 获取缓存的菜单
-    let menu = await store.dispatch("menu/getMenu");
-    // 取出name
-    let names = Vue.prototype.$arrayRepact(menu.map((item) => item.name));
-    // 判断是否含有菜单
-    if (names.includes(current.name)) {
-      let index = menu.findIndex((item) => item.name === current.name);
-      menu[index].count++;
-    } else {
-      current.count = 1;
-      menu.push(current);
-    }
-    // 根据count排序
-    menu = menu.sort((item1, item2) => {
-      return item2.count - item1.count;
-    });
-    // 更新数据
-    store.dispatch("menu/setMenu", menu);
-  };
-
   // 数组对象外数组去重
   Vue.prototype.$arrayRepact = function (arr) {
     return Array.from(new Set(arr));

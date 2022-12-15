@@ -1,12 +1,5 @@
-import { createStore } from "vuex";
-import getters from "./getters";
-import app from "./modules/app";
-import user from "./modules/user";
-
-export default createStore({
-  getters,
-  modules: {
-    app,
-    user,
-  },
-});
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+export default pinia
