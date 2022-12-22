@@ -2,6 +2,10 @@ import axios from "axios";
 import { baseURL } from "@config";
 import { IAxios } from "./axios.type";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@store/modules/user";
+import { useAppStore } from "@store/modules/app";
+const userInfo = useUserStore()
+const appStore = useAppStore()
 const router = useRouter();
 // 创建实例
 const instance = axios.create({
@@ -20,7 +24,12 @@ axios.defaults.headers.post["Content-Type"] =
 
 // 请求拦截器
 instance.interceptors.request.use((config) => {
-  console.log(config, "config");
+  const {
+    userInfo: { token = '' }
+  } = useUserStore()
+  if (token) {
+    config.headers.token = token
+  }
   return config;
 });
 
@@ -37,6 +46,7 @@ const handleErrorCode = ({
     switch (code) {
       case 401:
         console.log("没有登录");
+        appStore.showLoginDialog = true;
         break;
       case 403:
         console.log(message);

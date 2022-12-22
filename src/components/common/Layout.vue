@@ -43,7 +43,9 @@ const state = reactive({
   routeNameList: ["skill", "work", "project", "about"] as string[],
   scrollTime: null as number | null,
 });
-const showLogin = ref(true);
+const showLogin = computed(() => {
+  return appStore.showLoginDialog;
+});
 
 // cpmputed
 const showBanner = computed(() => {

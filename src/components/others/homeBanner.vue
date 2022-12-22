@@ -22,7 +22,7 @@
   </header>
 </template>
 <script lang="ts" setup>
-import { onMounted, reactive, nextTick, defineEmits } from "vue";
+import { onMounted, reactive, nextTick } from "vue";
 import Banner from "@components/others/Banner.vue";
 import currentImg from "@assets/images/banner1.jpg";
 import Tools from "@tools";

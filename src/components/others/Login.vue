@@ -8,34 +8,68 @@
     <div class="login-container" :class="loginModel">
       <div class="login-left"></div>
       <div class="login-right">
-        <h1 class="login-title">{{ loginTitle[loginModel] }}</h1>
+        <h1 class="login-title">
+          {{ loginTitle[loginModel] || "登录" }}
+          <Popover>
+            <template v-slot:reference>
+              <span class="reference iconfont yxryiwen"></span>
+            </template>
+            <template v-slot:content>
+              <span>contentcontentcontent</span>
+            </template>
+          </Popover>
+        </h1>
         <div class="login-form-item username">
-          <input type="text" v-model="info.username" required />
-          <label for="name">请输入账号</label>
+          <input type="text" v-model="userInfo.username" required />
+          <label for="name">请输入您的账号</label>
           <div class="user-list" v-show="localUserList.length">
-            <div class="user-item" v-for="item in localUserList" :key="item">
-              {{ item }}
+            <div
+              class="user-item"
+              v-for="account in localUserList"
+              :key="account.username"
+              @click="selectLocalAccount(account)"
+            >
+              {{ account.username }}
             </div>
           </div>
         </div>
         <div class="login-form-item password">
-          <input type="text" v-model="info.password" required />
-          <label for="password">请输入密码</label>
+          <input type="password" v-model="userInfo.password" required />
+          <label for="password">请输入您的密码</label>
         </div>
 
         <div class="login-form-item password" v-if="loginModel === 'retrieve'">
-          <input type="text" v-model="info.passwordTwo" required />
-          <label for="password">请在次输入密码</label>
+          <input type="password" v-model="userInfo.passwordTwo" required />
+          <label>请在次输入密码</label>
+        </div>
+
+        <div class="login-form-item email" v-if="loginModel === 'register'">
+          <input type="text" v-model="userInfo.email" required />
+          <label>请输入您的邮箱</label>
         </div>
 
         <div class="login-btn-box">
-          <div class="remember" v-if="loginModel === 'login'">
-            <span>记住密码</span>
+          <div
+            class="remember"
+            v-if="!['register', 'retrieve'].includes(loginModel)"
+          >
+            <span>
+              <input
+                id="rememberCheck"
+                type="checkbox"
+                name="remember"
+                v-model="isRemember"
+              />
+              <label for="rememberCheck">记住密码</label>
+            </span>
             <span @click="transFormModel('retrieve')">忘记密码</span>
           </div>
-          <div class="login-register" v-if="loginModel === 'login'">
+          <div
+            class="login-register"
+            v-if="!['register', 'retrieve'].includes(loginModel)"
+          >
             <button class="register button" @click="transFormModel('register')">
-              注册
+              Go注册
             </button>
             <button class="login-btn button" @click="login">登录</button>
           </div>
@@ -43,16 +77,18 @@
           <div class="login-register" v-if="loginModel === 'register'">
             <button class="register button" @click="register">注册</button>
             <button class="login-btn button" @click="transFormModel('login')">
-              登录
+              Go登录
             </button>
           </div>
 
           <div class="login-register" v-if="loginModel === 'retrieve'">
             <button class="register button" @click="retrieve">修改密码</button>
             <button class="login-btn button" @click="transFormModel('login')">
-              登录
+              Go登录
             </button>
           </div>
+
+          <div v-show="vaildMsg" class="vaild-result">* {{ vaildMsg }}</div>
         </div>
       </div>
     </div>
@@ -60,19 +96,18 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  onMounted,
-  ref,
-  reactive,
-  defineProps,
-  computed,
-  defineEmits,
-} from "vue";
+import { onMounted, ref, reactive, computed } from "vue";
 import Overlay from "./Overlay.vue";
-import { loginApi } from "@api/modules/user";
-import { useUserStore } from "@store/modules/user";
+import { loginApi, registerApi } from "@api/modules/user";
+import { useUserStore, localUserType } from "@store/modules/user";
 const userStore = useUserStore();
-const localUserList = reactive([]);
+import { useAppStore } from "@store/modules/app";
+const appStore = useAppStore();
+import Popover from "./Popover.vue";
+
+const localUserList = computed(() => {
+  return userStore.localUserList || [];
+});
 
 const props = defineProps({
   modelValue: {
@@ -84,49 +119,121 @@ const props = defineProps({
 const emits = defineEmits(["update:modelValue"]);
 const showOverlay = computed({
   get() {
-    return props.modelValue;
+    return props.modelValue || false;
   },
   set(value) {
-    emits("update:modelValue", value);
+    appStore.showLoginDialog = false;
   },
 });
 
-type loginModelType = "login" | "register" | "retrieve";
+type loginModelType = "login" | "register" | "retrieve" | "";
 
-let loginModel = ref<loginModelType>("login");
+let loginModel = ref<loginModelType>("");
 const loginTitle = reactive({
   login: "登录",
   register: "注册",
   retrieve: "忘记密码",
 });
 
-const info = reactive({
+const userInfo = reactive({
   username: "admin",
   password: "",
   passwordTwo: "",
+  email: "",
 });
 
+const isRemember = ref(false);
+let vaildMsg = ref("");
 /**
  * 登录
  */
 const login = () => {
   loginModel.value = "login";
-  let { username, password } = info;
+  let { username, password } = userInfo;
   loginApi({
     username,
     password,
   }).then((res: any) => {
     if (res.code === 200) {
-      if (res.code === 200) {
-        console.log(res.data, "登录成功");
-        // Utils.onMessage('登录成功')
+      console.log(res.data, "登录成功");
+      if (isRemember.value === true) {
         // 存用户信息
-        userStore.localUserList = [{ username, password }];
-        userStore.setUserInfo(res.data);
-        showOverlay.value = false;
+        let { localUserList } = userStore;
+        const loaclUserIndex = localUserList.findIndex(
+          (item: localUserType) => item.username === username
+        );
+        if (loaclUserIndex >= 0) {
+          localUserList.splice(loaclUserIndex, 1);
+        }
+        localUserList.unshift({ username, password });
+        userStore.localUserList = localUserList;
       }
+      userStore.isLogin = true;
+      userStore.setUserInfo(res.data);
+      showOverlay.value = false;
     }
   });
+};
+
+/**
+ * 选择本地账号
+ */
+
+const selectLocalAccount = (accoun: localUserType) => {
+  userInfo.username = accoun.username;
+  userInfo.password = accoun.password;
+};
+
+/**
+ * 修改密码
+ */
+const retrieve = () => {};
+
+/**
+ * 注册账号
+ */
+const register = () => {
+  let { username, password, email } = userInfo;
+  hasVaild();
+  if (vaildMsg.value) return;
+  registerApi({
+    username,
+    password,
+    email,
+  }).then((res) => {
+    if (res.code === 200) {
+      console.log("注册成功");
+      transFormModel("login");
+    } else {
+      vaildMsg.value = res.message || "";
+    }
+  });
+};
+
+/**
+ * 验证表单
+ */
+const hasVaild = () => {
+  const loginReg = /^[a-zA-Z0-9]{4}/;
+  const passwordReg = /^[a-zA-Z0-9]{4}/;
+  const emailReg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+  if (!loginReg.test(userInfo.username)) {
+    vaildMsg.value = "用户名格式错误";
+  } else if (!passwordReg.test(userInfo.password)) {
+    vaildMsg.value = "密码格式错误";
+  } else if (
+    userInfo.password !== userInfo.passwordTwo &&
+    loginModel.value === "retrieve"
+  ) {
+    vaildMsg.value = "两次密码不一致";
+  } else if (
+    !emailReg.test(userInfo.email) &&
+    loginModel.value === "register"
+  ) {
+    vaildMsg.value = "邮箱格式错误";
+  } else {
+    vaildMsg.value = "";
+  }
 };
 
 /**
@@ -134,6 +241,7 @@ const login = () => {
  */
 const transFormModel = (model: loginModelType) => {
   loginModel.value = model;
+  vaildMsg.value = "";
 };
 </script>
 
@@ -147,6 +255,7 @@ const transFormModel = (model: loginModelType) => {
   display: flex;
   transition: all 3s;
   position: relative;
+  flex-direction: row;
 
   .login-left {
     position: absolute;
@@ -156,6 +265,7 @@ const transFormModel = (model: loginModelType) => {
     height: 100%;
     background-image: url("@assets/images/banner1.jpg");
     background-size: cover;
+    clip-path: polygon(0px 0px, 0% 100%, 50% 100%, 100% 0px);
   }
 
   .login-right {
@@ -165,6 +275,8 @@ const transFormModel = (model: loginModelType) => {
     position: absolute;
     right: 0;
     width: 45%;
+    padding-right: 50px;
+    padding-left: 0;
 
     .login-title {
       color: $primary-color;
@@ -173,6 +285,8 @@ const transFormModel = (model: loginModelType) => {
       text-align: center;
       margin-bottom: 80px;
       margin-top: 20px;
+    }
+    .popover {
     }
   }
 
@@ -192,16 +306,13 @@ const transFormModel = (model: loginModelType) => {
       &::placeholder {
         color: #bbb;
       }
-      &:focus {
-        & ~ label {
-          top: -20px;
-          left: 0;
-        }
-      }
+      &:focus,
       &:valid {
         & ~ label {
           top: -20px;
           left: 0;
+          font-size: 12px;
+          line-height: normal;
         }
       }
     }
@@ -210,30 +321,44 @@ const transFormModel = (model: loginModelType) => {
       top: 0;
       left: 0;
       color: $primary-color;
+      line-height: 30px;
       transition: all 0.3s;
       pointer-events: none;
     }
   }
+  .username {
+    position: relative;
+  }
 
   .user-list {
-    display: none;
+    position: absolute;
+    width: 100%;
     padding: 0 10px;
-    transition: all 0.3s;
-    height: 100px;
+    max-height: 0;
     background: #fff;
     border: 1px solid #e5e5e5;
+    border-top: 0;
     overflow-y: scroll;
+    z-index: 2;
+    transition: all 0.3s;
+    visibility: hidden;
     .user-item {
       padding: 10px 0;
       border-bottom: 1px solid #e5e5e5;
+      cursor: pointer;
+      &:hover {
+        color: $primary-color;
+      }
       &:last-of-type {
         border-bottom: none;
       }
     }
   }
+
   .username input:focus {
     & ~ .user-list {
-      display: block;
+      visibility: visible;
+      max-height: 200px;
     }
   }
 
@@ -250,6 +375,26 @@ const transFormModel = (model: loginModelType) => {
         cursor: pointer;
         &:hover {
           color: $primary-color;
+        }
+      }
+
+      label {
+        cursor: pointer;
+        vertical-align: top;
+      }
+
+      #rememberCheck {
+        width: 14px;
+        height: 14px;
+        margin-right: 6px;
+        cursor: pointer;
+        outline: none;
+        &:checked {
+          background-color: $primary-color;
+          color: #fff;
+          & ~ label {
+            color: $primary-color;
+          }
         }
       }
     }
@@ -270,7 +415,6 @@ const transFormModel = (model: loginModelType) => {
       background-color: $primary-color;
       color: #fff;
     }
-
     .register {
       border: 1px solid #e5e5e5;
       background-color: #fff;
@@ -279,6 +423,12 @@ const transFormModel = (model: loginModelType) => {
         border-color: $primary-color;
         color: $primary-color;
       }
+    }
+
+    .vaild-result {
+      color: red;
+      margin-top: 12px;
+      font-size: 12px;
     }
   }
 }

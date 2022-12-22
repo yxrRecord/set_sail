@@ -1,19 +1,26 @@
 import { request } from "../index";
-
-const url = {
-  userListUrl: "/user/getUserList",
-  loginUrl: "/user/login",
-};
+interface userInfoType {
+  username: string;
+  password: string;
+  email?: string;
+}
 
 export const getUserListApi = () => {
   return request({
-    url: url.userListUrl,
+    url: "/user/getUserList",
   });
 };
 
-export const loginApi = (data: any) => {
+export const loginApi = (data: userInfoType) => {
   return request({
-    url: url.loginUrl,
+    url: "/user/login",
+    data,
+  });
+};
+
+export const registerApi = (data: userInfoType) => {
+  return request({
+    url: "/user/registeUser",
     data,
   });
 };

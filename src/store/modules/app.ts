@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import { localPrefix } from '@config'
+import { defineStore } from "pinia";
+import { localPrefix } from "@config";
 
 interface AppType {
   token?: string
@@ -10,6 +10,7 @@ interface AppInfoType {
   appInfo: AppType
   windowScrollTop: number
   showBanner: boolean
+  showLoginDialog: boolean
 }
 
 export const useAppStore = defineStore(`${localPrefix}app`, {
@@ -23,11 +24,12 @@ export const useAppStore = defineStore(`${localPrefix}app`, {
       },
       windowScrollTop: 0,
       showBanner: true,
-    }
+      showLoginDialog: false
+    };
   },
   actions: {
     setShowBanner(value: boolean) {
-      this.showBanner = value
-    }
-  }
-})
+      this.showBanner = value;
+    },
+  },
+});

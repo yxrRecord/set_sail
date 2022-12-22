@@ -96,8 +96,8 @@ const getData = () => {
 
 onMounted(() => {
   init();
-  // window.addEventListener('scroll', homeScroll)
   getData();
+  // window.addEventListener('scroll', homeScroll)
 });
 
 onDeactivated(() => {
