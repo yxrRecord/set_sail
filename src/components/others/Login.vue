@@ -9,13 +9,21 @@
       <div class="login-left"></div>
       <div class="login-right">
         <h1 class="login-title">
-          {{ loginTitle[loginModel] || "登录" }}
-          <Popover>
+          {{ loginTitle[loginModel || "login"] }}
+          <Popover :placement="placementValue" trigger="hover">
             <template v-slot:reference>
               <span class="reference iconfont yxryiwen"></span>
             </template>
             <template v-slot:content>
-              <span>contentcontentcontent</span>
+              <ul class="login-explain">
+                <li
+                  class="login-explain-text"
+                  v-for="item in loginExplain[loginModel || 'login']"
+                  :key="item"
+                >
+                  🌍 {{ item }}
+                </li>
+              </ul>
             </template>
           </Popover>
         </h1>
@@ -125,6 +133,11 @@ const showOverlay = computed({
     appStore.showLoginDialog = false;
   },
 });
+const placementValue = computed(() => {
+  return loginModel.value === "login" || loginModel.value === ""
+    ? "right-start"
+    : "left-start";
+});
 
 type loginModelType = "login" | "register" | "retrieve" | "";
 
@@ -133,6 +146,24 @@ const loginTitle = reactive({
   login: "登录",
   register: "注册",
   retrieve: "忘记密码",
+});
+
+const loginExplain = reactive({
+  login: [
+    "输入用户名和密码，点击登录即可",
+    "用户名为4位以上字母或者数组",
+    "密码为4位以上字母或者数组",
+  ],
+  register: [
+    "用户名为4位以上字母或者数组",
+    "密码为4位以上字母或者数组",
+    "输入可用的邮箱",
+  ],
+  retrieve: [
+    "用户名为4位以上字母或者数组",
+    "密码为4位以上字母或者数组",
+    "再次输入密码需要和原密码保持一致",
+  ],
 });
 
 const userInfo = reactive({
@@ -285,8 +316,6 @@ const transFormModel = (model: loginModelType) => {
       text-align: center;
       margin-bottom: 80px;
       margin-top: 20px;
-    }
-    .popover {
     }
   }
 
@@ -506,6 +535,19 @@ const transFormModel = (model: loginModelType) => {
     animation: formAnm 1s ease forwards;
     padding-left: 50px;
     padding-right: 0;
+  }
+}
+</style>
+
+<style lang="scss" type="text/scss">
+.login-explain {
+  .login-explain-text {
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: $color-gray3;
+    &:last-of-type {
+      margin: 0;
+    }
   }
 }
 </style>

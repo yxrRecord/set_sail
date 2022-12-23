@@ -1,6 +1,13 @@
 <template>
   <div class="popover">
-    <div class="reference" ref="referenceRef" @click="handleReference">
+    <!-- @mouseleave="hidenPopover('hover')" -->
+    <div
+      :class="`reference popover-${trigger}`"
+      ref="referenceRef"
+      @click="openPopover('click')"
+      @mouseenter="openPopover('hover')"
+      @mouseleave="hidenPopover('hover')"
+    >
       <slot name="reference"></slot>
     </div>
     <Teleport to="#app">
@@ -8,18 +15,20 @@
         :class="`popover-content popover-${placement}`"
         v-show="show"
         ref="contentRef"
+        @mouseenter="openPopover('hover')"
+        @mouseleave="hidenPopover('hover')"
         :style="{
           width: width,
           transform: `translate(${translateData.translateX}px, ${translateData.translateY}px)`,
         }"
       >
         <slot name="content"></slot>
-        <div
-          class="jt"
+        <span
+          :class="`jt jt-${placement}`"
           :style="{
-            transform: `rotateZ(45deg) translate3d(${translateData.jtTranslateX}px, ${translateData.jtTranslateY}px, 0)`,
+            transform: `translate3d(${translateData.jtTranslateX}px, ${translateData.jtTranslateY}px, 0)`,
           }"
-        ></div>
+        ></span>
       </div>
     </Teleport>
   </div>
@@ -27,6 +36,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, defineProps, computed, reactive, nextTick } from "vue";
+type triggerType = "click" | "hover";
 interface PropsType {
   title?: string;
   placement?:
@@ -44,13 +54,15 @@ interface PropsType {
     | "right-end";
   width?: string | number;
   content?: string;
+  trigger: triggerType;
 }
 
 const props = withDefaults(defineProps<PropsType>(), {
   title: "",
-  placement: "left-start",
+  placement: "right-start",
   width: "auto",
   content: "",
+  trigger: "click",
 });
 
 const referenceRef = ref();
@@ -88,15 +100,19 @@ const getTranslateData = () => {
   contentDom = contentRef.value.getBoundingClientRect();
   const tcaseTraData = {
     "left-start": {
-      translateX: referenceDom.left - contentDom.width - offsetLeft.value,
-      translateY: referenceDom.top,
-      jtTranslateX: contentDom.width + 7,
+      translateX:
+        referenceDom.left -
+        contentDom.width -
+        offsetLeft.value +
+        referenceDom.width,
+      translateY: referenceDom.top + offsetTop.value - referenceDom.height / 2,
+      jtTranslateX: contentDom.width - 9,
       jtTranslateY: 14,
     },
     "right-start": {
       translateX: referenceDom.left + offsetLeft.value,
       translateY: referenceDom.top + offsetTop.value - referenceDom.height / 2,
-      jtTranslateX: -7,
+      jtTranslateX: -9,
       jtTranslateY: 14,
     },
     //  "top"
@@ -117,14 +133,25 @@ const getTranslateData = () => {
   console.log(translateData);
 };
 
-const handleReference = () => {
-  getReferenceDom();
-  show.value = !show.value;
-  nextTick(getTranslateData);
+let hidenTimer = ref<number | undefined>(undefined);
+const openPopover = (triggerType: triggerType) => {
+  if (props.trigger === triggerType) {
+    if (hidenTimer) {
+      clearTimeout(hidenTimer.value);
+    }
+    getReferenceDom();
+    show.value = true;
+    nextTick(getTranslateData);
+  }
 };
-// const resetReferenceDom = () => {
-//   resetReferenceDom
-// }
+
+const hidenPopover = () => {
+  if (props.trigger === "hover") {
+    hidenTimer.value = setTimeout(() => {
+      show.value = false;
+    }, 200);
+  }
+};
 </script>
 
 <style lang="scss" type="text/scss" scoped>
@@ -149,6 +176,13 @@ const handleReference = () => {
 </style>
 
 <style lang="scss">
+.popover {
+  .popover-hover {
+    &:hover ~ .popover-content {
+      background: red !important;
+    }
+  }
+}
 .popover-content {
   position: absolute;
   top: 0;
@@ -161,7 +195,6 @@ const handleReference = () => {
   border: 1px solid #e4e7ed;
   border-radius: 5px;
   width: 200px;
-  height: 100px;
   z-index: 9999;
   transform: translate(0, 0);
   .jt {
@@ -174,11 +207,51 @@ const handleReference = () => {
     bottom: 0;
     width: 14px;
     height: 14px;
-    border: 1px solid #e4e7ed;
     transform: rotateZ(45deg) translate3d(0, 0, 0);
-    background-color: red;
-    border-top: transparent;
-    border-right: transparent;
+    &::before {
+      content: "";
+      border: 1px solid #e4e7ed;
+      transform: rotateZ(45deg) translate3d(0, 0, 0);
+      background-color: #fff;
+      height: 14px;
+      width: 14px;
+      display: inline-block;
+    }
+    // border-top-color: transparent;
+    // border-top-color: transparent;
+    &-left-start,
+    &-left-end,
+    &-left {
+      &::before {
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+      }
+    }
+    &-right-start,
+    &-right-end,
+    &-right {
+      &::before {
+        border-top-color: transparent;
+        border-right-color: transparent;
+      }
+    }
+
+    &-top-start,
+    &-top-end,
+    &-top {
+      &::before {
+        border-top-color: transparent;
+        border-right-color: transparent;
+      }
+    }
+    &-bottom-start,
+    &-bottom-end,
+    &-bottom {
+      &::before {
+        border-top-color: transparent;
+        border-right-color: transparent;
+      }
+    }
   }
 }
 </style>
