@@ -104,14 +104,15 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, reactive, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import Overlay from "./Overlay.vue";
-import { loginApi, registerApi } from "@api/modules/user";
-import { useUserStore, localUserType } from "@store/modules/user";
-const userStore = useUserStore();
+import { loginApi, registerApi } from "@api/user";
+import { useUserStore } from "@store/modules/user";
+import { LocalUserType } from "@api/user.type";
 import { useAppStore } from "@store/modules/app";
-const appStore = useAppStore();
 import Popover from "./Popover.vue";
+const appStore = useAppStore();
+const userStore = useUserStore();
 
 const localUserList = computed(() => {
   return userStore.localUserList || [];
@@ -124,13 +125,12 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["update:modelValue"]);
 const showOverlay = computed({
   get() {
     return props.modelValue || false;
   },
   set(value) {
-    appStore.showLoginDialog = false;
+    appStore.showLoginDialog = value;
   },
 });
 const placementValue = computed(() => {
@@ -184,14 +184,14 @@ const login = () => {
   loginApi({
     username,
     password,
-  }).then((res: any) => {
-    if (res.code === 200) {
+  }).then((res) => {
+    if (res && res.code === 200) {
       console.log(res.data, "登录成功");
       if (isRemember.value === true) {
         // 存用户信息
         let { localUserList } = userStore;
         const loaclUserIndex = localUserList.findIndex(
-          (item: localUserType) => item.username === username
+          (item: LocalUserType) => item.username === username
         );
         if (loaclUserIndex >= 0) {
           localUserList.splice(loaclUserIndex, 1);
@@ -210,7 +210,7 @@ const login = () => {
  * 选择本地账号
  */
 
-const selectLocalAccount = (accoun: localUserType) => {
+const selectLocalAccount = (accoun: LocalUserType) => {
   userInfo.username = accoun.username;
   userInfo.password = accoun.password;
 };
@@ -218,7 +218,9 @@ const selectLocalAccount = (accoun: localUserType) => {
 /**
  * 修改密码
  */
-const retrieve = () => {};
+const retrieve = () => {
+  console.log("retrieve");
+};
 
 /**
  * 注册账号
@@ -232,11 +234,11 @@ const register = () => {
     password,
     email,
   }).then((res) => {
-    if (res.code === 200) {
+    if (res && res.code === 200) {
       console.log("注册成功");
       transFormModel("login");
     } else {
-      vaildMsg.value = res.message || "";
+      vaildMsg.value = res ? res.message || "" : "";
     }
   });
 };

@@ -21,13 +21,13 @@
     padding: 20px;
     // background: $bgf-color;
     &::after {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      filter: blur(20px);
+      // content: "";
+      // width: 100%;
+      // height: 100%;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      // filter: blur(20px);
     }
   }
 
@@ -46,71 +46,10 @@
   .contariner-right {
     width: 25%;
     min-width: 250px;
-    .my-info {
-      min-height: 400px;
-      padding-top: 30px;
-      overflow: hidden;
+    .hot-fixed {
       position: sticky;
-      top: 120px;
-      img {
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-        margin: 0 auto;
-        display: block;
-
-        &:hover {
-          transform: rotate(666turn);
-          transition-delay: 1s;
-          transition-property: all;
-          transition-duration: 59s;
-          transition-timing-function: cubic-bezier(0.34, 0, 0.84, 1);
-        }
-      }
-      .username {
-        text-align: center;
-        font-size: 18px;
-        letter-spacing: 2px;
-        margin-top: 15px;
-        padding-bottom: 30px;
-        border-bottom: 1px solid $border-color;
-      }
-
-      .essential-info {
-        padding: 10px;
-        .info-title {
-          font-size: 16px;
-          letter-spacing: 1px;
-          line-height: 1.3em;
-          margin: 10px 0 10px;
-        }
-
-        .info-item {
-          line-height: 1.7em;
-          &:hover {
-            .label {
-              color: $primary-color;
-            }
-          }
-          .label {
-            font-size: 16px;
-            color: $color-gray6;
-            margin-right: 15px;
-            display: inline-block;
-          }
-          .value {
-            font-size: 16px;
-            color: $color-gray6;
-            margin-right: 10px;
-            display: inline-block;
-          }
-        }
-      }
-    }
-    .info-fixed {
-      position: sticky;
-      position: fixed;
-      top: 130px;
+      top: 80px;
+      background: #fff;
     }
   }
 

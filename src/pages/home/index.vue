@@ -16,88 +16,43 @@
         </div>
       </div>
       <div class="contariner-right" v-loadAni="'animate__slideInRight'">
-        <div
-          ref="myInfomyInfo"
-          class="my-info hover-shadow contariner-box animate__animated"
-        >
-          <img class="cover" :src="headPortrait" alt="头像" />
-          <p class="username">info.username</p>
-          <div class="essential-info">
-            <p class="info-item">
-              <span class="label iconfont yxrgongzuotai"></span>
-              <span class="value">info.workYear</span>
-            </p>
-            <p class="info-item">
-              <span class="label iconfont yxrdianhua"></span>
-              <span class="value">info.phone</span>
-            </p>
-            <p class="info-item">
-              <span class="label iconfont yxryouxiang"></span>
-              <span class="value">info.email</span>
-            </p>
-            <p class="info-item">
-              <span class="label iconfont yxrdizhi"></span>
-              <span class="value">info.address</span>
-            </p>
-          </div>
-        </div>
+        <Hot class="hover-shadow contariner-box animate__animated hot-fixed" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {
-  defineComponent,
-  nextTick,
-  onDeactivated,
-  onMounted,
-  reactive,
-  ref,
-  toRefs,
-} from "vue";
-import headPortrait from "@assets/images/headPortrait.jpg";
-import { getUserListApi } from "@api/modules/user";
-
-const state = reactive({});
+import { onDeactivated, onMounted, onBeforeMount, reactive, ref } from "vue";
+import { getUserListApi } from "@api/user";
+import Hot from "./component/Hot.vue";
 const io = ref<IntersectionObserver>();
-const myInfo = ref();
 
 // methods
-const homeScroll = () => {
-  if (myInfo.value.getClientRects()[0].top <= 130) {
-    myInfo.value.classList.add("info-fixed");
-  } else {
-    myInfo.value.classList.remove("info-fixed");
-  }
-};
-
 const init = () => {
-  io.value = new IntersectionObserver(
-    (entries: IntersectionObserverEntryInit[]) => {
-      entries.forEach((item: IntersectionObserverEntryInit) => {
-        if (item.intersectionRatio > 0) {
-          // 添加类名
-          item.target.classList.add("animate__slideInLeft");
-          io.value?.unobserve(item.target);
-        }
-      });
-    }
-  );
-  const doms = document.querySelectorAll(".article-item");
-  doms.forEach((dom: any) => io.value?.observe(dom));
-};
-
-const getData = () => {
-  getUserListApi().then((res: any) => {
-    console.log(res);
+  io.value = new IntersectionObserver((entries) => {
+    entries.forEach((item) => {
+      if (item.intersectionRatio > 0) {
+        // 添加类名
+        item.target.classList.add("animate__slideInLeft");
+        io.value?.unobserve(item.target);
+      }
+    });
   });
+  const doms = document.querySelectorAll(".article-item");
+  doms.forEach((dom) => io.value?.observe(dom));
 };
 
+const getData = async () => {
+  let res = await getUserListApi();
+  console.log(res);
+};
+onBeforeMount(() => {
+  console.log("onBeforeMount");
+});
 onMounted(() => {
   init();
   getData();
-  // window.addEventListener('scroll', homeScroll)
 });
 
 onDeactivated(() => {
@@ -111,4 +66,5 @@ onDeactivated(() => {
 }
 
 @import "./index.scss";
+@import "./table.scss";
 </style>

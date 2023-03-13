@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, defineProps, computed, reactive, nextTick } from "vue";
+import { ref, defineProps, reactive, nextTick } from "vue";
 type triggerType = "click" | "hover";
 interface PropsType {
   title?: string;
@@ -136,7 +136,7 @@ const getTranslateData = () => {
 let hidenTimer = ref<number | undefined>(undefined);
 const openPopover = (triggerType: triggerType) => {
   if (props.trigger === triggerType) {
-    if (hidenTimer) {
+    if (hidenTimer.value) {
       clearTimeout(hidenTimer.value);
     }
     getReferenceDom();
@@ -217,8 +217,6 @@ const hidenPopover = () => {
       width: 14px;
       display: inline-block;
     }
-    // border-top-color: transparent;
-    // border-top-color: transparent;
     &-left-start,
     &-left-end,
     &-left {

@@ -1,21 +1,8 @@
 import { defineStore } from "pinia";
 import { localPrefix } from "@config";
-
-interface UserInfoType {
-  token?: string
-  [key: string]: unknown
-}
-export interface localUserType {
-  username: string
-  password: string
-}
-interface UserType {
-  userInfo: UserInfoType
-  isLogin: boolean
-  localUserList: localUserType[]
-}
-
+import { UserType, UserInfoType, LocalUserType } from "@api/user.type";
 export const useUserStore = defineStore(`${localPrefix}user`, {
+  // 是否持久化
   persist: true,
   state(): UserType {
     return {
@@ -28,7 +15,7 @@ export const useUserStore = defineStore(`${localPrefix}user`, {
     setUserInfo(data: UserInfoType) {
       this.userInfo = data;
     },
-    updateLocalUserList(data: localUserType[]) {
+    updateLocalUserList(data: LocalUserType[]) {
       this.localUserList = data;
     },
   },

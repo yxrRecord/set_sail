@@ -6,7 +6,7 @@ import viteImagemin from "vite-plugin-imagemin";
 import compressPlugin from "vite-plugin-compression";
 import { resolve } from "path";
 
-export default ({ command, mode }: ConfigEnv) => {
+export default ({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd());
   return defineConfig({
     // env.VITE_BASE_NAME,
@@ -92,7 +92,7 @@ export default ({ command, mode }: ConfigEnv) => {
         "@utils": resolve(__dirname, "src/utils"),
         "@pages": resolve(__dirname, "src/pages"),
         "@types": resolve(__dirname, "src/types"),
-        "@api": resolve(__dirname, "src/api"),
+        "@api": resolve(__dirname, "src/api/modules"),
         // ...alias
       },
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], // 忽略扩展名

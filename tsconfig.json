@@ -23,6 +23,7 @@
       "@router/*": ["./src/router/*"],
       "@store/*": ["./src/store/*"],
       "@utils": ["./src/utils"],
+      "@tools": ["./src/tools"],
       "@views/*": ["./src/views/*"],
       "@types/*": ["./src/types/*"],
       "@api/*": ["./src/api/modules/*"],

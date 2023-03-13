@@ -293,7 +293,10 @@ class Tools implements ToolsInterface {
    * @param date 日期数据
    * @param formatter 转换格式
    */
-  formatDate = <T>(date: T, formatter = "YYYY-MM-DD"): string => {
+  formatDate = <T extends string>(
+    date: T,
+    formatter = "YYYY-MM-DD"
+  ): string => {
     return moment(date).format(formatter);
   };
 
@@ -445,6 +448,33 @@ class Tools implements ToolsInterface {
       span.style.animationDelay = `${time + Math.abs(index - middle) * 0.1}s`;
       dom.append(span);
     });
+  };
+  scrollToTop = (position: number) => {
+    // 使用requestAnimationFrame，如果没有则使用setTimeOut
+    if (!window.requestAnimationFrame) {
+      window.requestAnimationFrame = function (callback) {
+        return setTimeout(callback, 20);
+      };
+    }
+
+    // 获取当前元素滚动的距离
+    let scrollTopDistance =
+      document.documentElement.scrollTop || document.body.scrollTop;
+
+    const smoothScroll = () => {
+      // 如果你要滚到顶部，那么position传过来的就是0，下面这个distance肯定就是负值。
+      const distance = position - scrollTopDistance;
+      // 每次滚动的距离要不一样，制造一个缓冲效果
+      scrollTopDistance = scrollTopDistance + distance / 20;
+      // 判断条件
+      if (Math.abs(distance) < 1) {
+        window.scrollTo(0, position);
+      } else {
+        window.scrollTo(0, scrollTopDistance);
+        requestAnimationFrame(smoothScroll);
+      }
+    };
+    smoothScroll();
   };
 }
 export default new Tools();

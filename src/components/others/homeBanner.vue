@@ -1,12 +1,12 @@
 <template>
-  <header id="home-banner" class="banner">
+  <div id="home-banner" class="banner" ref="homeBannerRef">
     <section
       class="banner-box"
       :style="`background-image: url(${currentImg})`"
     ></section>
     <Banner class="canvas-banner" />
     <div class="copywriting">
-      <h2 class="hello-text">你 若 成 风 YXR</h2>
+      <h2 id="hello-text">你 若 成 风 YXR</h2>
       <p class="edit-text-box word-wrap">
         <span class="text-before">/* </span>
         <span class="edit-text">{{ state.showMessage }}</span>
@@ -15,19 +15,15 @@
       </p>
     </div>
     <div class="home-bottom-link pointer" @click="scrollHome">
-      <p>
-        <span class="iconfont yxrfanhui1"></span>
-      </p>
+      <span class="iconfont yxrfanhui1"></span>
     </div>
-  </header>
+  </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, reactive, nextTick } from "vue";
+import { onMounted, reactive, nextTick, ref } from "vue";
 import Banner from "@components/others/Banner.vue";
 import currentImg from "@assets/images/banner1.jpg";
 import Tools from "@tools";
-
-const emits = defineEmits(["scrollHome"]);
 
 const state = reactive({
   text: [
@@ -45,8 +41,8 @@ const state = reactive({
 });
 onMounted(() => {
   nextTick(() => {
-    const dom: HTMLCollectionOf<Element> =
-      document.getElementsByClassName("hello-text");
+    // 参考文章 https://blog.csdn.net/weixin_45299090/article/details/127670945
+    const dom = document.getElementById("hello-text") as HTMLElement;
     Tools.setTextAnimate(dom["0"] as HTMLElement, 0.1);
     beginTextAnimate();
   });
@@ -90,6 +86,8 @@ const beginTextAnimate = () => {
     removeText();
   }
 };
+
+const homeBannerRef = ref();
 const addText = (time = 200) => {
   let text = state.text[state.currentIndex].split("");
   let textLen = text.length,
@@ -133,7 +131,8 @@ const removeText = (time = 100) => {
 };
 
 const scrollHome = () => {
-  emits("scrollHome", "bottom");
+  const { height } = homeBannerRef.value.getBoundingClientRect();
+  Tools.scrollToTop(height);
 };
 </script>
 <style lang="scss" type="text/scss" scoped>
@@ -156,14 +155,15 @@ const scrollHome = () => {
   .banner-box {
     position: absolute;
     height: 100%;
+    width: 100%;
     top: 0;
     left: 0;
     display: flex;
-    width: 100%;
     background-color: transparent;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
+    background-size: cover;
   }
 
   /* canvas */
@@ -179,7 +179,6 @@ const scrollHome = () => {
   /* 背景图部分 文字 */
   .copywriting {
     position: absolute;
-    width: 50%;
     top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -191,7 +190,7 @@ const scrollHome = () => {
       text-align: center;
     }
 
-    .hello-text {
+    #hello-text {
       font-family: "qianduKaiTI";
       letter-spacing: 2px;
     }
@@ -206,7 +205,6 @@ const scrollHome = () => {
       font-family: "方正小标宋简体";
       line-height: 30px;
       color: $color-grayf;
-      white-space: nowrap;
 
       .text-before {
         margin-right: 10px;
@@ -237,15 +235,12 @@ const scrollHome = () => {
     text-align: center;
     z-index: 10;
 
-    p {
-      line-height: 40px;
-      animation: topBottom 2s linear infinite;
-    }
-
     .iconfont {
+      animation: topBottom 1.5s linear infinite;
+      line-height: 40px;
       display: inline-block;
       color: $color-grayf;
-      font-size: 20px;
+      font-size: 24px;
       transform: rotateZ(-90deg);
       font-weight: 600;
     }

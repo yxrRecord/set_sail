@@ -1,5 +1,5 @@
 <template>
-  <canvas :id="state.id"></canvas>
+  <canvas :id="canvasData.id"></canvas>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
@@ -10,22 +10,23 @@ interface Data {
   s: number;
   r: number;
 }
-const state = reactive({
+const canvasData = reactive({
   id: "canvas" + new Date().getTime(),
-  ctx: null,
   af: 0 as number,
 });
 const canvas = ref<HTMLCanvasElement>();
-const ctx = ref<CanvasRenderingContext2D>();
+const ctx = ref<CanvasRenderingContext2D | null>();
 // methods
 const init = () => {
   // canvas.value = null;
   const numLasers = 400;
-  canvas.value = document.getElementById(`${state.id}`)! as HTMLCanvasElement;
-  ctx.value = canvas.value.getContext("2d")!;
+  canvas.value = document.getElementById(
+    `${canvasData.id}`
+  ) as HTMLCanvasElement;
+  ctx.value = canvas.value.getContext("2d");
   canvas.value.width = window.innerWidth;
   canvas.value.height = window.innerHeight;
-  cancelAnimationFrame(state.af);
+  cancelAnimationFrame(canvasData.af);
   render(createLasers(numLasers));
 };
 
@@ -74,7 +75,7 @@ const render = (lasers: Data[]) => {
       renderLaser(l);
       updateLaser(l);
     }
-    state.af = requestAnimationFrame(() => render(lasers));
+    canvasData.af = requestAnimationFrame(() => render(lasers));
   }
 };
 

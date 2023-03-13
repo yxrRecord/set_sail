@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout-wrapper">
-    <HomeBanner v-if="showBanner" ref="homeBanner" @scrollHome="scrollHome" />
+    <HomeBanner v-if="showBanner" ref="homeBanner" />
     <Header></Header>
     <transition name="fade">
       <div
@@ -8,7 +8,7 @@
         class="back-top pointer iconfont yxricon-test"
         :class="{ 'an-back-top': state.showBackTop }"
         key="back-top"
-        @click="scrollToTop(0)"
+        @click="Tools.scrollToTop(0)"
       ></div>
     </transition>
     <div style="margin-top: 80px">
@@ -19,21 +19,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {
-  defineComponent,
-  reactive,
-  computed,
-  watch,
-  ref,
-  toRefs,
-  onMounted,
-} from "vue";
+import { reactive, computed, ref, onMounted } from "vue";
 import Header from "@components/others/Header.vue";
 import HomeBanner from "../others/HomeBanner.vue";
 import Login from "../others/Login.vue";
-
-import { useRouter, useRoute, Router } from "vue-router";
-const router: Router = useRouter();
+import Tools from "@tools";
+import { useRoute } from "vue-router";
 import { useAppStore } from "@store/modules/app";
 const appStore = useAppStore();
 const route = useRoute();
@@ -78,36 +69,6 @@ const onScroll = () => {
   if (scrollTop > state.containerHeight + 300) {
     state.showBackTop = true;
   } else state.showBackTop = false;
-};
-
-const scrollHome = () => {};
-
-const scrollToTop = (position: number) => {
-  // 使用requestAnimationFrame，如果没有则使用setTimeOut
-  if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame = function (callback) {
-      return setTimeout(callback, 20);
-    };
-  }
-
-  // 获取当前元素滚动的距离
-  let scrollTopDistance =
-    document.documentElement.scrollTop || document.body.scrollTop;
-
-  const smoothScroll = () => {
-    // 如果你要滚到顶部，那么position传过来的就是0，下面这个distance肯定就是负值。
-    let distance = position - scrollTopDistance;
-    // 每次滚动的距离要不一样，制造一个缓冲效果
-    scrollTopDistance = scrollTopDistance + distance / 20;
-    // 判断条件
-    if (Math.abs(distance) < 1) {
-      window.scrollTo(0, position);
-    } else {
-      window.scrollTo(0, scrollTopDistance);
-      requestAnimationFrame(smoothScroll);
-    }
-  };
-  smoothScroll();
 };
 </script>
 <style lang="scss" type="text/scss" scoped>

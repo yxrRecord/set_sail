@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs, computed } from "vue";
+import { computed } from "vue";
 const props = defineProps({
   showModal: {
     // 是否显示 modal

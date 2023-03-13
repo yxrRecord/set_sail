@@ -27,9 +27,8 @@ export default {
     };
   },
   mounted() {
-    let _this = this;
-    _this.items = document.querySelectorAll(".block");
-    _this.handleScroll();
+    this.items = document.querySelectorAll(".block");
+    this.handleScroll();
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
@@ -71,16 +70,15 @@ export default {
     },
     //监听滚轮方法
     handleScroll(val) {
-      let _this = this;
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       //每次滚轮滚动都会遍历 模块数组，从而添加样式
-      for (let i = 0; i < _this.items.length; i++) {
+      for (let i = 0; i < this.items.length; i++) {
         //如果 模块 达到可视范围，那么添加样式
-        if (_this.isElementInViewport(_this.items[i])) {
-          _this.items[i].classList.add("in-view");
+        if (this.isElementInViewport(this.items[i])) {
+          this.items[i].classList.add("in-view");
         } else {
           //每次滚动时都会出现过度效果
           //   _this.items[i].classList.remove('in-view');

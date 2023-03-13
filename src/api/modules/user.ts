@@ -1,5 +1,7 @@
 import { request } from "../index";
-interface userInfoType {
+import { ResType } from "../axios.type";
+import { UserInfoType } from "./user.type";
+interface UserLoginType {
   username: string;
   password: string;
   email?: string;
@@ -11,14 +13,18 @@ export const getUserListApi = () => {
   });
 };
 
-export const loginApi = (data: userInfoType) => {
+export const loginApi = (
+  data: UserLoginType
+): Promise<ResType<UserInfoType> | null> => {
   return request({
     url: "/user/login",
     data,
   });
 };
 
-export const registerApi = (data: userInfoType) => {
+export const registerApi = (
+  data: UserLoginType
+): Promise<ResType<UserInfoType> | null> => {
   return request({
     url: "/user/registeUser",
     data,

@@ -4,8 +4,8 @@ import { IAxios } from "./axios.type";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@store/modules/user";
 import { useAppStore } from "@store/modules/app";
-const userInfo = useUserStore()
-const appStore = useAppStore()
+const userInfo = useUserStore();
+const appStore = useAppStore();
 const router = useRouter();
 // 创建实例
 const instance = axios.create({
@@ -25,10 +25,10 @@ axios.defaults.headers.post["Content-Type"] =
 // 请求拦截器
 instance.interceptors.request.use((config) => {
   const {
-    userInfo: { token = '' }
-  } = useUserStore()
+    userInfo: { token = "" },
+  } = useUserStore();
   if (token) {
-    config.headers.token = token
+    config.headers.token = token;
   }
   return config;
 });

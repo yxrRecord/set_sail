@@ -4,7 +4,7 @@
       <div class="header-left">
         <slot name="left"></slot>
         <h1 class="iconfont yxrlunchuan logo"></h1>
-        <ul class="header-right-con">
+        <ul class="header-con">
           <li
             class="menu-item pointer"
             v-for="(item, index) in menuList"
@@ -25,8 +25,32 @@
         </ul>
       </div>
       <div class="header-right">
-        <img :src="avatar" alt="" v-show="isLogin" />
-        <ul class="header-right-con" v-show="!isLogin">
+        <div class="avatar-box">
+          <img :src="avatar" class="avatar-img" alt="头像" v-show="isLogin" />
+          <div class="my-info hover-shadow animate__animated">
+            <p class="username">info.username</p>
+            <div class="essential-info">
+              <p class="info-item">
+                <span class="label iconfont yxrgongzuotai"></span>
+                <span class="value">info.workYear</span>
+              </p>
+              <p class="info-item">
+                <span class="label iconfont yxrdianhua"></span>
+                <span class="value">info.phone</span>
+              </p>
+              <p class="info-item">
+                <span class="label iconfont yxryouxiang"></span>
+                <span class="value">info.email</span>
+              </p>
+              <p class="info-item">
+                <span class="label iconfont yxrdizhi"></span>
+                <span class="value">info.address</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ul class="header-con" v-show="!isLogin">
           <li class="menu-item pointer" @click="openLogin">Login</li>
         </ul>
       </div>
@@ -34,7 +58,7 @@
   </header>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useRoute, useRouter, Router } from "vue-router";
 import { useAppStore } from "@store/modules/app";
 import { useUserStore } from "@store/modules/user";
@@ -43,7 +67,7 @@ const appStore = useAppStore();
 const userStore = useUserStore();
 
 import { Menu } from "@types";
-const route: any = useRoute();
+const route = useRoute();
 const router: Router = useRouter();
 const state = reactive({
   routeNameList: ["skill", "work", "project", "about"],
@@ -79,7 +103,7 @@ const openLogin = () => {
 };
 
 onMounted(() => {
-  state.routeName = route.name;
+  state.routeName = route.name as string;
   appStore.setShowBanner(!state.routeNameList.includes(state.routeName));
 });
 </script>
@@ -113,7 +137,7 @@ $offsetW: 100px;
       margin-right: 50px;
     }
   }
-  .header-right-con {
+  .header-con {
     color: $color-grayf;
     display: flex;
     justify-content: flex-end;
@@ -180,12 +204,118 @@ $offsetW: 100px;
     transition: all 0.3s;
   }
   .header-right {
-    height: 100%;
-    @include flex(center, center);
-    img {
+    .avatar-box {
+      @include flex(center, center);
+      position: relative;
+      &:hover {
+        .avatar-img {
+          transform: scale(2.5);
+        }
+        .my-info {
+          transform: translate(-50%, 50px);
+          visibility: visible;
+        }
+      }
+    }
+    .avatar-img {
       width: 30px;
       height: 30px;
       border-radius: 50%;
+      transition: all 0.3s;
+      transform-origin: 50% 0;
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .my-info {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, 40px);
+      background-color: #fff;
+      box-sizing: border-box;
+      padding-top: 30px;
+      border: 1px solid #e3e5e7;
+      width: 240px;
+      border-radius: 5px;
+      visibility: hidden;
+      box-shadow: 0 0 30px #0000001a;
+      padding: 20px;
+      transition: transform 0.3s;
+
+      // img {
+      //   border-radius: 50%;
+      //   width: 80px;
+      //   height: 80px;
+      //   margin: 0 auto;
+      //   display: block;
+      //   &:hover {
+      //     transform: rotate(666turn);
+      //     transition-delay: 1s;
+      //     transition-property: all;
+      //     transition-duration: 59s;
+      //     transition-timing-function: cubic-bezier(0.34, 0, 0.84, 1);
+      //   }
+      // }
+      .username {
+        text-align: center;
+        font-size: 18px;
+        letter-spacing: 2px;
+        margin-top: 20px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid $border-color;
+      }
+
+      .essential-info {
+        padding: 16px;
+        .info-title {
+          font-size: 16px;
+          letter-spacing: 1px;
+          line-height: 1.3em;
+          margin: 10px 0 10px;
+        }
+
+        .info-item {
+          line-height: 1.7em;
+          &:hover {
+            .label {
+              color: $primary-color;
+            }
+          }
+          .label {
+            font-size: 16px;
+            color: $color-gray6;
+            margin-right: 15px;
+            display: inline-block;
+          }
+          .value {
+            font-size: 16px;
+            color: $color-gray6;
+            margin-right: 10px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  #home-header {
+    .header-main {
+      width: 800px;
+      padding: 0 20px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  #home-header {
+    .header-main {
+      width: 100%;
+      .header-con {
+        display: none;
+      }
     }
   }
 }
