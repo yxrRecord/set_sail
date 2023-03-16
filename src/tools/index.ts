@@ -3,6 +3,7 @@
  */
 
 import config from "@config";
+import { LocationQueryRaw } from "vue-router";
 import router from "@router";
 
 const localObj = {}; //保存localstorage对象
@@ -62,7 +63,7 @@ class Tools implements ToolsInterface {
       }
     }
     let rulesResult = true;
-    for (var ruleName in rules) {
+    for (const ruleName in rules) {
       let isRuleValid = true;
       if (Array.isArray(rules[ruleName])) {
         //=>数组格式
@@ -209,7 +210,7 @@ class Tools implements ToolsInterface {
    * 深拷贝
    * @param sourceData 源数据
    */
-  deepCopy = <T extends unknown>(sourceData: T): T => {
+  deepCopy = <T>(sourceData: T): T => {
     let obj: T = {} as T;
     if (Array.isArray(sourceData)) {
       return sourceData.map((item) => this.deepCopy(item)) as T;
@@ -254,19 +255,22 @@ class Tools implements ToolsInterface {
    * @param key 比较的key，如果不传代表所有字段比较
    * @returns {*}
    */
-  duplicationByArray = (arr: any[], key?: string): any[] => {
-    let newArr: any[] = [],
-      obj = {};
+  duplicationByArray = <T extends Array<T>>(arr: T, key?: string) => {
+    let newArr: T[] = [];
+    const obj: object = {};
     if (key) {
-      newArr = arr.reduce((preVal: object[], curVal: any) => {
+      newArr = arr.reduce((preVal: T[], curVal: T) => {
         obj[curVal[key]]
           ? ""
           : (obj[curVal[key]] = true && preVal.push(curVal));
         return preVal;
       }, []);
     } else {
-      newArr = arr.filter((val: any) => {
-        return obj.hasOwnProperty(typeof val + JSON.stringify(val))
+      newArr = arr.filter((val: T) => {
+        return Object.prototype.hasOwnProperty.call(
+          obj,
+          typeof val + JSON.stringify(val)
+        )
           ? false
           : (obj[typeof val + JSON.stringify(val)] = true);
       });
@@ -320,7 +324,11 @@ class Tools implements ToolsInterface {
    * @param fields     信息集字段
    * @param callback   自定义方法
    */
-  createRules = (rules: any, fields: any = [], callback?: Function) => {
+  createRules = (
+    rules: object,
+    fields: any = [],
+    callback?: (a: any) => void
+  ) => {
     if (rules) {
       fields.forEach((item: any) => {
         if (callback) callback(item);
@@ -344,7 +352,7 @@ class Tools implements ToolsInterface {
    * @param diffOptions     与之对比的值
    * @param result          返回的值
    */
-  diffObject = <T extends unknown>(options: T, diffOptions: T): T => {
+  diffObject = <T>(options: T, diffOptions: T): T => {
     const result: T = {} as T;
     for (const key in options) {
       if (diffOptions[key] !== options[key]) result[key] = diffOptions[key];
@@ -357,7 +365,7 @@ class Tools implements ToolsInterface {
    * @param data 数据对象
    * @param keyName 特定的单独存储为一个对象
    */
-  setLocal = (name: string, data: any, keyName?: string): void => {
+  setLocal = (name: string, data: unknown, keyName?: string): void => {
     const l = localStorage.getItem(`${keyName ? keyName : config.localPrefix}`);
     if (l && !keyName) {
       const local = JSON.parse(l);
@@ -395,12 +403,16 @@ class Tools implements ToolsInterface {
    * @param params  跳转路由参数
    * @param callback 回调方法
    */
-  openWin = (url: string, params?: any, callback?: Function) => {
+  openWin = (
+    url: string,
+    params?: LocationQueryRaw,
+    callback?: (a: MessageEvent) => void
+  ) => {
     // 先打开一个不被拦截的新窗口
     const newWindow = window.open();
     const { href } = router.resolve({
       name: url,
-      query: params,
+      query: params || {},
     });
     if (newWindow) newWindow.location.href = href;
     window.addEventListener(
