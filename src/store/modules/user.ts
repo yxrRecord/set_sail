@@ -18,5 +18,9 @@ export const useUserStore = defineStore(`${localPrefix}user`, {
     updateLocalUserList(data: LocalUserType[]) {
       this.localUserList = data;
     },
+    loginOut() {
+      this.userInfo = {};
+      this.isLogin = false;
+    },
   },
 });

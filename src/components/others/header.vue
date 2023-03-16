@@ -47,6 +47,9 @@
                 <span class="value">info.address</span>
               </p>
             </div>
+            <div class="logout">
+              <span class="logout-btn" @click="logout">退 出</span>
+            </div>
           </div>
         </div>
 
@@ -63,11 +66,14 @@ import { useRoute, useRouter, Router } from "vue-router";
 import { useAppStore } from "@store/modules/app";
 import { useUserStore } from "@store/modules/user";
 import avatar from "@assets/images/headPortrait.jpg";
+import { Menu } from "@types";
+import { logoutApi } from "@api/user";
 const appStore = useAppStore();
 const userStore = useUserStore();
 
-import { Menu } from "@types";
 const route = useRoute();
+console.log(route, "route");
+
 const router: Router = useRouter();
 const state = reactive({
   routeNameList: ["skill", "work", "project", "about"],
@@ -100,6 +106,18 @@ const jumpPage = (item: Menu) => {
 
 const openLogin = () => {
   appStore.showLoginDialog = true;
+};
+
+const logout = () => {
+  logoutApi().then((res) => {
+    console.log(res, "logout");
+    userStore.loginOut();
+    if (route.name !== "home") {
+      router.push({
+        name: "name",
+      });
+    }
+  });
 };
 
 onMounted(() => {
@@ -239,7 +257,7 @@ $offsetW: 100px;
       width: 240px;
       border-radius: 5px;
       visibility: hidden;
-      box-shadow: 0 0 30px #0000001a;
+      box-shadow: 0 0 30px #000000;
       padding: 20px;
       transition: transform 0.3s;
 
@@ -282,18 +300,26 @@ $offsetW: 100px;
               color: $primary-color;
             }
           }
-          .label {
-            font-size: 16px;
-            color: $color-gray6;
-            margin-right: 15px;
-            display: inline-block;
-          }
+          .label,
           .value {
             font-size: 16px;
             color: $color-gray6;
-            margin-right: 10px;
             display: inline-block;
           }
+          .label {
+            margin-right: 15px;
+          }
+          .value {
+            margin-right: 10px;
+          }
+        }
+      }
+      .logout {
+        // @include flex(center);
+        text-align: center;
+        &-btn {
+          color: $danger-color;
+          cursor: pointer;
         }
       }
     }

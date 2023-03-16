@@ -19,16 +19,6 @@
     position: relative;
     border-radius: 10px;
     padding: 20px;
-    // background: $bgf-color;
-    &::after {
-      // content: "";
-      // width: 100%;
-      // height: 100%;
-      // position: absolute;
-      // top: 0;
-      // left: 0;
-      // filter: blur(20px);
-    }
   }
 
   .contariner-left {
@@ -46,6 +36,7 @@
   .contariner-right {
     width: 25%;
     min-width: 250px;
+    margin-left: 40px;
     .hot-fixed {
       position: sticky;
       top: 80px;

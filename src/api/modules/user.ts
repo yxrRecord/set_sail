@@ -30,3 +30,9 @@ export const registerApi = (
     data,
   });
 };
+
+export const logoutApi = (): Promise<ResType<void> | null> => {
+  return request({
+    url: "/user/logout",
+  });
+};

@@ -10,7 +10,7 @@ const router = useRouter();
 // 创建实例
 const instance = axios.create({
   baseURL: baseURL,
-  timeout: 100000,
+  timeout: 10000,
   headers: { "X-Custom-Header": "foobar" },
 });
 
