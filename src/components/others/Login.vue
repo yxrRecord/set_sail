@@ -127,7 +127,7 @@ const props = defineProps({
 
 const showOverlay = computed({
   get() {
-    return props.modelValue || false;
+    return props.modelValue || true;
   },
   set(value) {
     appStore.showLoginDialog = value;
