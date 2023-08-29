@@ -127,7 +127,7 @@ const props = defineProps({
 
 const showOverlay = computed({
   get() {
-    return props.modelValue || true;
+    return props.modelValue || false;
   },
   set(value) {
     appStore.showLoginDialog = value;
@@ -200,7 +200,9 @@ const login = () => {
         userStore.localUserList = localUserList;
       }
       userStore.isLogin = true;
-      userStore.setUserInfo(res.data);
+      let { token = "", ...data } = res.data;
+      userStore.setUserInfo(data);
+      userStore.updateToken(token);
       showOverlay.value = false;
     }
   });

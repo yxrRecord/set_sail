@@ -6,6 +6,7 @@ export const useUserStore = defineStore(`${localPrefix}user`, {
   persist: true,
   state(): UserType {
     return {
+      token: "",
       userInfo: {},
       isLogin: false,
       localUserList: [],
@@ -18,8 +19,15 @@ export const useUserStore = defineStore(`${localPrefix}user`, {
     updateLocalUserList(data: LocalUserType[]) {
       this.localUserList = data;
     },
+    updateToken(value: string) {
+      this.token = value;
+    },
+    resetToken() {
+      this.token = "";
+    },
     loginOut() {
       this.userInfo = {};
+      this.resetToken();
       this.isLogin = false;
     },
   },

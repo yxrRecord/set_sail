@@ -13,6 +13,7 @@ const routes = [
         meta: {
           title: "首页",
           showBanner: true,
+          transition: "animate__bounce",
         },
         component: () => import("@pages/home/index.vue"),
       },
@@ -22,6 +23,7 @@ const routes = [
         meta: {
           title: "过渡",
           showBanner: true,
+          transition: "animate__bounce",
         },
         component: () => import("@pages/home/transition.vue"),
       },
@@ -31,6 +33,7 @@ const routes = [
         meta: {
           title: "技能",
           showBanner: false,
+          transition: "animate__bounce",
         },
         component: () => import("@pages/skill/index.vue"),
       },
@@ -40,6 +43,7 @@ const routes = [
         meta: {
           title: "工作",
           showBanner: false,
+          transition: "animate__bounce",
         },
         component: () => import("@pages/work/index.vue"),
       },
@@ -49,6 +53,7 @@ const routes = [
         meta: {
           title: "项目",
           showBanner: false,
+          transition: "animate__bounce",
         },
         component: () => import("@pages/project/index.vue"),
       },
@@ -58,6 +63,7 @@ const routes = [
         meta: {
           title: "关于我",
           showBanner: false,
+          transition: "animate__bounce",
         },
         component: () => import("@pages/about/index.vue"),
       },

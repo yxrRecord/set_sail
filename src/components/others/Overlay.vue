@@ -33,28 +33,25 @@ const emits = defineEmits(["update:modelValue"]);
 
 const visible = computed({
   get() {
-    if (props.modelValue && props.showModal) {
-      setScroll();
-    }
-    if (props.modelValue === false && props.showModal) {
-      removeScroll();
-    }
+    setHidden();
     return props.modelValue;
   },
   set(value) {
     if (!value && props.showModal) {
-      removeScroll();
+      setHidden();
     }
     emits("update:modelValue", value);
   },
 });
 const rootDom = document.querySelector("#app") as HTMLElement;
-const setScroll = () => {
-  rootDom.classList.add("app-overflow-hidden");
+const setHidden = () => {
+  if (props.modelValue && props.showModal) {
+    if (rootDom.className.includes("app-overflow-hidden")) {
+      rootDom.classList.remove("app-overflow-hidden");
+    } else rootDom.classList.add("app-overflow-hidden");
+  }
 };
-const removeScroll = () => {
-  rootDom.classList.remove("app-overflow-hidden");
-};
+
 const close = () => {
   if (props.closeOnClickModal) {
     visible.value = false;

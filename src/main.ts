@@ -1,8 +1,9 @@
-import { createApp } from "vue";
+import { createApp, Directive } from "vue";
 import App from "./App.vue";
 import router from "./router"; // 引入路由
 import config from "./config"; // 通用配置文件
 import store from "@store";
+import directives from "@/directive";
 // import i18n from './language'; // 引入 语言
 // import { done, start } from "nprogress";
 // import "nprogress/nprogress.css";
@@ -21,40 +22,11 @@ router.afterEach(transition => {
 
 const app = createApp(App);
 
-// 全局指令
-app.directive("loadAni", {
-  mounted(el, binding) {
-    const elClass = el.getAttribute("class");
-    const per = 0.95;
-    const scrollClassName = function () {
-      const scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      if (
-        scrollTop + document.documentElement.clientHeight * per >=
-          el.offsetTop ||
-        scrollTop + document.documentElement.clientHeight >=
-          el.offsetTop + el.offsetHeight
-      ) {
-        el.setAttribute(
-          "class",
-          `${elClass} animate__animated ${binding.value || "ls-animationed"}`
-        );
-        window.removeEventListener("scroll", scrollClassName);
-      }
-    };
-    window.addEventListener("scroll", scrollClassName);
-    const scrollTops =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop;
-    if (scrollTops === 0) {
-      scrollClassName();
-    }
-  },
-});
 // 配置全局属性
 app.config.globalProperties.$config = config;
 
+Object.keys(directives).forEach((key) => {
+    //key是自定义指令名字；后面应该是自定义指令的值，值类型是string
+    app.directive(key, (directives as { [key: string]: Directive })[key]);
+});
 app.use(router).use(store).mount("#app");

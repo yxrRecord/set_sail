@@ -52,7 +52,7 @@ onBeforeMount(() => {
 });
 onMounted(() => {
   init();
-  getData();
+  // getData();
 });
 
 onDeactivated(() => {

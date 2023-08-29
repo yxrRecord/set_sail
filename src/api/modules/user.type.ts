@@ -7,6 +7,7 @@ export interface LocalUserType {
   password: string;
 }
 export interface UserType {
+  token: string;
   userInfo: UserInfoType;
   isLogin: boolean;
   localUserList: LocalUserType[];

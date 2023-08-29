@@ -6,7 +6,11 @@
     ></section>
     <Banner class="canvas-banner" />
     <div class="copywriting">
-      <h2 id="hello-text">你 若 成 风 YXR</h2>
+      <!-- refreshToken -->
+      <h2 id="hello-text">
+        <button @click="refreshToken">刷新</button>
+        <button @click="getUserData">请求</button>你 若 成 风 YXR
+      </h2>
       <p class="edit-text-box word-wrap">
         <span class="text-before">/* </span>
         <span class="edit-text">{{ state.showMessage }}</span>
@@ -24,6 +28,8 @@ import { onMounted, reactive, nextTick, ref } from "vue";
 import Banner from "@components/others/Banner.vue";
 import currentImg from "@assets/images/banner1.jpg";
 import Tools from "@tools";
+import { getUserListApi, refreshTokenApi } from "@api/user";
+import { useUserStore } from "@store/modules/user";
 
 const state = reactive({
   text: [
@@ -85,6 +91,22 @@ const beginTextAnimate = () => {
   } else {
     removeText();
   }
+};
+
+const userStore = useUserStore();
+const refreshToken = () => {
+  refreshTokenApi().then((res) => {
+    if (res.code === 200) {
+      console.log(res.data);
+      // 更新 token
+      userStore.updateToken(res.data);
+      getUserData();
+    }
+  });
+};
+const getUserData = async () => {
+  let res = await getUserListApi();
+  console.log(res);
 };
 
 const homeBannerRef = ref();

@@ -12,7 +12,13 @@
       ></div>
     </transition>
     <div style="margin-top: 80px">
-      <router-view :key="route.fullPath"></router-view>
+      <router-view #default="{ route, Component }" :key="route.fullPath">
+        <transition
+          :enter-active-class="`animate__animated ${route.meta.transition}`"
+        >
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
     </div>
 
     <Login v-model="showLogin"></Login>

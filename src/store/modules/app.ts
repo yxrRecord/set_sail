@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { localPrefix } from "@config";
 
 interface AppType {
-  token?: string;
-  [key: string]: unknown;
+  appName?: string;
+  appIcon?: string;
 }
 interface AppInfoType {
   prefix: string;

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 export interface IAxios extends AxiosRequestConfig {
-  methods?: string;
+  isLogin?: boolean;
 }
 export interface ResType<T> {
   code: number;

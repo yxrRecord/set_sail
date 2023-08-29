@@ -12,7 +12,7 @@
     </div>
     <Teleport to="#app">
       <div
-        :class="`popover-content popover-${placement}`"
+        :class="`popover-content popover-${placement} ${className}`"
         v-show="show"
         ref="contentRef"
         @mouseenter="openPopover('hover')"
@@ -55,6 +55,7 @@ interface PropsType {
   width?: string | number;
   content?: string;
   trigger: triggerType;
+  className: string;
 }
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -63,6 +64,7 @@ const props = withDefaults(defineProps<PropsType>(), {
   width: "auto",
   content: "",
   trigger: "click",
+  className: "",
 });
 
 const referenceRef = ref();
@@ -106,13 +108,13 @@ const getTranslateData = () => {
         offsetLeft.value +
         referenceDom.width,
       translateY: referenceDom.top + offsetTop.value - referenceDom.height / 2,
-      jtTranslateX: contentDom.width - 9,
+      jtTranslateX: contentDom.width - 8,
       jtTranslateY: 14,
     },
     "right-start": {
       translateX: referenceDom.left + offsetLeft.value,
       translateY: referenceDom.top + offsetTop.value - referenceDom.height / 2,
-      jtTranslateX: -9,
+      jtTranslateX: -8,
       jtTranslateY: 14,
     },
     //  "top"
@@ -144,7 +146,6 @@ const openPopover = (triggerType: triggerType) => {
     nextTick(getTranslateData);
   }
 };
-
 const hidenPopover = () => {
   if (props.trigger === "hover") {
     hidenTimer.value = setTimeout(() => {
@@ -189,8 +190,7 @@ const hidenPopover = () => {
   left: 0;
   padding: 16px;
   background: #fff;
-  box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.04),
-    0px 8px 20px rgba(0, 0, 0, 0.08);
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
 
   border: 1px solid #e4e7ed;
   border-radius: 5px;
@@ -207,49 +207,49 @@ const hidenPopover = () => {
     bottom: 0;
     width: 14px;
     height: 14px;
-    transform: rotateZ(45deg) translate3d(0, 0, 0);
+    // transform: rotateZ(45deg) translate3d(0, 0, 0);
     &::before {
       content: "";
-      border: 1px solid #e4e7ed;
+      // border: 1px solid #e4e7ed;
       transform: rotateZ(45deg) translate3d(0, 0, 0);
       background-color: #fff;
       height: 14px;
       width: 14px;
       display: inline-block;
     }
-    &-left-start,
-    &-left-end,
-    &-left {
-      &::before {
-        border-bottom-color: transparent;
-        border-left-color: transparent;
-      }
-    }
-    &-right-start,
-    &-right-end,
-    &-right {
-      &::before {
-        border-top-color: transparent;
-        border-right-color: transparent;
-      }
-    }
+    // &-left-start,
+    // &-left-end,
+    // &-left {
+    //   &::before {
+    //     border-bottom-color: transparent;
+    //     border-left-color: transparent;
+    //   }
+    // }
+    // &-right-start,
+    // &-right-end,
+    // &-right {
+    //   &::before {
+    //     border-top-color: transparent;
+    //     border-right-color: transparent;
+    //   }
+    // }
 
-    &-top-start,
-    &-top-end,
-    &-top {
-      &::before {
-        border-top-color: transparent;
-        border-right-color: transparent;
-      }
-    }
-    &-bottom-start,
-    &-bottom-end,
-    &-bottom {
-      &::before {
-        border-top-color: transparent;
-        border-right-color: transparent;
-      }
-    }
+    // &-top-start,
+    // &-top-end,
+    // &-top {
+    //   &::before {
+    //     border-top-color: transparent;
+    //     border-right-color: transparent;
+    //   }
+    // }
+    // &-bottom-start,
+    // &-bottom-end,
+    // &-bottom {
+    //   &::before {
+    //     border-top-color: transparent;
+    //     border-right-color: transparent;
+    //   }
+    // }
   }
 }
 </style>
